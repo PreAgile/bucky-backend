@@ -9,4 +9,10 @@ phases:
       - gradle -version
   build:
     commands:
-      - ./gradlew clean build
+      - ./gradlew bootJar
+  post_build:
+    commands:
+      - echo Build completed
+  artifacts:
+    files:
+      - build/libs/*.jar
