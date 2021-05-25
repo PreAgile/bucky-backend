@@ -1,4 +1,0 @@
-dev/buckybackend/BuckyBackendApplication.java
- dev.buckybackend.BuckyBackendApplication
-dev/buckybackend/controller/WelcomeController.java
- dev.buckybackend.controller.WelcomeController
