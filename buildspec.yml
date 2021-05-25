@@ -11,8 +11,8 @@ phases:
   post_build:
     commands:
       # move the jar (by wildcard, agnostic to its name) to top level app.jar
-      - mv build/libs/*.jar bucky-backend.jar
+      - mv build/libs/*.jar application.jar
 artifacts:
   files:
     # publish the now top level app.jar as the artifact
-    - bucky-backend.jar
+    - application.jar
