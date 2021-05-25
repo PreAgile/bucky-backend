@@ -1,19 +1,18 @@
-version: 0.1
+version: 0.2
 
 phases:
   install:
-    commands:
-      - echo Entering install phase...
-      - echo Nothing to do now
+    runtime-versions:
+      java: corretto8
   build:
     commands:
-      - echo Build started on `date`
+      # bootJar task outputs to build/libs/<name>.jar
       - ./gradlew bootJar
   post_build:
     commands:
       # move the jar (by wildcard, agnostic to its name) to top level app.jar
-      - mv build/libs/*.jar app.jar
+      - mv build/libs/*.jar bucky-backend.jar
 artifacts:
   files:
     # publish the now top level app.jar as the artifact
-    - app.jar
+    - bucky-backend.jar
