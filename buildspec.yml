@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - java -version
+      - gradle -version
+  build:
+    commands:
+      - ./gradlew clean build
+reports:
+  <YOUR-REPORT-GROUP-ARN>:
+    files:
+      - '**/*'
+    base-directory: 'build/test-results/test'
+  <Coverage-REPORT-GROUP-ARN>:
+    files:
+      - 'build/jacoco_report/test/jacocoTestReport.xml'
+    file-format: 'JACOCOXML'
+artifacts:
+  files:
+    - '**/*'
+  name: concurrencysample-$(date +%Y-%m-%d)
