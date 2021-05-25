@@ -9,7 +9,7 @@ phases:
       - gradle -version
   build:
     commands:
-      - ./gradlew bootJar
+      - ./gradlew clean build
   post_build:
     commands:
       - echo Build completed
