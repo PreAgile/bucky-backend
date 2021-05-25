@@ -1,18 +1,15 @@
-version: 0.2
+version: 0.1
 
 phases:
   install:
-    runtime-versions:
-      java: corretto11
     commands:
-      - java -version
-      - gradle -version
+      - echo Entering install phase...
+      - echo Nothing to do now
   build:
     commands:
-      - ./gradlew clean build
-  post_build:
-    commands:
-      - echo Build completed
-  artifacts:
-    files:
-      - build/libs/*.jar
+      - echo Build started on `date`
+      - gradle build
+artifacts:
+  type: zip
+  files:
+    - 'build/libs/*.jar'
