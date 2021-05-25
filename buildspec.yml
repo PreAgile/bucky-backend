@@ -8,8 +8,12 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - ./gradlew clean build
+      - ./gradlew bootJar
+  post_build:
+    commands:
+      # move the jar (by wildcard, agnostic to its name) to top level app.jar
+      - mv build/libs/*.jar app.jar
 artifacts:
-  type: zip
   files:
-    - 'build/libs/*.jar'
+    # publish the now top level app.jar as the artifact
+    - app.jar
