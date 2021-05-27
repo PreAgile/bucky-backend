@@ -10,6 +10,6 @@ public class WelcomeController {
     @GetMapping("/")
     @ResponseBody
     public String hello() {
-        return "This is Bucky-backend!!!";
+        return "Test If CodeBuild Work?";
     }
 }
