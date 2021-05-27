@@ -10,6 +10,6 @@ public class WelcomeController {
     @GetMapping("/")
     @ResponseBody
     public String hello() {
-        return "Test If CodeBuild Work?";
+        return "change Java 11";
     }
 }
