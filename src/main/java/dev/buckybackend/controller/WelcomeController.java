@@ -10,6 +10,6 @@ public class WelcomeController {
     @GetMapping("/")
     @ResponseBody
     public String hello() {
-        return "Hello Bucky~~~";
+        return "Rechange Test, env";
     }
 }
