@@ -1,2 +1,5 @@
-package dev.buckybackend.domain;public enum PeopleNum {
+package dev.buckybackend.domain;
+
+public enum PeopleNum {
+    ONE, TWO, MANY
 }
