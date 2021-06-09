@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue
     @Column(name = "user_id")
     @NonNull
-    private int id;
+    private Long id;
 
     @NonNull
     private String name;
@@ -32,10 +32,10 @@ public class User {
     private Studio studio;
 
     @Column(columnDefinition = "TEXT")
-    @NonNull
     private String memo;
 
-    @NonNull
+    private LocalDateTime create_time;
+
     private LocalDateTime recent_login_time;
 
     @ManyToMany

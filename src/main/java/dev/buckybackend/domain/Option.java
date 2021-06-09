@@ -1,12 +1,13 @@
 package dev.buckybackend.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
 @Embeddable
-@Getter
+@Getter @Setter
 public class Option {
 
     private Character hair_makeup;
@@ -17,13 +18,4 @@ public class Option {
 
     private Character waxing;
 
-    protected Option() {
-    }
-
-    public Option(Character hair_makeup, Character rent_clothes, Character tanning, Character waxing) {
-        this.hair_makeup = hair_makeup;
-        this.rent_clothes = rent_clothes;
-        this.tanning = tanning;
-        this.waxing = waxing;
-    }
 }

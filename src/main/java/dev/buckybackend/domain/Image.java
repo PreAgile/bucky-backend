@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.aspectj.weaver.ast.Var;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -13,7 +15,7 @@ public class Image {
 
     @Id @GeneratedValue
     @Column(name = "image_id")
-    private int id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @NonNull
@@ -37,4 +39,6 @@ public class Image {
 
     @NonNull
     private Character is_delete;
+
+    private LocalDateTime create_time;
 }

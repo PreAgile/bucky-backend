@@ -14,7 +14,7 @@ public class Studio {
 
     @Id @GeneratedValue
     @Column(name = "studio_id")
-    private int id;
+    private Long id;
 
     @NonNull
     private String name;
