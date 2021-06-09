@@ -1,12 +1,11 @@
 package dev.buckybackend.domain;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Var;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,27 +17,33 @@ public class Image {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @Column(nullable = false)
     private PeopleNum people_num;
 
-    @NonNull
+    @Column(nullable = false)
     private Character sex;
 
-    @NonNull
-    private String color;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Color color;
 
-    @NonNull
+    @Column(nullable = false)
     private Character outdoor;
 
-    @NonNull
+    @Column(nullable = false)
     private String image_url;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id")
     private Studio studio;
 
-    @NonNull
+    @Column(nullable = false)
+    @ColumnDefault("0")
     private Character is_delete;
 
     private LocalDateTime create_time;
+
+    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+    private ImageLike imageLike;
+
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Getter @Setter
-public class StudioAddress implements Serializable {
+public class StudioPhone implements Serializable {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
@@ -17,18 +17,18 @@ public class StudioAddress implements Serializable {
     private Studio studio;
 
     @Id
-    private String address;
+    private String phone;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudioAddress that = (StudioAddress) o;
-        return studio.equals(that.studio) && Objects.equals(address, that.address);
+        StudioPhone that = (StudioPhone) o;
+        return studio.equals(that.studio) && Objects.equals(phone, that.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studio, address);
+        return Objects.hash(studio, phone);
     }
 }

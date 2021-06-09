@@ -1,6 +1,7 @@
 package dev.buckybackend.domain;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Getter @Setter
-public class StudioAddress implements Serializable {
+public class MenuBoard implements Serializable {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
@@ -17,18 +18,25 @@ public class StudioAddress implements Serializable {
     private Studio studio;
 
     @Id
-    private String address;
+    @Column(nullable = false)
+    private Integer people_num;
+
+    private Integer basic_price;
+
+    private Integer standard_price;
+
+    private Integer premium_price;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudioAddress that = (StudioAddress) o;
-        return studio.equals(that.studio) && Objects.equals(address, that.address);
+        MenuBoard menuBoard = (MenuBoard) o;
+        return studio.equals(menuBoard.studio) && people_num.equals(menuBoard.people_num);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(studio, address);
+        return Objects.hash(studio, people_num);
     }
 }
