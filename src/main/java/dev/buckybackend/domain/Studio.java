@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
 @Getter @Setter
 public class Studio {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "studio_id")
     private Long id;
 
@@ -20,8 +22,10 @@ public class Studio {
     private String name;
 
     @NonNull
-    private String address;
+    @OneToOne(mappedBy = "studio", fetch = FetchType.LAZY)
+    private StudioAddress studioAddress;
 
+    @NonNull
     @Embedded
     private Option option;
 
@@ -32,7 +36,7 @@ public class Studio {
 
     private String instagram_id;
 
-    // 미확정
+    //TODO: 미확정
     @NonNull
     private int min_price;
 
