@@ -1,12 +1,10 @@
 package dev.buckybackend.domain;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Getter @Setter
@@ -17,26 +15,13 @@ public class MenuBoard implements Serializable {
     @JoinColumn(name = "studio_id")
     private Studio studio;
 
-    @Id
     @Column(nullable = false)
-    private Integer people_num;
+    private String product_name;
 
-    private Integer basic_price;
+    @Column(nullable = false)
+    private int price;
 
-    private Integer standard_price;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String description;
 
-    private Integer premium_price;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MenuBoard menuBoard = (MenuBoard) o;
-        return studio.equals(menuBoard.studio) && people_num.equals(menuBoard.people_num);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studio, people_num);
-    }
 }

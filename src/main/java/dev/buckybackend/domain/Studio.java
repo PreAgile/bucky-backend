@@ -1,14 +1,9 @@
 package dev.buckybackend.domain;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Fetch;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +47,9 @@ public class Studio {
 
     private LocalDateTime update_time;
 
-    @Column(nullable = false)
-    @ColumnDefault("0")
+    private Character is_release;
+
+    @Column(nullable = false, columnDefinition = "char(1) default 'N'")
     private Character is_delete;
 
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)

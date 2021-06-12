@@ -19,6 +19,8 @@ public class StudioAddress implements Serializable {
     @Id
     private String address;
 
+    private Character is_main;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

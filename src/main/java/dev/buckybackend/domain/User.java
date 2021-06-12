@@ -37,6 +37,9 @@ public class User {
 
     private LocalDateTime recent_login_time;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @ManyToMany
     @JoinTable(name = "pick_list",
             joinColumns = @JoinColumn(name = "user_id"),
