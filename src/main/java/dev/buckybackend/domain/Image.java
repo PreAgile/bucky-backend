@@ -37,9 +37,10 @@ public class Image {
     @JoinColumn(name = "studio_id")
     private Studio studio;
 
-    @Column(nullable = false)
-    @ColumnDefault("0")
+    @Column(nullable = false, columnDefinition = "char(1) default 'N'")
     private Character is_delete;
+
+    private Character is_release;
 
     private LocalDateTime create_time;
 

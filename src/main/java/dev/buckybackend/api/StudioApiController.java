@@ -46,6 +46,7 @@ public class StudioApiController {
         studio.setCreate_time(request.getCreate_time());
         studio.setUpdate_time(request.getUpdate_time());
         studio.setIs_delete('N');
+        studio.setIs_release('N');
 
         Long id = studioService.register(studio);
         return new CreateStudioResponse(id);

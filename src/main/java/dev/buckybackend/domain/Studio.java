@@ -47,7 +47,9 @@ public class Studio {
 
     private LocalDateTime update_time;
 
-    @Column(nullable = false)
+    private Character is_release;
+
+    @Column(nullable = false, columnDefinition = "char(1) default 'N'")
     private Character is_delete;
 
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
