@@ -1,4 +1,4 @@
-package dev.buckybackend.api;
+package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
-public class StudioApiController {
+public class StudioCreateApiController {
 
     private final StudioService studioService;
 
@@ -80,7 +80,7 @@ public class StudioApiController {
     }
 
     @Data
-    class CreateStudioResponse {
+    static class CreateStudioResponse {
         private Long id;
 
         public CreateStudioResponse(Long id) {

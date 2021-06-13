@@ -23,6 +23,28 @@ public class StudioService {
         return studio.getId();
     }
 
+    //스튜디오 수정
+    @Transactional
+    public void update(Long id, Studio studio) {
+        Studio findStudio = studioRepository.findOne(id);
+
+        findStudio.setName(studio.getName());
+
+        findStudio.setMin_price(studio.getMin_price());
+        findStudio.setMax_price(studio.getMax_price());
+
+        findStudio.setHomepage(studio.getHomepage());
+        findStudio.setInstagram(studio.getInstagram());
+        findStudio.setNaver(studio.getNaver());
+        findStudio.setFacebook(studio.getFacebook());
+
+        findStudio.setDescription(studio.getDescription());
+        findStudio.setOption(studio.getOption());
+        findStudio.setParking(studio.getParking());
+
+        findStudio.setUpdate_time(studio.getUpdate_time());
+    }
+
     //중복 스튜디오 검증
     private void validateDuplicateStudio(Studio studio) {
         List<Studio> studioList = studioRepository.findByName(studio.getName());
