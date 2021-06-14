@@ -43,8 +43,16 @@ public class Image {
     private Character is_release;
 
     private LocalDateTime create_time;
+    private LocalDateTime update_time;
 
-    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ImageLike imageLike;
+
+    /** 연관 관계 메서드 **/
+    public void setStudio(Studio studio) {
+        this.studio = studio;
+        studio.getImages().add(this);
+    }
+
 
 }
