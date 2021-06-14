@@ -19,7 +19,7 @@ public class StudioCreateApiController {
 
     private final StudioService studioService;
 
-    @PostMapping("/api/v1/studio")
+    @PostMapping("/api/v1/studios")
     public CreateStudioResponse saveStudio(@RequestBody @Valid CreateStudioRequest request) {
         Studio studio = new Studio();
         studio.setName(request.getName());
@@ -44,9 +44,7 @@ public class StudioCreateApiController {
         studio.setParking(request.getParking());
 
         studio.setCreate_time(request.getCreate_time());
-        studio.setUpdate_time(request.getUpdate_time());
         studio.setIs_delete('N');
-        studio.setIs_release('N');
 
         Long id = studioService.register(studio);
         return new CreateStudioResponse(id);
@@ -58,6 +56,7 @@ public class StudioCreateApiController {
         @NotEmpty
         private String name;
 
+
         private int min_price;
         private int max_price;
 
@@ -68,6 +67,7 @@ public class StudioCreateApiController {
 
         private String description;
 
+
         private Character hair_makeup;
         private Character rent_clothes;
         private Character tanning;
@@ -77,6 +77,7 @@ public class StudioCreateApiController {
         private LocalDateTime create_time;
         private LocalDateTime update_time;
 
+        private Character is_release;
     }
 
     @Data

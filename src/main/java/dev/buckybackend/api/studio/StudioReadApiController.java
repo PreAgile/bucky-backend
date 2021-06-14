@@ -26,10 +26,12 @@ public class StudioReadApiController {
         return new Result(collect.size(), collect);
     }
 
-    @GetMapping("/api/v1/studio/{id}")
+    @GetMapping("/api/v1/studios/{id}")
     public StudioDto getStudio(@PathVariable("id") Long id) {
         Studio findStudio = studioService.findStudio(id);
         return new StudioDto(findStudio.getName(),
+                findStudio.getMin_price(),
+                findStudio.getMax_price(),
                 findStudio.getHomepage(),
                 findStudio.getInstagram(),
                 findStudio.getNaver(),
@@ -39,7 +41,8 @@ public class StudioReadApiController {
                 findStudio.getOption().getRent_clothes(),
                 findStudio.getOption().getTanning(),
                 findStudio.getOption().getWaxing(),
-                findStudio.getParking());
+                findStudio.getParking(),
+                findStudio.getIs_delete());
     }
 
     @Data
@@ -61,6 +64,9 @@ public class StudioReadApiController {
     static class StudioDto {
         private String name;
 
+        private int min_price;
+        private int max_price;
+
         private String homepage;
         private String instagram;
         private String naver;
@@ -73,5 +79,7 @@ public class StudioReadApiController {
         private Character tanning;
         private Character waxing;
         private Character parking;
+
+        private Character is_deleted;
     }
 }

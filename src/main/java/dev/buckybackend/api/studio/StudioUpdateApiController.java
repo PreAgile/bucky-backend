@@ -20,11 +20,11 @@ import java.time.LocalDateTime;
 public class StudioUpdateApiController {
     private final StudioService studioService;
 
-    @PutMapping("/api/v1/studio/{id}")
+    @PutMapping("/api/v1/studios/{id}")
     public UpdateStudioResponse updateStudio(@PathVariable("id") Long id,
                                              @RequestBody @Valid UpdateStudioRequest request) {
         Studio studio = new Studio();
-
+        studio.setId(id);
         studio.setName(request.getName());
 
         studio.setMin_price(request.getMin_price());
