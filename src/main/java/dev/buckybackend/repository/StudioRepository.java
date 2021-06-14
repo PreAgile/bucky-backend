@@ -13,7 +13,13 @@ public class StudioRepository {
     private final EntityManager em;
 
     public void save(Studio studio) {
-        em.persist(studio);
+        System.out.println("studio.getId() >>> " + Long.toString(studio.getId()));
+        if (studio.getId() == null) {
+            em.persist(studio);
+        }
+        else {
+            em.merge(studio);
+        }
     }
 
     public Studio findOne(Long id) {

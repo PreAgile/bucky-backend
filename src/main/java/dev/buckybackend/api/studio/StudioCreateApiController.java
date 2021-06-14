@@ -1,4 +1,4 @@
-package dev.buckybackend.api;
+package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
-public class StudioApiController {
+public class StudioCreateApiController {
 
     private final StudioService studioService;
 
-    @PostMapping("/api/v1/studio")
+    @PostMapping("/api/v1/studios")
     public CreateStudioResponse saveStudio(@RequestBody @Valid CreateStudioRequest request) {
         Studio studio = new Studio();
         studio.setName(request.getName());
@@ -44,9 +44,7 @@ public class StudioApiController {
         studio.setParking(request.getParking());
 
         studio.setCreate_time(request.getCreate_time());
-        studio.setUpdate_time(request.getUpdate_time());
         studio.setIs_delete('N');
-        studio.setIs_release('N');
 
         Long id = studioService.register(studio);
         return new CreateStudioResponse(id);
@@ -58,7 +56,9 @@ public class StudioApiController {
         @NotEmpty
         private String name;
 
+        @NotEmpty
         private int min_price;
+        @NotEmpty
         private int max_price;
 
         private String homepage;
@@ -68,19 +68,25 @@ public class StudioApiController {
 
         private String description;
 
+        @NotEmpty
         private Character hair_makeup;
+        @NotEmpty
         private Character rent_clothes;
+        @NotEmpty
         private Character tanning;
+        @NotEmpty
         private Character waxing;
+        @NotEmpty
         private Character parking;
 
         private LocalDateTime create_time;
         private LocalDateTime update_time;
 
+        private Character is_release;
     }
 
     @Data
-    class CreateStudioResponse {
+    static class CreateStudioResponse {
         private Long id;
 
         public CreateStudioResponse(Long id) {
