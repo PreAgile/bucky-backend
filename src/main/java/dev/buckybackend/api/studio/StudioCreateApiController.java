@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @RestController
@@ -44,7 +45,7 @@ public class StudioCreateApiController {
         studio.setParking(request.getParking());
 
         studio.setCreate_time(request.getCreate_time());
-        studio.setIs_delete('N');
+        studio.setIs_delete('N'); //생성할 때는 Default N
 
         Long id = studioService.register(studio);
         return new CreateStudioResponse(id);
@@ -56,7 +57,6 @@ public class StudioCreateApiController {
         @NotEmpty
         private String name;
 
-
         private int min_price;
         private int max_price;
 
@@ -67,15 +67,18 @@ public class StudioCreateApiController {
 
         private String description;
 
-
+        @NotNull
         private Character hair_makeup;
+        @NotNull
         private Character rent_clothes;
+        @NotNull
         private Character tanning;
+        @NotNull
         private Character waxing;
+        @NotNull
         private Character parking;
 
         private LocalDateTime create_time;
-        private LocalDateTime update_time;
 
         private Character is_release;
     }

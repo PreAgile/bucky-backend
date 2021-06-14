@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @RestController
@@ -69,10 +70,15 @@ public class StudioUpdateApiController {
 
         private String description;
 
+        @NotNull
         private Character hair_makeup;
+        @NotNull
         private Character rent_clothes;
+        @NotNull
         private Character tanning;
+        @NotNull
         private Character waxing;
+        @NotNull
         private Character parking;
 
         private LocalDateTime update_time;

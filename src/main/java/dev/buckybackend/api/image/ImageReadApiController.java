@@ -19,7 +19,7 @@ public class ImageReadApiController {
     @GetMapping("/api/v1/images")
     public Result getImages() {
         List<ImageListDto> collect = imageService.findImages().stream()
-                .map(m -> new ImageListDto(m.getId(), m.getImage_url()))
+                .map(m -> new ImageListDto(m.getId(), m.getStudio().getId(), m.getImage_url()))
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
@@ -35,6 +35,7 @@ public class ImageReadApiController {
     @AllArgsConstructor
     static class ImageListDto {
         private Long id;
+        private Long studio_id;
         private String image_url;
     }
 }
