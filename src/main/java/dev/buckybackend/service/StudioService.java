@@ -26,30 +26,35 @@ public class StudioService {
     //스튜디오 수정
     @Transactional
     public void update(Long id, Studio studio) {
-        Studio findStudio = studioRepository.findOne(id);
+        validateExistStudio(id);
+        //studio.setIs_delete('N');
+        studioRepository.save(studio);
+    }
 
-        findStudio.setName(studio.getName());
-
-        findStudio.setMin_price(studio.getMin_price());
-        findStudio.setMax_price(studio.getMax_price());
-
-        findStudio.setHomepage(studio.getHomepage());
-        findStudio.setInstagram(studio.getInstagram());
-        findStudio.setNaver(studio.getNaver());
-        findStudio.setFacebook(studio.getFacebook());
-
-        findStudio.setDescription(studio.getDescription());
-        findStudio.setOption(studio.getOption());
-        findStudio.setParking(studio.getParking());
-
-        findStudio.setUpdate_time(studio.getUpdate_time());
+    //스튜디오 삭제(비활성화)
+    @Transactional
+    public void delete(Long id) {
+        Studio findStudio = validateExistStudio(id);
+        findStudio.setIs_delete('Y');
+        studioRepository.save(findStudio);
     }
 
     //중복 스튜디오 검증
     private void validateDuplicateStudio(Studio studio) {
         List<Studio> studioList = studioRepository.findByName(studio.getName());
         if (!studioList.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 스튜디오입니다.");
+            throw new IllegalStateException("Duplicate Name");
+        }
+    }
+
+    //스튜디오 등록 유무 검증
+    private Studio validateExistStudio(Long id) {
+        Studio findStudio = studioRepository.findOne(id);
+        if (findStudio == null) {
+            throw new IllegalStateException("Not Exist Key");
+        }
+        else {
+            return findStudio;
         }
     }
 
@@ -59,7 +64,7 @@ public class StudioService {
     }
 
     //특정 스튜디오 조회
-    public Studio findStudio(Long studioId) {
-        return studioRepository.findOne(studioId);
+    public Studio findStudio(Long id) {
+        return studioRepository.findOne(id);
     }
 }
