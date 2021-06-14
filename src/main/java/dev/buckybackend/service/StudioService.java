@@ -26,8 +26,8 @@ public class StudioService {
     //스튜디오 수정
     @Transactional
     public void update(Long id, Studio studio) {
-        validateExistStudio(id);
-        //studio.setIs_delete('N');
+        Studio findStudio = validateExistStudio(id);
+        studio.setIs_delete(findStudio.getIs_delete());
         studioRepository.save(studio);
     }
 

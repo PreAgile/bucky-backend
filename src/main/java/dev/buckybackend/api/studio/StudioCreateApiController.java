@@ -56,9 +56,8 @@ public class StudioCreateApiController {
         @NotEmpty
         private String name;
 
-        @NotEmpty
+
         private int min_price;
-        @NotEmpty
         private int max_price;
 
         private String homepage;
@@ -68,15 +67,11 @@ public class StudioCreateApiController {
 
         private String description;
 
-        @NotEmpty
+
         private Character hair_makeup;
-        @NotEmpty
         private Character rent_clothes;
-        @NotEmpty
         private Character tanning;
-        @NotEmpty
         private Character waxing;
-        @NotEmpty
         private Character parking;
 
         private LocalDateTime create_time;
