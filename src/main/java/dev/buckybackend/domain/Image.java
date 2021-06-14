@@ -20,8 +20,9 @@ public class Image {
     @Column(nullable = false)
     private PeopleNum people_num;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Character sex;
+    private Sex sex;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

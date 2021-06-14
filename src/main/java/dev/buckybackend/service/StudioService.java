@@ -27,6 +27,7 @@ public class StudioService {
     @Transactional
     public void update(Long id, Studio studio) {
         Studio findStudio = validateExistStudio(id);
+        validateDuplicateStudio(findStudio);
         studio.setIs_delete(findStudio.getIs_delete());
         studioRepository.save(studio);
     }

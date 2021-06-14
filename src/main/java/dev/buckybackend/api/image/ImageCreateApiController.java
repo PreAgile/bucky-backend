@@ -3,6 +3,7 @@ package dev.buckybackend.api.image;
 import dev.buckybackend.domain.Color;
 import dev.buckybackend.domain.Image;
 import dev.buckybackend.domain.PeopleNum;
+import dev.buckybackend.domain.Sex;
 import dev.buckybackend.service.ImageService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @RestController
@@ -32,28 +34,25 @@ public class ImageCreateApiController {
         image.setCreate_time(request.getCreate_time());
         image.setIs_delete('N');
 
-        //TODO:
-
-        Long id = imageService.upload(image);
+        Long id = imageService.upload(image, request.getStudio_id());
         return new CreateImageResponse(id);
     }
 
     @Data
     static class CreateImageRequest {
-        @NotEmpty
+        @NotNull
         private PeopleNum people_num;
-        @NotEmpty
-        private Character sex;
-        @NotEmpty
+        @NotNull
+        private Sex sex;
+        @NotNull
         private Color color;
-        @NotEmpty
+        @NotNull
         private Character outdoor;
         @NotEmpty
         private String image_url;
-        @NotEmpty
+        @NotNull
         private Long studio_id;
 
-        private LocalDateTime update_time;
         private LocalDateTime create_time;
 
         private Character is_release;
