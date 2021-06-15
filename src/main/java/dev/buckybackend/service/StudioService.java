@@ -26,11 +26,26 @@ public class StudioService {
 
     //스튜디오 수정
     @Transactional
-    public void update(Long id, Studio studio) {
-        validateDuplicateStudioExceptId(studio, id);
-        Studio findStudio = validateExistStudio(id);
-        studio.setIs_delete(findStudio.getIs_delete());
-        studioRepository.save(studio);
+    public void update(Long studioId, Studio studio) {
+        validateDuplicateStudioExceptId(studio, studioId);
+        Studio findStudio = validateExistStudio(studioId);
+
+        findStudio.setName(studio.getName());
+
+        findStudio.setMin_price(studio.getMin_price());
+        findStudio.setMax_price(studio.getMax_price());
+
+        findStudio.setHomepage(studio.getHomepage());
+        findStudio.setInstagram(studio.getInstagram());
+        findStudio.setName(studio.getName());
+        findStudio.setFacebook(studio.getFacebook());
+
+        findStudio.setDescription(studio.getDescription());
+
+        findStudio.setOption(studio.getOption());
+        findStudio.setParking(studio.getParking());
+
+        findStudio.setUpdate_time(studio.getUpdate_time());
     }
 
     //스튜디오 삭제(비활성화)
@@ -38,7 +53,6 @@ public class StudioService {
     public void delete(Long id) {
         Studio findStudio = validateExistStudio(id);
         findStudio.setIs_delete('Y');
-        studioRepository.save(findStudio);
     }
 
     //중복 스튜디오 검증

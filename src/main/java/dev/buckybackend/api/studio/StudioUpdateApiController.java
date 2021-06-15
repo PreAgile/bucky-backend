@@ -25,7 +25,6 @@ public class StudioUpdateApiController {
     public UpdateStudioResponse updateStudio(@PathVariable("id") Long id,
                                              @RequestBody @Valid UpdateStudioRequest request) {
         Studio studio = new Studio();
-        studio.setId(id);
         studio.setName(request.getName());
 
         studio.setMin_price(request.getMin_price());

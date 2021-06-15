@@ -13,12 +13,7 @@ public class StudioRepository {
     private final EntityManager em;
 
     public void save(Studio studio) {
-        if (studio.getId() == null) {
-            em.persist(studio);
-        }
-        else {
-            em.merge(studio);
-        }
+        em.persist(studio);
     }
 
     public Studio findOne(Long id) {
@@ -35,5 +30,6 @@ public class StudioRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
+
 
 }
