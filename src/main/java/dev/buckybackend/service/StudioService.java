@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -26,6 +27,7 @@ public class StudioService {
     //스튜디오 수정
     @Transactional
     public void update(Long id, Studio studio) {
+        validateDuplicateStudioExceptId(studio, id);
         Studio findStudio = validateExistStudio(id);
         studio.setIs_delete(findStudio.getIs_delete());
         studioRepository.save(studio);
@@ -44,6 +46,16 @@ public class StudioService {
         List<Studio> studioList = studioRepository.findByName(studio.getName());
         if (!studioList.isEmpty()) {
             throw new IllegalStateException("Duplicate Name");
+        }
+    }
+
+    //특정 Id를 제외한 중복 스튜디오 유무 검증
+    private void validateDuplicateStudioExceptId(Studio studio, Long Id) {
+        List<Studio> studioList = studioRepository.findByName(studio.getName());
+        for( Iterator<Studio> itr = studioList.iterator(); itr.hasNext(); ) {
+            if (itr.next().getId() != Id) {
+                throw new IllegalStateException("Duplicate Name");
+            }
         }
     }
 
