@@ -46,7 +46,7 @@ public class StudioUpdateApiController {
         studio.setOption(option);
         studio.setParking(request.getParking());
 
-        studio.setUpdate_time(request.getUpdate_time());
+        studio.setUpdate_time(LocalDateTime.now());
 
         studioService.update(id, studio);
 
