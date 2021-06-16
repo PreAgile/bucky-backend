@@ -28,7 +28,7 @@ public class ImageReadApiController {
     @AllArgsConstructor
     static class Result<T> {
         private int count;
-        private T data;
+        private T images;
     }
 
     @Data

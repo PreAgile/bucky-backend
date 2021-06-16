@@ -25,7 +25,6 @@ public class StudioUpdateApiController {
     public UpdateStudioResponse updateStudio(@PathVariable("id") Long id,
                                              @RequestBody @Valid UpdateStudioRequest request) {
         Studio studio = new Studio();
-        studio.setId(id);
         studio.setName(request.getName());
 
         studio.setMin_price(request.getMin_price());
@@ -47,7 +46,7 @@ public class StudioUpdateApiController {
         studio.setOption(option);
         studio.setParking(request.getParking());
 
-        studio.setUpdate_time(request.getUpdate_time());
+        studio.setUpdate_time(LocalDateTime.now());
 
         studioService.update(id, studio);
 

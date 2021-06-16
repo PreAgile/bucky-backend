@@ -44,7 +44,8 @@ public class StudioCreateApiController {
         studio.setOption(option);
         studio.setParking(request.getParking());
 
-        studio.setCreate_time(request.getCreate_time());
+        studio.setCreate_time(LocalDateTime.now());
+        studio.setUpdate_time(LocalDateTime.now());
         studio.setIs_delete('N'); //생성할 때는 Default N
 
         Long id = studioService.register(studio);
