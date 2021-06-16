@@ -2,9 +2,12 @@ package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.domain.StudioAddress;
 import dev.buckybackend.service.StudioService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +16,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +25,11 @@ public class StudioCreateApiController {
 
     private final StudioService studioService;
 
+    /**
+     * 스튜디오 등록
+     * @param request
+     * @return
+     */
     @PostMapping("/api/v1/studios")
     public CreateStudioResponse saveStudio(@RequestBody @Valid CreateStudioRequest request) {
         Studio studio = new Studio();
@@ -89,6 +99,48 @@ public class StudioCreateApiController {
         private Long id;
 
         public CreateStudioResponse(Long id) {
+            this.id = id;
+        }
+    }
+
+    /**
+     * 스튜디오 주소 등록
+     * @param id
+     * @param request
+     * @return
+     */
+    @PostMapping("/api/v1/studios/{id}/addresses")
+    public CreateAddressResponse saveAddresses(@PathVariable("id") Long id,
+                                               @RequestBody @Valid CreateAddressRequest request) {
+        List<StudioAddress> studioAddressList = new ArrayList<>();
+        for (AddressListDto address : request.getStudio_addresses()) {
+            StudioAddress studioAddress = new StudioAddress();
+            studioAddress.setAddress(address.getAddress());
+            studioAddress.setIs_main(address.getIs_main());
+            studioAddressList.add(studioAddress);
+        }
+        Long studioId = studioService.addStudioAddresses(id, studioAddressList);
+        return new CreateAddressResponse(studioId);
+    }
+
+    @Data
+    static class CreateAddressRequest {
+        @NotNull
+        private List<AddressListDto> studio_addresses;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class AddressListDto {
+        private String address;
+        private Character is_main;
+    }
+
+    @Data
+    private class CreateAddressResponse {
+        private Long id;
+
+        public CreateAddressResponse(Long id) {
             this.id = id;
         }
     }
