@@ -2,11 +2,13 @@ package dev.buckybackend.service;
 
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.domain.StudioPhone;
 import dev.buckybackend.repository.StudioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -105,5 +107,30 @@ public class StudioService {
         return id;
     }
 
-    //스튜디오 주소 업데이트
+    //TODO: 스튜디오 주소 업데이트
+
+    //스튜디오 주소 조회
+    public List<StudioAddress> findAddresses(Long id) {
+        Studio findStudio = validateExistStudio(id);
+        return findStudio.getStudioAddresses();
+    }
+
+    //TODO: 스튜디오 전화번호 업데이트
+
+    //스튜디오 전화번호 등록
+    @Transactional
+    public Long addStudioPhones(Long id, List<StudioPhone> studioPhoneList) {
+        Studio findStudio = validateExistStudio(id);
+        for (StudioPhone studioPhone : studioPhoneList) {
+            findStudio.addStudioPhones(studioPhone);
+        }
+        return id;
+    }
+
+    //스튜디오 전화번호 조회
+    public List<StudioPhone> findPhones(Long id) {
+        Studio findStudio = validateExistStudio(id);
+        return findStudio.getStudioPhones();
+    }
+
 }

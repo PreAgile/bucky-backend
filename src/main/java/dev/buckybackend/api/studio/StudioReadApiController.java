@@ -18,14 +18,23 @@ public class StudioReadApiController {
 
     private final StudioService studioService;
 
+    /**
+     * 전체 스튜디오 조회
+     * @return
+     */
     @GetMapping("/api/v1/studios")
-    public Result getStudios() {
+    public StudioResult getStudios() {
         List<StudioListDto> collect = studioService.findStudios().stream()
                 .map(m -> new StudioListDto(m.getId(), m.getName()))
                 .collect(Collectors.toList());
-        return new Result(collect.size(), collect);
+        return new StudioResult(collect.size(), collect);
     }
 
+    /**
+     * 특정 스튜디오 조회
+     * @param id
+     * @return
+     */
     @GetMapping("/api/v1/studios/{id}")
     public StudioDto getStudio(@PathVariable("id") Long id) {
         Studio findStudio = studioService.findStudio(id);
@@ -45,9 +54,30 @@ public class StudioReadApiController {
                 findStudio.getIs_delete());
     }
 
+    /**
+     * 스튜디오 주소 조회
+     * @param id
+     * @return
+     */
+    @GetMapping("/api/v1/studios/{id}/addresses")
+    public AddressResult getAddresses(@PathVariable("id") Long id) {
+        List<AddressListDto> collect = studioService.findAddresses(id).stream()
+                .map(m -> new AddressListDto(m.getAddress(), m.getIs_main()))
+                .collect(Collectors.toList());
+        return new AddressResult(collect.size(), collect);
+    }
+
+    @GetMapping("/api/v1/studios/{id}/phones")
+    public PhoneResult getPhones(@PathVariable("id") Long id) {
+        List<PhoneListDto> collect = studioService.findPhones(id).stream()
+                .map(m -> new PhoneListDto(m.getPhone(), m.getIs_main()))
+                .collect(Collectors.toList());
+        return new PhoneResult(collect.size(), collect);
+    }
+
     @Data
     @AllArgsConstructor
-    static class Result<T> {
+    static class StudioResult<T> {
         private int count;
         private T studios;
     }
@@ -81,5 +111,33 @@ public class StudioReadApiController {
         private Character parking;
 
         private Character is_deleted;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class AddressResult<T> {
+        private int count;
+        private T Addresses;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class AddressListDto {
+        private String address;
+        private Character is_main;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class PhoneResult<T> {
+        private int count;
+        private T Phones;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class PhoneListDto {
+        private String phone;
+        private Character is_main;
     }
 }

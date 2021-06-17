@@ -69,4 +69,9 @@ public class Studio {
         this.studioAddresses.add(studioAddress);
         studioAddress.setStudio(this);
     }
+
+    public void addStudioPhones(StudioPhone studioPhone) {
+        this.studioPhones.add(studioPhone);
+        studioPhone.setStudio(this);
+    }
 }

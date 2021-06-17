@@ -3,6 +3,7 @@ package dev.buckybackend.api.studio;
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.domain.StudioPhone;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -62,6 +63,46 @@ public class StudioCreateApiController {
         return new CreateStudioResponse(id);
     }
 
+    /**
+     * 스튜디오 주소 등록
+     * @param id
+     * @param request
+     * @return
+     */
+    @PostMapping("/api/v1/studios/{id}/addresses")
+    public CreateStudioResponse saveAddresses(@PathVariable("id") Long id,
+                                               @RequestBody @Valid AddressListDto[] request) {
+        List<StudioAddress> studioAddressList = new ArrayList<>();
+        for (AddressListDto address : request) {
+            StudioAddress studioAddress = new StudioAddress();
+            studioAddress.setAddress(address.getAddress());
+            studioAddress.setIs_main(address.getIs_main());
+            studioAddressList.add(studioAddress);
+        }
+        Long studioId = studioService.addStudioAddresses(id, studioAddressList);
+        return new CreateStudioResponse(studioId);
+    }
+
+    /**
+     * 스튜디오 전화번호 등록
+     * @param id
+     * @param request
+     * @return
+     */
+    @PostMapping("/api/v1/studios/{id}/phones")
+    public CreateStudioResponse savePhones(@PathVariable("id") Long id,
+                                           @RequestBody @Valid PhoneListDto[] request) {
+        List<StudioPhone> studioPhoneList = new ArrayList<>();
+        for (PhoneListDto phone : request) {
+            StudioPhone studioPhone = new StudioPhone();
+            studioPhone.setPhone(phone.getPhone());
+            studioPhone.setIs_main(phone.getIs_main());
+            studioPhoneList.add(studioPhone);
+        }
+        Long studioId = studioService.addStudioPhones(id, studioPhoneList);
+        return new CreateStudioResponse(studioId);
+    }
+
     @Data
     static class CreateStudioRequest {
 
@@ -103,31 +144,6 @@ public class StudioCreateApiController {
         }
     }
 
-    /**
-     * 스튜디오 주소 등록
-     * @param id
-     * @param request
-     * @return
-     */
-    @PostMapping("/api/v1/studios/{id}/addresses")
-    public CreateAddressResponse saveAddresses(@PathVariable("id") Long id,
-                                               @RequestBody @Valid CreateAddressRequest request) {
-        List<StudioAddress> studioAddressList = new ArrayList<>();
-        for (AddressListDto address : request.getStudio_addresses()) {
-            StudioAddress studioAddress = new StudioAddress();
-            studioAddress.setAddress(address.getAddress());
-            studioAddress.setIs_main(address.getIs_main());
-            studioAddressList.add(studioAddress);
-        }
-        Long studioId = studioService.addStudioAddresses(id, studioAddressList);
-        return new CreateAddressResponse(studioId);
-    }
-
-    @Data
-    static class CreateAddressRequest {
-        @NotNull
-        private List<AddressListDto> studio_addresses;
-    }
 
     @Data
     @AllArgsConstructor
@@ -137,12 +153,9 @@ public class StudioCreateApiController {
     }
 
     @Data
-    private class CreateAddressResponse {
-        private Long id;
-
-        public CreateAddressResponse(Long id) {
-            this.id = id;
-        }
+    @AllArgsConstructor
+    static class PhoneListDto {
+        private String phone;
+        private Character is_main;
     }
-
 }

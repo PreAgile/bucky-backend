@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(indexes = {@Index(name = "IX_studio_address_1", columnList = "studio_id", unique = false)})
+@Table(indexes = {@Index(name = "IX_studio_address_1", columnList = "studio_id")})
 @Getter @Setter
 public class StudioAddress {
 
