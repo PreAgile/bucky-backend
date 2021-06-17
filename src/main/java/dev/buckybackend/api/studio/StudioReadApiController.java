@@ -1,5 +1,6 @@
 package dev.buckybackend.api.studio;
 
+import dev.buckybackend.domain.MenuBoard;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
@@ -75,6 +76,14 @@ public class StudioReadApiController {
         return new PhoneResult(collect.size(), collect);
     }
 
+    @GetMapping("/api/v1/studios/{id}/menus")
+    public MenuBoardResult getMenus(@PathVariable("id") Long id) {
+        List<MenuBoardDto> collect = studioService.findMenuBoard(id).stream()
+                .map(m -> new MenuBoardDto(m.getProduct_name(), m.getPrice(), m.getDescription()))
+                .collect(Collectors.toList());
+        return new MenuBoardResult(collect.size(), collect);
+    }
+
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
@@ -117,7 +126,7 @@ public class StudioReadApiController {
     @AllArgsConstructor
     static class AddressResult<T> {
         private int count;
-        private T Addresses;
+        private T address;
     }
 
     @Data
@@ -131,7 +140,7 @@ public class StudioReadApiController {
     @AllArgsConstructor
     static class PhoneResult<T> {
         private int count;
-        private T Phones;
+        private T phones;
     }
 
     @Data
@@ -139,5 +148,20 @@ public class StudioReadApiController {
     static class PhoneListDto {
         private String phone;
         private Character is_main;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MenuBoardResult<T> {
+        private int count;
+        private T menu_board;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MenuBoardDto {
+        private String product_name;
+        private int price;
+        private String description;
     }
 }

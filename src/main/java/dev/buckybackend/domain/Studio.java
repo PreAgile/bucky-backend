@@ -74,4 +74,9 @@ public class Studio {
         this.studioPhones.add(studioPhone);
         studioPhone.setStudio(this);
     }
+
+    public void addMenuBoard(MenuBoard menuBoard) {
+        this.menuBoards.add(menuBoard);
+        menuBoard.setStudio(this);
+    }
 }

@@ -1,9 +1,6 @@
 package dev.buckybackend.api.studio;
 
-import dev.buckybackend.domain.Option;
-import dev.buckybackend.domain.Studio;
-import dev.buckybackend.domain.StudioAddress;
-import dev.buckybackend.domain.StudioPhone;
+import dev.buckybackend.domain.*;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -103,6 +100,21 @@ public class StudioCreateApiController {
         return new CreateStudioResponse(studioId);
     }
 
+    @PostMapping("/api/v1/studios/{id}/menus")
+    public CreateStudioResponse saveMenus(@PathVariable("id") Long id,
+                                          @RequestBody @Valid MenuBoardDto[] request) {
+        List<MenuBoard> menuBoardList = new ArrayList<>();
+        for (MenuBoardDto menu : request) {
+            MenuBoard menuBoard = new MenuBoard();
+            menuBoard.setProduct_name(menu.getProduct_name());
+            menuBoard.setPrice(menu.getPrice());
+            menuBoard.setDescription(menu.getDescription());
+            menuBoardList.add(menuBoard);
+        }
+        Long studioId = studioService.addMenuBoard(id, menuBoardList);
+        return new CreateStudioResponse(studioId);
+    }
+
     @Data
     static class CreateStudioRequest {
 
@@ -157,5 +169,15 @@ public class StudioCreateApiController {
     static class PhoneListDto {
         private String phone;
         private Character is_main;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class MenuBoardDto {
+        @NotNull
+        private String product_name;
+        private int price;
+        @NotNull
+        private String description;
     }
 }

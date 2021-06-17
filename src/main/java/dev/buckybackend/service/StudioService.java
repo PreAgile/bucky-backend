@@ -1,5 +1,6 @@
 package dev.buckybackend.service;
 
+import dev.buckybackend.domain.MenuBoard;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.domain.StudioAddress;
 import dev.buckybackend.domain.StudioPhone;
@@ -133,4 +134,21 @@ public class StudioService {
         return findStudio.getStudioPhones();
     }
 
+    //메뉴 정보 등록
+    @Transactional
+    public Long addMenuBoard(Long id, List<MenuBoard> menuBoardList) {
+        Studio findStudio = validateExistStudio(id);
+        for (MenuBoard menuBoard : menuBoardList) {
+            findStudio.addMenuBoard(menuBoard);
+        }
+        return id;
+    }
+
+    //TODO: 메뉴 정보 수정
+
+    //메뉴 정보 조회
+    public List<MenuBoard> findMenuBoard(Long id) {
+        Studio findStudio = validateExistStudio(id);
+        return findStudio.getMenuBoards();
+    }
 }
