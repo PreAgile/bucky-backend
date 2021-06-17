@@ -7,14 +7,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(indexes = {@Index(name = "IX_menu_board_1", columnList = "studio_id")})
 @Getter @Setter
-public class MenuBoard implements Serializable {
+public class MenuBoard {
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_id")
+    @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
+    @Id
     @Column(nullable = false)
     private String product_name;
 

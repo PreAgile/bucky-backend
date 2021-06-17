@@ -4,16 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
+@Table(indexes = {@Index(name = "IX_studio_address_1", columnList = "studio_id")})
 @Getter @Setter
-public class StudioAddress implements Serializable {
+public class StudioAddress {
 
-    @Id
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_id")
+    @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
     @Id
@@ -21,16 +20,4 @@ public class StudioAddress implements Serializable {
 
     private Character is_main;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudioAddress that = (StudioAddress) o;
-        return studio.equals(that.studio) && Objects.equals(address, that.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studio, address);
-    }
 }
