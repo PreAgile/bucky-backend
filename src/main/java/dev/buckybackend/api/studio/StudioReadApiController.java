@@ -47,11 +47,11 @@ public class StudioReadApiController {
                 findStudio.getNaver(),
                 findStudio.getFacebook(),
                 findStudio.getDescription(),
-                findStudio.getOption().getHair_makeup(),
-                findStudio.getOption().getRent_clothes(),
-                findStudio.getOption().getTanning(),
-                findStudio.getOption().getWaxing(),
-                findStudio.getParking(),
+                findStudio.getOption().isHair_makeup(),
+                findStudio.getOption().isRent_clothes(),
+                findStudio.getOption().isTanning(),
+                findStudio.getOption().isWaxing(),
+                findStudio.isParking(),
                 findStudio.getIs_delete());
     }
 
@@ -94,7 +94,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioListDto {
-        private Long id;
+        private Long studio_id;
         private String name;
     }
 
@@ -113,11 +113,11 @@ public class StudioReadApiController {
 
         private String description;
 
-        private Character hair_makeup;
-        private Character rent_clothes;
-        private Character tanning;
-        private Character waxing;
-        private Character parking;
+        private boolean hair_makeup;
+        private boolean rent_clothes;
+        private boolean tanning;
+        private boolean waxing;
+        private boolean parking;
 
         private Character is_deleted;
     }

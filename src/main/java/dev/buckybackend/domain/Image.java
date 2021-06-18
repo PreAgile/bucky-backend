@@ -1,9 +1,7 @@
 package dev.buckybackend.domain;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,7 +27,7 @@ public class Image {
     private Color color;
 
     @Column(nullable = false)
-    private Character outdoor;
+    private boolean outdoor;
 
     @Column(nullable = false)
     private String image_url;

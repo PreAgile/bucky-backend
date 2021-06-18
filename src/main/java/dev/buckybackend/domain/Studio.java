@@ -30,7 +30,7 @@ public class Studio {
     private Option option;
 
     @Column(nullable = false)
-    private Character parking;
+    private boolean parking;
 
     @Column(columnDefinition = "TEXT")
     private String description;

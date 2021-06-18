@@ -28,7 +28,7 @@ public class ImageCreateApiController {
         image.setPeople_num(request.getPeople_num());
         image.setSex(request.getSex());
         image.setColor(request.getColor());
-        image.setOutdoor(request.getOutdoor());
+        image.setOutdoor(request.isOutdoor());
         image.setImage_url(request.getImage_url());
 
         image.setCreate_time(LocalDateTime.now());
@@ -47,8 +47,7 @@ public class ImageCreateApiController {
         private Sex sex;
         @NotNull
         private Color color;
-        @NotNull
-        private Character outdoor;
+        private boolean outdoor;
         @NotEmpty
         private String image_url;
         @NotNull
@@ -61,10 +60,10 @@ public class ImageCreateApiController {
 
     @Data
     static class CreateImageResponse {
-        private Long id;
+        private Long image_id;
 
-        public CreateImageResponse(Long id) {
-            this.id = id;
+        public CreateImageResponse(Long image_id) {
+            this.image_id = image_id;
         }
     }
 }
