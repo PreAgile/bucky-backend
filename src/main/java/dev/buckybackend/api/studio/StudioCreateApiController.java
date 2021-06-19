@@ -44,13 +44,13 @@ public class StudioCreateApiController {
         studio.setDescription(request.getDescription());
 
         Option option = new Option();
-        option.setHair_makeup(request.getHair_makeup());
-        option.setRent_clothes(request.getRent_clothes());
-        option.setTanning(request.getTanning());
-        option.setWaxing(request.getWaxing());
+        option.setHair_makeup(request.isHair_makeup());
+        option.setRent_clothes(request.isRent_clothes());
+        option.setTanning(request.isTanning());
+        option.setWaxing(request.isWaxing());
 
         studio.setOption(option);
-        studio.setParking(request.getParking());
+        studio.setParking(request.isParking());
 
         studio.setCreate_time(LocalDateTime.now());
         studio.setUpdate_time(LocalDateTime.now());
@@ -131,16 +131,11 @@ public class StudioCreateApiController {
 
         private String description;
 
-        @NotNull
-        private Character hair_makeup;
-        @NotNull
-        private Character rent_clothes;
-        @NotNull
-        private Character tanning;
-        @NotNull
-        private Character waxing;
-        @NotNull
-        private Character parking;
+        private boolean hair_makeup; //getter isHair_makeup
+        private boolean rent_clothes;
+        private boolean tanning;
+        private boolean waxing;
+        private boolean parking;
 
         private LocalDateTime create_time;
 
@@ -149,10 +144,10 @@ public class StudioCreateApiController {
 
     @Data
     static class CreateStudioResponse {
-        private Long id;
+        private Long studio_id;
 
-        public CreateStudioResponse(Long id) {
-            this.id = id;
+        public CreateStudioResponse(Long studio_id) {
+            this.studio_id = studio_id;
         }
     }
 

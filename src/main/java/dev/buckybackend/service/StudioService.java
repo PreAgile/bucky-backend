@@ -47,7 +47,7 @@ public class StudioService {
         findStudio.setDescription(studio.getDescription());
 
         findStudio.setOption(studio.getOption());
-        findStudio.setParking(studio.getParking());
+        findStudio.setParking(studio.isParking());
 
         findStudio.setUpdate_time(studio.getUpdate_time());
     }

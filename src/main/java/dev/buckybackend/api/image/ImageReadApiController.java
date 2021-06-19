@@ -34,7 +34,7 @@ public class ImageReadApiController {
     @Data
     @AllArgsConstructor
     static class ImageListDto {
-        private Long id;
+        private Long image_id;
         private Long studio_id;
         private String image_url;
     }
