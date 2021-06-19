@@ -27,7 +27,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id")
     private Studio studio;
 
