@@ -17,7 +17,7 @@ import java.util.List;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue //Kakao 회원 번호로 대체(TODO: 추후 논의 필요)
     @Column(name = "user_id")
     private Long id;
 
