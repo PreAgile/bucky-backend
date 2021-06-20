@@ -46,6 +46,7 @@ public class LoginController {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getRole(),
                 profile.getThumbnail_image_url(),
                 profile.getProfile_image_url()
         );
@@ -57,6 +58,7 @@ public class LoginController {
         private Long user_id;
         private String name;
         private String email;
+        private Role role;
         private String thumbnail_image_url;
         private String profile_image_url;
     }
