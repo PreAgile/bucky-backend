@@ -39,7 +39,7 @@ public class StudioCreateApiController {
         studio.setHomepage(request.getHomepage());
         studio.setInstagram(request.getInstagram());
         studio.setNaver(request.getNaver());
-        studio.setFacebook(request.getFacebook());
+        studio.setKakao(request.getKakao());
 
         studio.setDescription(request.getDescription());
 
@@ -127,7 +127,7 @@ public class StudioCreateApiController {
         private String homepage;
         private String instagram;
         private String naver;
-        private String facebook;
+        private String kakao;
 
         private String description;
 
