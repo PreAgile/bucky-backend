@@ -1,6 +1,5 @@
 package dev.buckybackend.api.studio;
 
-import dev.buckybackend.domain.MenuBoard;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
@@ -45,7 +44,7 @@ public class StudioReadApiController {
                 findStudio.getHomepage(),
                 findStudio.getInstagram(),
                 findStudio.getNaver(),
-                findStudio.getFacebook(),
+                findStudio.getKakao(),
                 findStudio.getDescription(),
                 findStudio.getOption().isHair_makeup(),
                 findStudio.getOption().isRent_clothes(),
@@ -109,7 +108,7 @@ public class StudioReadApiController {
         private String homepage;
         private String instagram;
         private String naver;
-        private String facebook;
+        private String kakao;
 
         private String description;
 

@@ -41,7 +41,7 @@ public class Studio {
 
     private String naver;
 
-    private String facebook;
+    private String kakao;
 
     private LocalDateTime create_time;
 

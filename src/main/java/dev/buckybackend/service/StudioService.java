@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -42,7 +40,7 @@ public class StudioService {
         findStudio.setHomepage(studio.getHomepage());
         findStudio.setInstagram(studio.getInstagram());
         findStudio.setName(studio.getName());
-        findStudio.setFacebook(studio.getFacebook());
+        findStudio.setKakao(studio.getKakao());
 
         findStudio.setDescription(studio.getDescription());
 
