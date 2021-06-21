@@ -7,8 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -41,12 +41,12 @@ public class UserServiceImplTest {
         studio.setMax_price(100);
         studio.setIs_delete('N');
         Option options = new Option();
-        options.setHair_makeup('N');
-        options.setRent_clothes('N');
-        options.setTanning('N');
-        options.setWaxing('N');
+        options.setHair_makeup(false);
+        options.setRent_clothes(false);
+        options.setTanning(false);
+        options.setWaxing(false);
         studio.setOption(options);
-        studio.setParking('N');
+        studio.setParking(false);
         studio.setDescription("HAHAHAHA");
         studio.setIs_delete('N');
 
@@ -55,7 +55,7 @@ public class UserServiceImplTest {
         image.setPeople_num(PeopleNum.MANY);
         image.setSex(Sex.F);
         image.setColor(Color.ACHROMATIC);
-        image.setOutdoor('Y');
+        image.setOutdoor(true);
         image.setImage_url("www.bucky.com");
         image.setStudio(studio);
         image.setIs_delete('N');
@@ -64,6 +64,7 @@ public class UserServiceImplTest {
 
         //유저1 세팅
         user1 = new User();
+        user1.setId(1L);
         user1.setCreate_time(LocalDateTime.now());
         user1.setName("테스트1");
         user1.setEmail("test1@naver.com");
@@ -74,6 +75,7 @@ public class UserServiceImplTest {
 
         //유저2 세팅
         user2 = new User();
+        user2.setId(2L);
         user2.setCreate_time(LocalDateTime.now());
         user2.setName("테스트2");
         user2.setEmail("test2@naver.com");
@@ -136,6 +138,7 @@ public class UserServiceImplTest {
     @Test
     @DisplayName("둘이상의 유저를 조회한다")
     void getAllUsers() {
+        // Error!!
         userRepository.save(user1);
         userRepository.save(user2);
 

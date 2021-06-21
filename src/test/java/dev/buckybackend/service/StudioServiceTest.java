@@ -7,15 +7,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,14 +33,15 @@ public class StudioServiceTest {
         studio.setName("버키스튜디오");
 
         Option options = new Option();
-        options.setHair_makeup(true);
-        options.setRent_clothes(true);
-        options.setTanning(true);
-        options.setWaxing(true);
+
+        options.setHair_makeup(false);
+        options.setRent_clothes(false);
+        options.setTanning(false);
+        options.setWaxing(false);
         studio.setOption(options);
 
         studio.setParking(true);
-        studio.setIs_delete('N');
+        studio.setIs_delete('Y');
 
         studio.setCreate_time(LocalDateTime.now());
         studio.setUpdate_time(LocalDateTime.now());

@@ -1,6 +1,8 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.domain.StudioPhone;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,11 +22,11 @@ public class StudioReadApiController {
     private final StudioService studioService;
 
     /**
-     * 전체 스튜디오 조회
+     * 전체 스튜디오 조회(Paging)
      * @return
      */
-    @GetMapping("/api/v1/studios")
-    public StudioResult getStudios() {
+    @GetMapping("/api/v1/studios/page/{count}")
+    public StudioResult getStudios(@PathVariable("count") Integer count) {
         List<Studio> findStudio = studioService.findStudios();
 
         List<StudioListDto> collect = findStudio.stream()
@@ -46,7 +48,10 @@ public class StudioReadApiController {
                         m.getIs_release()
                 ))
                 .collect(Collectors.toList());
-        return new StudioResult(collect.size(), collect);
+
+        Integer lastPage = calculateLastPage(collect.size(), count);
+
+        return new StudioResult(lastPage ,count, collect);
     }
 
     /**
@@ -105,6 +110,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
+        private int lastPage;
         private int count;
         private T studios;
     }
@@ -187,5 +193,20 @@ public class StudioReadApiController {
         private String product_name;
         private int price;
         private String description;
+    }
+
+    public Integer calculateLastPage(int collectSize, int count) {
+        int portion = collectSize / count;
+        int rest = collectSize % count;
+        int lastPage;
+        // Paging 계산
+        if(rest != 0 && rest != collectSize) {
+            lastPage = portion + 1;
+        } else if(portion == 1 || count == 1){
+            lastPage = portion;
+        } else {
+            throw new ArithmeticException("계산되지 않는 값입니다.");
+        }
+        return lastPage;
     }
 }
