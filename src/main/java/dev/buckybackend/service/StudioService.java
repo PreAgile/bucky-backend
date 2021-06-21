@@ -1,15 +1,14 @@
 package dev.buckybackend.service;
 
-import dev.buckybackend.domain.MenuBoard;
-import dev.buckybackend.domain.Studio;
-import dev.buckybackend.domain.StudioAddress;
-import dev.buckybackend.domain.StudioPhone;
+import dev.buckybackend.domain.*;
 import dev.buckybackend.repository.StudioRepository;
+import dev.buckybackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,18 +16,22 @@ import java.util.List;
 public class StudioService {
 
     private final StudioRepository studioRepository;
+    private final UserRepository userRepository;
 
     //스튜디오 등록
     @Transactional
-    public Long register(Studio studio) {
+    public Long register(Studio studio, Long userId) {
         validateDuplicateStudio(studio);
+        Optional<User> findUser = userRepository.findById(userId);
+
         studioRepository.save(studio);
+        findUser.ifPresent(u -> studio.setUser(u));
         return studio.getId();
     }
 
     //스튜디오 수정
     @Transactional
-    public void update(Long studioId, Studio studio) {
+    public void update(Long studioId, Studio studio, Long userId) {
         validateDuplicateStudioExceptId(studio, studioId);
         Studio findStudio = validateExistStudio(studioId);
 
@@ -48,6 +51,9 @@ public class StudioService {
         findStudio.setParking(studio.isParking());
 
         findStudio.setUpdate_time(studio.getUpdate_time());
+
+        Optional<User> findUser = userRepository.findById(userId);
+        findUser.ifPresent(u -> findStudio.setUser(u));
     }
 
     //스튜디오 삭제(비활성화)

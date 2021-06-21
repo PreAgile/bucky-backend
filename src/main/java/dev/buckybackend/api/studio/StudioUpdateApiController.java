@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @RestController
@@ -47,7 +48,7 @@ public class StudioUpdateApiController {
 
         studio.setUpdate_time(LocalDateTime.now());
 
-        studioService.update(id, studio);
+        studioService.update(id, studio, request.getUser_id());
 
         Studio findStudio = studioService.findStudio(id);
         return new UpdateStudioResponse(findStudio.getId(), findStudio.getName());
@@ -57,6 +58,8 @@ public class StudioUpdateApiController {
     static class UpdateStudioRequest {
         @NotEmpty
         private String name;
+        @NotNull
+        private Long user_id;
 
         private int min_price;
         private int max_price;

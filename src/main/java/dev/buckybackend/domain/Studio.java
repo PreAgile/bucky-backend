@@ -64,6 +64,9 @@ public class Studio {
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
     private List<MenuBoard> menuBoards = new ArrayList<>();
 
+    @OneToOne(mappedBy = "studio")
+    private User user = new User();
+
     /** 연관 관계 메서드 **/
     public void addStudioAddresses(StudioAddress studioAddress) {
         this.studioAddresses.add(studioAddress);
@@ -78,5 +81,10 @@ public class Studio {
     public void addMenuBoard(MenuBoard menuBoard) {
         this.menuBoards.add(menuBoard);
         menuBoard.setStudio(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.setStudio(this);
     }
 }

@@ -33,6 +33,7 @@ public class StudioServiceTest {
         studio.setName("버키스튜디오");
 
         Option options = new Option();
+
         options.setHair_makeup(false);
         options.setRent_clothes(false);
         options.setTanning(false);
@@ -46,7 +47,7 @@ public class StudioServiceTest {
         studio.setUpdate_time(LocalDateTime.now());
 
         //when
-        Long saveId = studioService.register(studio);
+        Long saveId = studioService.register(studio, 7L);
 
         //then
         assertEquals(studio, studioRepository.findOne(saveId));
@@ -83,8 +84,8 @@ public class StudioServiceTest {
         studio2.setIs_delete('Y');
 
         //when
-        studioService.register(studio1);
-        studioService.register(studio2); //exception
+        studioService.register(studio1, 1L);
+        studioService.register(studio2, 2L); //exception
 
         //then
         fail("예외가 발생해야 한다.");

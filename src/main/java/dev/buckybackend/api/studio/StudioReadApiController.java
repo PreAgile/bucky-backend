@@ -27,11 +27,26 @@ public class StudioReadApiController {
      */
     @GetMapping("/api/v1/studios/page/{count}")
     public StudioResult getStudios(@PathVariable("count") Integer count) {
-        List<StudioListDto> collect = studioService.findStudios().stream()
-                .map(s -> new StudioListDto(s.getId(), s.getName(), s.getImages().size()
-                        , s.getStudioAddresses().stream().map(sa -> sa.getAddress()).collect(Collectors.toList())
-                        , s.getStudioPhones().stream().map(sp -> sp.getPhone()).collect(Collectors.toList())
-                        , s.getCreate_time(), s.getUpdate_time(), s.getUpdate_time()))
+        List<Studio> findStudio = studioService.findStudios();
+
+        List<StudioListDto> collect = findStudio.stream()
+                .filter(f -> f.getIs_delete() == 'N')
+                .map(m -> new StudioListDto(
+                        m.getId(),
+                        m.getName(),
+                        m.getStudioAddresses().stream()
+                                .filter(a -> a.getIs_main() == 'Y')
+                                .map(o -> o.getAddress())
+                                .collect(Collectors.joining("")),
+                        m.getStudioPhones().stream()
+                                .filter(a -> a.getIs_main() == 'Y')
+                                .map(o -> o.getPhone())
+                                .collect(Collectors.joining("")),
+                        m.getImages().size(),
+                        m.getCreate_time(),
+                        m.getUpdate_time(),
+                        m.getIs_release()
+                ))
                 .collect(Collectors.toList());
 
         Integer lastPage = calculateLastPage(collect.size(), count);
@@ -105,12 +120,12 @@ public class StudioReadApiController {
     static class StudioListDto {
         private Long studio_id;
         private String name;
-        private int totalImages;
-        private List<String> address;
-        private List<String> phonenumber;
-        private LocalDateTime created_at;
-        private LocalDateTime updated_at;
-        private LocalDateTime uploaded_at;
+        private String address;
+        private String phone;
+        private int total_images;
+        private LocalDateTime create_time;
+        private LocalDateTime update_time;
+        private Character is_release;
     }
 
     @Data
