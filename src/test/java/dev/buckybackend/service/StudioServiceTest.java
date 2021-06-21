@@ -7,15 +7,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -35,13 +33,13 @@ public class StudioServiceTest {
         studio.setName("버키스튜디오");
 
         Option options = new Option();
-        options.setHair_makeup('N');
-        options.setRent_clothes('N');
-        options.setTanning('N');
-        options.setWaxing('N');
+        options.setHair_makeup(false);
+        options.setRent_clothes(false);
+        options.setTanning(false);
+        options.setWaxing(false);
         studio.setOption(options);
 
-        studio.setParking('Y');
+        studio.setParking(true);
         studio.setIs_delete('Y');
 
         studio.setCreate_time(LocalDateTime.now());
@@ -63,25 +61,25 @@ public class StudioServiceTest {
         studio1.setName("버키스튜디오");
 
         Option options1 = new Option();
-        options1.setHair_makeup('N');
-        options1.setRent_clothes('N');
-        options1.setTanning('N');
-        options1.setWaxing('N');
+        options1.setHair_makeup(false);
+        options1.setRent_clothes(false);
+        options1.setTanning(false);
+        options1.setWaxing(false);
         studio1.setOption(options1);
 
-        studio1.setParking('Y');
+        studio1.setParking(true);
         studio1.setIs_delete('Y');
         //----
         studio2.setName("버키스튜디오");
 
         Option options2 = new Option();
-        options2.setHair_makeup('N');
-        options2.setRent_clothes('N');
-        options2.setTanning('N');
-        options2.setWaxing('N');
+        options2.setHair_makeup(false);
+        options2.setRent_clothes(false);
+        options2.setTanning(false);
+        options2.setWaxing(false);
         studio2.setOption(options2);
 
-        studio2.setParking('Y');
+        studio2.setParking(true);
         studio2.setIs_delete('Y');
 
         //when
