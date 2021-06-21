@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,26 @@ public class StudioReadApiController {
      */
     @GetMapping("/api/v1/studios")
     public StudioResult getStudios() {
-        List<StudioListDto> collect = studioService.findStudios().stream()
-                .map(m -> new StudioListDto(m.getId(), m.getName()))
+        List<Studio> findStudio = studioService.findStudios();
+
+        List<StudioListDto> collect = findStudio.stream()
+                .filter(f -> f.getIs_delete() == 'N')
+                .map(m -> new StudioListDto(
+                        m.getId(),
+                        m.getName(),
+                        m.getStudioAddresses().stream()
+                                .filter(a -> a.getIs_main() == 'Y')
+                                .map(o -> o.getAddress())
+                                .collect(Collectors.joining("")),
+                        m.getStudioPhones().stream()
+                                .filter(a -> a.getIs_main() == 'Y')
+                                .map(o -> o.getPhone())
+                                .collect(Collectors.joining("")),
+                        m.getImages().size(),
+                        m.getCreate_time(),
+                        m.getUpdate_time(),
+                        m.getIs_release()
+                ))
                 .collect(Collectors.toList());
         return new StudioResult(collect.size(), collect);
     }
@@ -95,6 +114,12 @@ public class StudioReadApiController {
     static class StudioListDto {
         private Long studio_id;
         private String name;
+        private String address;
+        private String phone;
+        private int total_images;
+        private LocalDateTime create_time;
+        private LocalDateTime update_time;
+        private Character is_release;
     }
 
     @Data
