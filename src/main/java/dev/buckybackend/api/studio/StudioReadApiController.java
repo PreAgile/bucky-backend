@@ -19,15 +19,21 @@ public class StudioReadApiController {
     private final StudioService studioService;
 
     /**
-     * 전체 스튜디오 조회
+     * 전체 스튜디오 조회(Paging)
      * @return
      */
-    @GetMapping("/api/v1/studios")
-    public StudioResult getStudios() {
-        List<StudioListDto> collect = studioService.findStudios().stream()
-                .map(m -> new StudioListDto(m.getId(), m.getName()))
+    @GetMapping("/api/v1/studios/page/{count}")
+    public StudioResult getStudios(@PathVariable("count") Integer count) {
+        List<StudioDto> collect = studioService.findStudios().stream()
+                .map(s -> new StudioDto(s.getId(),s.getName(), s.getMin_price(), s.getMax_price()
+                        , s.getHomepage(), s.getInstagram(), s.getNaver(), s.getKakao(), s.getDescription()
+                        , s.getOption().isHair_makeup(), s.getOption().isRent_clothes(), s.getOption().isTanning()
+                        , s.getOption().isWaxing(), s.isParking(), s.getIs_delete(), s.getImages().size()))
                 .collect(Collectors.toList());
-        return new StudioResult(collect.size(), collect);
+
+        Integer lastPage = calculateLastPage(collect.size(), count);
+
+        return new StudioResult(lastPage ,count, collect);
     }
 
     /**
@@ -38,7 +44,8 @@ public class StudioReadApiController {
     @GetMapping("/api/v1/studios/{id}")
     public StudioDto getStudio(@PathVariable("id") Long id) {
         Studio findStudio = studioService.findStudio(id);
-        return new StudioDto(findStudio.getName(),
+        return new StudioDto(findStudio.getId(),
+                findStudio.getName(),
                 findStudio.getMin_price(),
                 findStudio.getMax_price(),
                 findStudio.getHomepage(),
@@ -51,7 +58,8 @@ public class StudioReadApiController {
                 findStudio.getOption().isTanning(),
                 findStudio.getOption().isWaxing(),
                 findStudio.isParking(),
-                findStudio.getIs_delete());
+                findStudio.getIs_delete(),
+                findStudio.getImages().size());
     }
 
     /**
@@ -86,6 +94,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
+        private int lastPage;
         private int count;
         private T studios;
     }
@@ -100,6 +109,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioDto {
+        private Long Id;
         private String name;
 
         private int min_price;
@@ -119,6 +129,8 @@ public class StudioReadApiController {
         private boolean parking;
 
         private Character is_deleted;
+        // 총 이미지 개수 추가
+        private int totalImages;
     }
 
     @Data
@@ -162,5 +174,20 @@ public class StudioReadApiController {
         private String product_name;
         private int price;
         private String description;
+    }
+
+    public Integer calculateLastPage(int collectSize, int count) {
+        int portion = collectSize / count;
+        int rest = collectSize % count;
+        int lastPage;
+        // Paging 계산
+        if(rest != 0 && rest != collectSize) {
+            lastPage = portion + 1;
+        } else if(portion == 1 || count == 1){
+            lastPage = portion;
+        } else {
+            throw new ArithmeticException("계산되지 않는 값입니다.");
+        }
+        return lastPage;
     }
 }
