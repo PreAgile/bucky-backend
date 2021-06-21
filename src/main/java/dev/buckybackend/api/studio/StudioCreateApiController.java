@@ -56,7 +56,7 @@ public class StudioCreateApiController {
         studio.setUpdate_time(LocalDateTime.now());
         studio.setIs_delete('N'); //생성할 때는 Default N
 
-        Long id = studioService.register(studio);
+        Long id = studioService.register(studio, request.getUser_id());
         return new CreateStudioResponse(id);
     }
 
@@ -120,6 +120,8 @@ public class StudioCreateApiController {
 
         @NotEmpty
         private String name;
+        @NotNull
+        private Long user_id;
 
         private int min_price;
         private int max_price;

@@ -35,20 +35,20 @@ public class StudioServiceTest {
         studio.setName("버키스튜디오");
 
         Option options = new Option();
-        options.setHair_makeup('N');
-        options.setRent_clothes('N');
-        options.setTanning('N');
-        options.setWaxing('N');
+        options.setHair_makeup(true);
+        options.setRent_clothes(true);
+        options.setTanning(true);
+        options.setWaxing(true);
         studio.setOption(options);
 
-        studio.setParking('Y');
-        studio.setIs_delete('Y');
+        studio.setParking(true);
+        studio.setIs_delete('N');
 
         studio.setCreate_time(LocalDateTime.now());
         studio.setUpdate_time(LocalDateTime.now());
 
         //when
-        Long saveId = studioService.register(studio);
+        Long saveId = studioService.register(studio, 7L);
 
         //then
         assertEquals(studio, studioRepository.findOne(saveId));
@@ -63,30 +63,30 @@ public class StudioServiceTest {
         studio1.setName("버키스튜디오");
 
         Option options1 = new Option();
-        options1.setHair_makeup('N');
-        options1.setRent_clothes('N');
-        options1.setTanning('N');
-        options1.setWaxing('N');
+        options1.setHair_makeup(false);
+        options1.setRent_clothes(false);
+        options1.setTanning(false);
+        options1.setWaxing(false);
         studio1.setOption(options1);
 
-        studio1.setParking('Y');
+        studio1.setParking(true);
         studio1.setIs_delete('Y');
         //----
         studio2.setName("버키스튜디오");
 
         Option options2 = new Option();
-        options2.setHair_makeup('N');
-        options2.setRent_clothes('N');
-        options2.setTanning('N');
-        options2.setWaxing('N');
+        options2.setHair_makeup(false);
+        options2.setRent_clothes(false);
+        options2.setTanning(false);
+        options2.setWaxing(false);
         studio2.setOption(options2);
 
-        studio2.setParking('Y');
+        studio2.setParking(true);
         studio2.setIs_delete('Y');
 
         //when
-        studioService.register(studio1);
-        studioService.register(studio2); //exception
+        studioService.register(studio1, 1L);
+        studioService.register(studio2, 2L); //exception
 
         //then
         fail("예외가 발생해야 한다.");
