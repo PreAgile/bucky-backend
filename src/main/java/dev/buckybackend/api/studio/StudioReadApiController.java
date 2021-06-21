@@ -1,6 +1,8 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.domain.StudioPhone;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +27,11 @@ public class StudioReadApiController {
      */
     @GetMapping("/api/v1/studios/page/{count}")
     public StudioResult getStudios(@PathVariable("count") Integer count) {
-        List<StudioDto> collect = studioService.findStudios().stream()
-                .map(s -> new StudioDto(s.getId(),s.getName(), s.getMin_price(), s.getMax_price()
-                        , s.getHomepage(), s.getInstagram(), s.getNaver(), s.getKakao(), s.getDescription()
-                        , s.getOption().isHair_makeup(), s.getOption().isRent_clothes(), s.getOption().isTanning()
-                        , s.getOption().isWaxing(), s.isParking(), s.getIs_delete(), s.getImages().size()))
+        List<StudioListDto> collect = studioService.findStudios().stream()
+                .map(s -> new StudioListDto(s.getId(), s.getName(), s.getImages().size()
+                        , s.getStudioAddresses().stream().map(sa -> sa.getAddress()).collect(Collectors.toList())
+                        , s.getStudioPhones().stream().map(sp -> sp.getPhone()).collect(Collectors.toList())
+                        , s.getCreate_time(), s.getUpdate_time(), s.getUpdate_time()))
                 .collect(Collectors.toList());
 
         Integer lastPage = calculateLastPage(collect.size(), count);
@@ -44,8 +47,7 @@ public class StudioReadApiController {
     @GetMapping("/api/v1/studios/{id}")
     public StudioDto getStudio(@PathVariable("id") Long id) {
         Studio findStudio = studioService.findStudio(id);
-        return new StudioDto(findStudio.getId(),
-                findStudio.getName(),
+        return new StudioDto(findStudio.getName(),
                 findStudio.getMin_price(),
                 findStudio.getMax_price(),
                 findStudio.getHomepage(),
@@ -58,8 +60,7 @@ public class StudioReadApiController {
                 findStudio.getOption().isTanning(),
                 findStudio.getOption().isWaxing(),
                 findStudio.isParking(),
-                findStudio.getIs_delete(),
-                findStudio.getImages().size());
+                findStudio.getIs_delete());
     }
 
     /**
@@ -104,12 +105,17 @@ public class StudioReadApiController {
     static class StudioListDto {
         private Long studio_id;
         private String name;
+        private int totalImages;
+        private List<String> address;
+        private List<String> phonenumber;
+        private LocalDateTime created_at;
+        private LocalDateTime updated_at;
+        private LocalDateTime uploaded_at;
     }
 
     @Data
     @AllArgsConstructor
     static class StudioDto {
-        private Long Id;
         private String name;
 
         private int min_price;
@@ -129,8 +135,6 @@ public class StudioReadApiController {
         private boolean parking;
 
         private Character is_deleted;
-        // 총 이미지 개수 추가
-        private int totalImages;
     }
 
     @Data
