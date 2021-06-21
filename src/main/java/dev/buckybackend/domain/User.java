@@ -39,6 +39,7 @@ public class User implements Serializable {
     private LocalDateTime recent_login_time;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     @ManyToMany
