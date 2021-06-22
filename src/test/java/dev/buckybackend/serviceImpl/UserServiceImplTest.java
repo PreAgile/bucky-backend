@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -61,27 +60,27 @@ public class UserServiceImplTest {
         image.setStudio(studio);
         image.setIs_delete('N');
         image.setIs_release('N');
-        image.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        image.setCreate_time(LocalDateTime.now());
 
         //유저1 세팅
         user1 = new User();
         user1.setId(1L);
-        user1.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        user1.setCreate_time(LocalDateTime.now());
         user1.setName("테스트1");
         user1.setEmail("test1@naver.com");
         user1.setMemo("테스트1 유저");
-        user1.setRecent_login_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        user1.setRecent_login_time(LocalDateTime.now());
         user1.setRole(Role.USER);
         user1.setStudio(studio);
 
         //유저2 세팅
         user2 = new User();
         user2.setId(2L);
-        user2.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        user2.setCreate_time(LocalDateTime.now());
         user2.setName("테스트2");
         user2.setEmail("test2@naver.com");
         user2.setMemo("테스트2 유저");
-        user2.setRecent_login_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        user2.setRecent_login_time(LocalDateTime.now());
         user2.setRole(Role.USER);
         user2.setStudio(studio);
     }
@@ -109,10 +108,10 @@ public class UserServiceImplTest {
         Long originUserId = saveUser.getId();
 
         saveUser.setName("바뀐 유저");
-        saveUser.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        saveUser.setCreate_time(LocalDateTime.now());
         saveUser.setEmail("changeUser@naver.com");
         saveUser.setMemo("테스트로 바뀐 유저");
-        saveUser.setRecent_login_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        saveUser.setRecent_login_time(LocalDateTime.now());
         saveUser.setRole(Role.MANAGER);
         saveUser.setStudio(studio);
 
