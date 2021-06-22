@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -43,8 +44,8 @@ public class StudioServiceTest {
         studio.setParking(true);
         studio.setIs_delete('Y');
 
-        studio.setCreate_time(LocalDateTime.now());
-        studio.setUpdate_time(LocalDateTime.now());
+        studio.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        studio.setUpdate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
 
         //when
         Long saveId = studioService.register(studio, 7L);

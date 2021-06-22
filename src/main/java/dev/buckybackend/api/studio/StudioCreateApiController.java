@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,8 +54,8 @@ public class StudioCreateApiController {
         studio.setOption(option);
         studio.setParking(request.isParking());
 
-        studio.setCreate_time(LocalDateTime.now());
-        studio.setUpdate_time(LocalDateTime.now());
+        studio.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        studio.setUpdate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         studio.setIs_delete('N'); //생성할 때는 Default N
 
         Long id = studioService.register(studio, request.getUser_id());

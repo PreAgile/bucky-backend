@@ -34,10 +34,10 @@ public class LoginController {
         user.setName(profile.getNickname());
         user.setEmail(kakaoAccount.getEmail());
 
-        DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
+        DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.of("Asia/Seoul"));
         LocalDateTime connected_time = LocalDateTime.parse(userResult.getConnected_at(), dtf);
         user.setCreate_time(connected_time);
-        user.setRecent_login_time(LocalDateTime.now());
+        user.setRecent_login_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         user.setRole(Role.MANAGER);
 
         userService.saveUser(user);

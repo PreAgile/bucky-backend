@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,8 +32,8 @@ public class ImageCreateApiController {
         image.setOutdoor(request.isOutdoor());
         image.setImage_url(request.getImage_url());
 
-        image.setCreate_time(LocalDateTime.now());
-        image.setUpdate_time(LocalDateTime.now());
+        image.setCreate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        image.setUpdate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         image.setIs_delete('N');
 
         Long id = imageService.upload(image, request.getStudio_id());
