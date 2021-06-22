@@ -17,7 +17,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +50,7 @@ public class StudioUpdateApiController {
         studio.setOption(option);
         studio.setParking(request.isParking());
 
-        studio.setUpdate_time(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
+        studio.setUpdate_time(LocalDateTime.now());
 
         studioService.update(id, studio, request.getUser_id());
 
