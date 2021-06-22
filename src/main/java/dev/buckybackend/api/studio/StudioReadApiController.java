@@ -188,21 +188,18 @@ public class StudioReadApiController {
     }
 
     public Integer calculateLastPage(int collectSize, int count) {
-        if (collectSize == 0) return 0;
-        if (count == 0) throw new ArithmeticException("계산되지 않는 값입니다.");
+        if (collectSize == 0 || count == 0) return 0;
 
         int portion = collectSize / count;
         int rest = collectSize % count;
-        int lastPage;
+        int lastPage = portion;
         // Paging 계산
-        if(rest != 0 && rest != collectSize) {
+        if (rest != 0 && rest != collectSize) {
             lastPage = portion + 1;
-        } else if(portion == 1 || count == 1){
+        } else if (portion == 1 || count == 1){
             lastPage = portion;
-        } else if(count > collectSize) {
+        } else if (count > collectSize) {
             lastPage = 1;
-        } else {
-            throw new ArithmeticException("계산되지 않는 값입니다.");
         }
         return lastPage;
     }
