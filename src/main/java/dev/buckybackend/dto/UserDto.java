@@ -7,10 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +24,6 @@ public class UserDto {
     private String email;
     private Studio studio;
     private String memo;
-    private LocalDateTime create_time;
-    private LocalDateTime recent_login_time;
     private Role role;
     private List<Image> images = new ArrayList<>();
 }

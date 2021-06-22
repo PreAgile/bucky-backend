@@ -36,8 +36,6 @@ public class LoginController {
 
         DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
         LocalDateTime connected_time = LocalDateTime.parse(userResult.getConnected_at(), dtf);
-        user.setCreate_time(connected_time);
-        user.setRecent_login_time(LocalDateTime.now());
         user.setRole(Role.MANAGER);
 
         userService.saveUser(user);

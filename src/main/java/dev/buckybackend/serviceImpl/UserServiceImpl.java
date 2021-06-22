@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getById(id);
+        User user = userRepository.getById(id);
+        user.setRecent_login_time(LocalDateTime.now());
+        return user;
     }
 
     @Override
@@ -29,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        // 차후에 유저변경을 어떻게 할건지 논의해야됨.
         saveUser(user);
     }
 

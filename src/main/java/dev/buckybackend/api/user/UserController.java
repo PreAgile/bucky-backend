@@ -28,8 +28,6 @@ public class UserController {
                     user.getEmail(),
                     user.getStudio(),
                     user.getMemo(),
-                    user.getCreate_time(),
-                    user.getRecent_login_time(),
                     user.getRole(),
                     user.getImages()
             );
