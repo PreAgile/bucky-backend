@@ -2,6 +2,8 @@ package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.dto.AddressListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +17,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,7 +55,21 @@ public class StudioUpdateApiController {
         studioService.update(id, studio, request.getUser_id());
 
         Studio findStudio = studioService.findStudio(id);
-        return new UpdateStudioResponse(findStudio.getId(), findStudio.getName());
+        return new UpdateStudioResponse(findStudio.getId());
+    }
+
+    @PutMapping("/api/v1/studios/{id}/addresses")
+    public UpdateStudioResponse updateAddresses(@PathVariable("id") Long id,
+                                                @RequestBody @Valid AddressListDto[] request) {
+        List<StudioAddress> studioAddressList = new ArrayList<>();
+        for (AddressListDto address : request) {
+            StudioAddress studioAddress = new StudioAddress();
+            studioAddress.setAddress(address.getAddress());
+            studioAddress.setIs_main(address.getIs_main());
+            studioAddressList.add(studioAddress);
+        }
+        Long studioId = studioService.updateStudioAddresses(id, studioAddressList);
+        return new UpdateStudioResponse(studioId);
     }
 
     @Data
@@ -84,7 +102,6 @@ public class StudioUpdateApiController {
     @AllArgsConstructor
     static class UpdateStudioResponse {
         private Long studio_id;
-        private String name;
     }
 
 }

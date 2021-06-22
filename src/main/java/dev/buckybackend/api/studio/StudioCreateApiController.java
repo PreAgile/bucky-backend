@@ -1,6 +1,7 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.*;
+import dev.buckybackend.dto.AddressListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -154,12 +155,7 @@ public class StudioCreateApiController {
     }
 
 
-    @Data
-    @AllArgsConstructor
-    static class AddressListDto {
-        private String address;
-        private Character is_main;
-    }
+
 
     @Data
     @AllArgsConstructor

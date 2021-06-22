@@ -1,6 +1,7 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.dto.AddressListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -155,13 +156,6 @@ public class StudioReadApiController {
     static class AddressResult<T> {
         private int count;
         private T address;
-    }
-
-    @Data
-    @AllArgsConstructor
-    static class AddressListDto {
-        private String address;
-        private Character is_main;
     }
 
     @Data
