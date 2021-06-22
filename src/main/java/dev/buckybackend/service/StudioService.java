@@ -1,12 +1,14 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.*;
+import dev.buckybackend.repository.StudioAddressRepository;
 import dev.buckybackend.repository.StudioRepository;
 import dev.buckybackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ public class StudioService {
 
     private final StudioRepository studioRepository;
     private final UserRepository userRepository;
+    private final StudioAddressRepository addressRepository;
 
     //스튜디오 등록
     @Transactional
@@ -109,10 +112,17 @@ public class StudioService {
         for (StudioAddress studioAddress : studioAddressList) {
             findStudio.addStudioAddresses(studioAddress);
         }
-        return id;
+        return findStudio.getId();
     }
 
-    //TODO: 스튜디오 주소 업데이트
+    //스튜디오 주소 업데이트
+    @Transactional
+    public Long updateStudioAddresses(Long id, List<StudioAddress> studioAddressList) {
+        Studio findStudio = validateExistStudio(id);
+        addressRepository.deleteAllByStudio(findStudio);
+
+        return id;
+    }
 
     //스튜디오 주소 조회
     public List<StudioAddress> findAddresses(Long id) {

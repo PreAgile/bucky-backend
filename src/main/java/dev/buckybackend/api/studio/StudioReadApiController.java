@@ -1,6 +1,7 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.dto.AddressListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -159,13 +160,6 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class AddressListDto {
-        private String address;
-        private Character is_main;
-    }
-
-    @Data
-    @AllArgsConstructor
     static class PhoneResult<T> {
         private int count;
         private T phones;
@@ -194,6 +188,9 @@ public class StudioReadApiController {
     }
 
     public Integer calculateLastPage(int collectSize, int count) {
+        if (collectSize == 0) return 0;
+        if (count == 0) throw new ArithmeticException("계산되지 않는 값입니다.");
+
         int portion = collectSize / count;
         int rest = collectSize % count;
         int lastPage;
@@ -202,6 +199,8 @@ public class StudioReadApiController {
             lastPage = portion + 1;
         } else if(portion == 1 || count == 1){
             lastPage = portion;
+        } else if(count > collectSize) {
+            lastPage = 1;
         } else {
             throw new ArithmeticException("계산되지 않는 값입니다.");
         }
