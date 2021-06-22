@@ -1,8 +1,6 @@
 package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
-import dev.buckybackend.domain.StudioAddress;
-import dev.buckybackend.domain.StudioPhone;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -110,7 +108,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
-        private int lastPage;
+        private int last_page;
         private int count;
         private T studios;
     }
