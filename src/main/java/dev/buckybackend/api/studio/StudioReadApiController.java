@@ -51,7 +51,7 @@ public class StudioReadApiController {
 
         Integer lastPage = calculateLastPage(collect.size(), count);
 
-        return new StudioResult(lastPage ,count, collect);
+        return new StudioResult(lastPage, count, collect);
     }
 
     /**
