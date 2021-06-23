@@ -16,7 +16,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class StudioCreateApiController {
 
     /**
      * 스튜디오 등록
+     *
      * @param request
      * @return
      */
@@ -62,14 +65,37 @@ public class StudioCreateApiController {
     }
 
     /**
+     * 스튜디오 관리 페이지에서 업로드 클릭시 해당 스튜디오와 그에 따른 이미지들을 Upload(is_release 변경)
+     *
+     * @param studioIdList
+     * @return
+     */
+    @PostMapping("/api/v1/studios/upload")
+    public void uploadStudiosAndImages(@RequestBody @Valid uploadStudioIdDto[] studioIdList) {
+        Optional<@Valid uploadStudioIdDto[]> list = Optional.ofNullable(studioIdList);
+        list.ifPresentOrElse(i -> {
+            for (uploadStudioIdDto input : i) {
+                Studio studio = studioService.findStudio(input.getStudio_id());
+                studio.setIs_release(input.getIs_release());
+                studio.getImages().forEach(image -> image.setIs_release(input.getIs_release()));
+                studio.setRelease_time(LocalDateTime.now());
+                studioService.update(studio.getId(), studio, studio.getUser().getId());
+            }
+        }, () -> {
+            throw new InputMismatchException("잘못된 값 입니다.");
+        });
+    }
+
+    /**
      * 스튜디오 주소 등록
+     *
      * @param id
      * @param request
      * @return
      */
     @PostMapping("/api/v1/studios/{id}/addresses")
     public CreateStudioResponse saveAddresses(@PathVariable("id") Long id,
-                                               @RequestBody @Valid AddressListDto[] request) {
+                                              @RequestBody @Valid AddressListDto[] request) {
         List<StudioAddress> studioAddressList = new ArrayList<>();
         for (AddressListDto address : request) {
             StudioAddress studioAddress = new StudioAddress();
@@ -83,6 +109,7 @@ public class StudioCreateApiController {
 
     /**
      * 스튜디오 전화번호 등록
+     *
      * @param id
      * @param request
      * @return
@@ -155,8 +182,6 @@ public class StudioCreateApiController {
     }
 
 
-
-
     @Data
     @AllArgsConstructor
     static class PhoneListDto {
@@ -172,5 +197,13 @@ public class StudioCreateApiController {
         private int price;
         @NotNull
         private String description;
+    }
+
+    @Data
+    static class uploadStudioIdDto {
+        @NotEmpty
+        private Long studio_id;
+        @NotEmpty
+        private Character is_release;
     }
 }
