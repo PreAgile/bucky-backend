@@ -33,9 +33,6 @@ public class LoginController {
         user.setId(userResult.getId());
         user.setName(profile.getNickname());
         user.setEmail(kakaoAccount.getEmail());
-
-        DateTimeFormatter dtf = DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault());
-        LocalDateTime connected_time = LocalDateTime.parse(userResult.getConnected_at(), dtf);
         user.setRole(Role.MANAGER);
 
         userService.saveUser(user);
