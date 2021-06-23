@@ -2,8 +2,9 @@ package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.*;
 import dev.buckybackend.dto.AddressListDto;
+import dev.buckybackend.dto.MenuBoardDto;
+import dev.buckybackend.dto.PhoneListDto;
 import dev.buckybackend.service.StudioService;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -177,24 +178,6 @@ public class StudioCreateApiController {
         public CreateStudioResponse(Long studio_id) {
             this.studio_id = studio_id;
         }
-    }
-
-
-    @Data
-    @AllArgsConstructor
-    static class PhoneListDto {
-        private String phone;
-        private Character is_main;
-    }
-
-    @Data
-    @AllArgsConstructor
-    static class MenuBoardDto {
-        @NotNull
-        private String product_name;
-        private int price;
-        @NotNull
-        private String description;
     }
 
     @Data

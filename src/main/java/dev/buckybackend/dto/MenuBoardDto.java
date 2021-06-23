@@ -7,9 +7,10 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor
-public class AddressListDto {
+public class MenuBoardDto {
     @NotEmpty
-    private String address;
+    private String product_name;
+    private int price;
     @NotEmpty
-    private Character is_main;
+    private String description;
 }

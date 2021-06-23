@@ -1,9 +1,9 @@
 package dev.buckybackend.api.studio;
 
-import dev.buckybackend.domain.Option;
-import dev.buckybackend.domain.Studio;
-import dev.buckybackend.domain.StudioAddress;
+import dev.buckybackend.domain.*;
 import dev.buckybackend.dto.AddressListDto;
+import dev.buckybackend.dto.MenuBoardDto;
+import dev.buckybackend.dto.PhoneListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -67,6 +67,35 @@ public class StudioUpdateApiController {
             studioAddressList.add(studioAddress);
         }
         Long studioId = studioService.updateStudioAddresses(id, studioAddressList);
+        return new UpdateStudioResponse(studioId);
+    }
+
+    @PutMapping("/api/v1/studios/{id}/phones")
+    public UpdateStudioResponse updatePhones(@PathVariable("id") Long id,
+                                             @RequestBody @Valid PhoneListDto[] request) {
+        List<StudioPhone> studioPhoneList = new ArrayList<>();
+        for (PhoneListDto phone : request) {
+            StudioPhone studioPhone = new StudioPhone();
+            studioPhone.setPhone(phone.getPhone());
+            studioPhone.setIs_main(phone.getIs_main());
+            studioPhoneList.add(studioPhone);
+        }
+        Long studioId = studioService.updateStudioPhones(id, studioPhoneList);
+        return new UpdateStudioResponse(studioId);
+    }
+
+    @PutMapping("/api/v1/studios/{id}/menus")
+    public UpdateStudioResponse updateMenus(@PathVariable("id") Long id,
+                                            @RequestBody @Valid MenuBoardDto[] request) {
+        List<MenuBoard> menuBoardList = new ArrayList<>();
+        for (MenuBoardDto menu : request) {
+            MenuBoard menuBoard = new MenuBoard();
+            menuBoard.setProduct_name(menu.getProduct_name());
+            menuBoard.setPrice(menu.getPrice());
+            menuBoard.setDescription(menu.getDescription());
+            menuBoardList.add(menuBoard);
+        }
+        Long studioId = studioService.updateMenuBoard(id, menuBoardList);
         return new UpdateStudioResponse(studioId);
     }
 

@@ -2,6 +2,8 @@ package dev.buckybackend.api.studio;
 
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.dto.AddressListDto;
+import dev.buckybackend.dto.MenuBoardDto;
+import dev.buckybackend.dto.PhoneListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -169,24 +171,9 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class PhoneListDto {
-        private String phone;
-        private Character is_main;
-    }
-
-    @Data
-    @AllArgsConstructor
     static class MenuBoardResult<T> {
         private int count;
         private T menu_board;
-    }
-
-    @Data
-    @AllArgsConstructor
-    static class MenuBoardDto {
-        private String product_name;
-        private int price;
-        private String description;
     }
 
     public Integer calculateLastPage(int collectSize, int count) {

@@ -7,9 +7,9 @@ import javax.validation.constraints.NotEmpty;
 
 @Data
 @AllArgsConstructor
-public class AddressListDto {
+public class PhoneListDto {
     @NotEmpty
-    private String address;
+    private String phone;
     @NotEmpty
     private Character is_main;
 }
