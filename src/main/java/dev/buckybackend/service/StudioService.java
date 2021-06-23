@@ -1,8 +1,7 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.*;
-import dev.buckybackend.repository.StudioRepository;
-import dev.buckybackend.repository.UserRepository;
+import dev.buckybackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +15,9 @@ import java.util.Optional;
 public class StudioService {
 
     private final StudioRepository studioRepository;
+    private final StudioAddressRepository addressRepository;
+    private final StudioPhoneRepository phoneRepository;
+    private final MenuBoardRepository menuBoardRepository;
     private final UserRepository userRepository;
 
     //스튜디오 등록
@@ -104,8 +106,8 @@ public class StudioService {
     @Transactional
     public Long addStudioAddresses(Long id, List<StudioAddress> studioAddressList) {
         Studio findStudio = validateExistStudio(id);
-        for (StudioAddress studioAddress : studioAddressList) {
-            findStudio.addStudioAddresses(studioAddress);
+        for (StudioAddress sa : studioAddressList) {
+            findStudio.addStudioAddresses(sa);
         }
         return findStudio.getId();
     }
@@ -114,8 +116,11 @@ public class StudioService {
     @Transactional
     public Long updateStudioAddresses(Long id, List<StudioAddress> studioAddressList) {
         Studio findStudio = validateExistStudio(id);
-        //TODO: update
-        return id;
+        addressRepository.deleteByStudioId(findStudio.getId());
+        for (StudioAddress sa : studioAddressList) {
+            findStudio.addStudioAddresses(sa);
+        }
+        return findStudio.getId();
     }
 
     //스튜디오 주소 조회
@@ -124,7 +129,16 @@ public class StudioService {
         return findStudio.getStudioAddresses();
     }
 
-    //TODO: 스튜디오 전화번호 업데이트
+    //스튜디오 전화번호 업데이트
+    @Transactional
+    public Long updateStudioPhones(Long id, List<StudioPhone> studioPhoneList) {
+        Studio findStudio = validateExistStudio(id);
+        phoneRepository.deleteByStudioId(findStudio.getId());
+        for (StudioPhone sp : studioPhoneList) {
+            findStudio.addStudioPhones(sp);
+        }
+        return findStudio.getId();
+    }
 
     //스튜디오 전화번호 등록
     @Transactional
@@ -152,7 +166,16 @@ public class StudioService {
         return id;
     }
 
-    //TODO: 메뉴 정보 수정
+    //메뉴 정보 수정
+    @Transactional
+    public Long updateMenuBoard(Long id, List<MenuBoard> menuBoardList) {
+        Studio findStudio = validateExistStudio(id);
+        menuBoardRepository.deleteByStudioId(findStudio.getId());
+        for (MenuBoard mb : menuBoardList) {
+            findStudio.addMenuBoard(mb);
+        }
+        return findStudio.getId();
+    }
 
     //메뉴 정보 조회
     public List<MenuBoard> findMenuBoard(Long id) {
