@@ -1,5 +1,6 @@
 package dev.buckybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -64,7 +65,8 @@ public class Studio {
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
     private List<MenuBoard> menuBoards = new ArrayList<>();
 
-    @OneToOne(mappedBy = "studio")
+    @OneToOne(mappedBy = "studio", fetch = FetchType.EAGER)
+    @JsonBackReference
     private User user = new User();
 
     /** 연관 관계 메서드 **/

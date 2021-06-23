@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -37,8 +38,14 @@ public class UserController {
     }
 
     @GetMapping(value = "/api/v1/users")
-    public List<User> getAllUser() {
-        return userService.getAllUsers();
+    public List<UserDto> getAllUser() {
+        List<UserDto> userDtoList = new ArrayList<>();
+        List<User> allUsers = userService.getAllUsers();
+        allUsers.forEach(s -> {
+            UserDto userDto = new UserDto(s.getId(), s.getName(), s.getEmail(), s.getStudio(), s.getMemo(), s.getRole(), s.getImages());
+            userDtoList.add(userDto);
+        });
+        return userDtoList;
     }
 
     @PostMapping(value = "/api/v1/users")
