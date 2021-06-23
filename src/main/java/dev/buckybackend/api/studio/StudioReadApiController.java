@@ -44,7 +44,8 @@ public class StudioReadApiController {
                         m.getImages().size(),
                         m.getCreate_time(),
                         m.getUpdate_time(),
-                        m.getIs_release()
+                        m.getIs_release(),
+                        m.getRelease_time()
                 ))
                 .collect(Collectors.toList());
 
@@ -125,6 +126,7 @@ public class StudioReadApiController {
         private LocalDateTime create_time;
         private LocalDateTime update_time;
         private Character is_release;
+        private LocalDateTime release_time;
     }
 
     @Data

@@ -50,6 +50,8 @@ public class Studio {
 
     private Character is_release;
 
+    private LocalDateTime release_time;
+
     @Column(nullable = false, columnDefinition = "char(1) default 'N'")
     private Character is_delete;
 
