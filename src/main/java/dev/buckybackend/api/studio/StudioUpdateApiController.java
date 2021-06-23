@@ -50,8 +50,6 @@ public class StudioUpdateApiController {
         studio.setOption(option);
         studio.setParking(request.isParking());
 
-        studio.setUpdate_time(LocalDateTime.now());
-
         studioService.update(id, studio, request.getUser_id());
 
         Studio findStudio = studioService.findStudio(id);
@@ -94,8 +92,6 @@ public class StudioUpdateApiController {
         private boolean tanning;
         private boolean waxing;
         private boolean parking;
-
-        private LocalDateTime update_time;
     }
 
     @Data

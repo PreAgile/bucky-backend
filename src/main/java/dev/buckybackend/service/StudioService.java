@@ -50,8 +50,6 @@ public class StudioService {
         findStudio.setOption(studio.getOption());
         findStudio.setParking(studio.isParking());
 
-        findStudio.setUpdate_time(studio.getUpdate_time());
-
         Optional<User> findUser = userRepository.findById(userId);
         findUser.ifPresent(u -> findStudio.setUser(u));
     }

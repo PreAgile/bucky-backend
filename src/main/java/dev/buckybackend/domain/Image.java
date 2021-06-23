@@ -2,12 +2,16 @@ package dev.buckybackend.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Image {
 
     @Id @GeneratedValue
@@ -41,7 +45,9 @@ public class Image {
 
     private Character is_release;
 
+    @CreatedDate
     private LocalDateTime create_time;
+    @LastModifiedDate
     private LocalDateTime update_time;
 
     @OneToOne(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
