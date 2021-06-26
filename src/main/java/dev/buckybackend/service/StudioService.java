@@ -94,7 +94,7 @@ public class StudioService {
 
     //전체 스튜디오 조회
     public List<Studio> findStudios() {
-        return studioRepository.findAll();
+        return studioRepository.findAllOrderByCreateTimeDesc();
     }
 
     //특정 스튜디오 조회
