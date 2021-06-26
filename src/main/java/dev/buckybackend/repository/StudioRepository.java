@@ -25,6 +25,10 @@ public class StudioRepository {
                 .getResultList();
     }
 
+    public List<Studio> findAllOrderByCreateTimeDesc() {
+        return em.createQuery("select s from Studio s order by s.create_time desc", Studio.class)
+                .getResultList();
+    }
     public List<Studio> findByName(String name) {
         return em.createQuery("select s from Studio s where s.name = :name", Studio.class)
                 .setParameter("name", name)
