@@ -53,9 +53,9 @@ public class StudioCreateApiController {
         option.setRent_clothes(request.isRent_clothes());
         option.setTanning(request.isTanning());
         option.setWaxing(request.isWaxing());
+        option.setParking(request.isParking());
 
         studio.setOption(option);
-        studio.setParking(request.isParking());
 
         studio.setIsDelete('N'); //생성할 때는 Default N
 

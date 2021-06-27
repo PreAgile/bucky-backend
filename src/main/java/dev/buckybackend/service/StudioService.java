@@ -55,7 +55,6 @@ public class StudioService {
         findStudio.setDescription(studio.getDescription());
 
         findStudio.setOption(studio.getOption());
-        findStudio.setParking(studio.isParking());
 
         Optional<User> findUser = userRepository.findById(userId);
         findUser.ifPresent(u -> findStudio.setUser(u));
