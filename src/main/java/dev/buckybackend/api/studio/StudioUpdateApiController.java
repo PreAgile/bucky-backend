@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +47,6 @@ public class StudioUpdateApiController {
         option.setWaxing(request.isWaxing());
 
         studio.setOption(option);
-        studio.setParking(request.isParking());
 
         studioService.update(id, studio, request.getUser_id());
 

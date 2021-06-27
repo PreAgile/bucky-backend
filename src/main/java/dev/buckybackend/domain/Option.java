@@ -22,4 +22,6 @@ public class Option {
     @Column(nullable = false)
     private boolean waxing;
 
+    @Column(nullable = false)
+    private boolean parking;
 }

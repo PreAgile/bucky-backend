@@ -35,9 +35,6 @@ public class Studio {
     @Embedded
     private Option option;
 
-    @Column(nullable = false)
-    private boolean parking;
-
     @Column(columnDefinition = "TEXT")
     private String description;
 

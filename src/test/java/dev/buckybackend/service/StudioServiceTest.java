@@ -38,6 +38,7 @@ public class StudioServiceTest {
         options.setRent_clothes(false);
         options.setTanning(false);
         options.setWaxing(false);
+        options.setParking(true);
         studio.setOption(options);
 
         studio.setIsDelete('Y');
@@ -65,6 +66,7 @@ public class StudioServiceTest {
         options1.setRent_clothes(false);
         options1.setTanning(false);
         options1.setWaxing(false);
+        options1.setParking(true);
         studio1.setOption(options1);
 
         studio1.setIsDelete('Y');
@@ -76,6 +78,7 @@ public class StudioServiceTest {
         options2.setRent_clothes(false);
         options2.setTanning(false);
         options2.setWaxing(false);
+        options2.setParking(true);
         studio2.setOption(options2);
 
         studio2.setIsDelete('Y');
