@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Long> {
 
+    List<Studio> findAllByIsDelete(Character isDelete);
     List<Studio> findByName(String name);
-    Page<Studio> findByNameContainsIgnoreCase(String name, Pageable pageable);
-
+    Page<Studio> findByNameContainsIgnoreCaseAndIsDelete(String name, Character isDelete, Pageable pageable);
 }

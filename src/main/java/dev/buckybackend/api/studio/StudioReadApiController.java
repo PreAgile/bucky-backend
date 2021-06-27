@@ -30,35 +30,35 @@ public class StudioReadApiController {
     private final StudioService studioService;
 
     /**
-     * 전체 스튜디오 조회(Paging)
+     * 전체 스튜디오 조회
      * @return
      */
     @GetMapping("/api/v1/studios/all")
-    public StudioNameResult getStudios() {
+    public StudioResult getStudios() {
         List<StudioNameDto> collect = studioService.findStudios().stream()
-                .filter(f -> f.getIs_delete() == 'N')
+//                .filter(f -> f.getIs_delete() == 'N')
                 .map(m -> new StudioNameDto(
                         m.getId(),
                         m.getName()
                 ))
                 .collect(Collectors.toList());
-        return new StudioNameResult(collect.size(), collect);
+        return new StudioResult(collect.size(), collect);
     }
 
     /**
-     * 전체 스튜디오 조회(Paging)
+     * 전체 스튜디오 조회(pagination)
      * @return
      */
     @GetMapping("/api/v1/studios")
-    public StudioResult getStudiosPageable(@RequestParam("name") String name,
-                                           @RequestParam("page") int page,
-                                           @RequestParam("size") int size) {
+    public StudioPageResult getStudiosPageable(@RequestParam("name") String name,
+                                               @RequestParam("page") Integer page,
+                                               @RequestParam("size") Integer size) {
         PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
         Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
 
-        List<StudioListDto> collect = findStudio.stream()
-                .filter(f -> f.getIs_delete() == 'N')
-                .map(m -> new StudioListDto(
+        List<StudioPageDto> collect = findStudio.stream()
+//                .filter(f -> f.getIs_delete() == 'N')
+                .map(m -> new StudioPageDto(
                         m.getId(),
                         m.getName(),
                         m.getStudioAddresses().stream()
@@ -76,7 +76,7 @@ public class StudioReadApiController {
                         m.getRelease_time()
                 ))
                 .collect(Collectors.toList());
-        return new StudioResult(collect.size(), findStudio.getTotalPages(), collect);
+        return new StudioPageResult(collect.size(), findStudio.getTotalPages(), collect);
     }
 
     /**
@@ -85,9 +85,9 @@ public class StudioReadApiController {
      * @return
      */
     @GetMapping("/api/v1/studios/{id}")
-    public StudioDto getStudio(@PathVariable("id") Long id) {
+    public StudioDetailDto getStudio(@PathVariable("id") Long id) {
         Studio findStudio = studioService.findStudio(id);
-        return new StudioDto(findStudio.getName(),
+        return new StudioDetailDto(findStudio.getName(),
                 findStudio.getMin_price(),
                 findStudio.getMax_price(),
                 findStudio.getHomepage(),
@@ -99,8 +99,8 @@ public class StudioReadApiController {
                 findStudio.getOption().isRent_clothes(),
                 findStudio.getOption().isTanning(),
                 findStudio.getOption().isWaxing(),
-                findStudio.isParking(),
-                findStudio.getIs_delete());
+                findStudio.getOption().isParking(),
+                findStudio.getIsDelete());
     }
 
     /**
@@ -152,7 +152,7 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class StudioResult<T> {
+    static class StudioPageResult<T> {
         private int count;
         private int last_page;
         private T studios;
@@ -160,14 +160,14 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class StudioNameResult<T> {
+    static class StudioResult<T> {
         private int count;
         private T studios;
     }
 
     @Data
     @AllArgsConstructor
-    static class StudioListDto {
+    static class StudioPageDto {
         private Long studio_id;
         private String name;
         private String address;
@@ -188,7 +188,7 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class StudioDto {
+    static class StudioDetailDto {
         private String name;
 
         private int min_price;
