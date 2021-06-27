@@ -33,10 +33,26 @@ public class StudioReadApiController {
      * 전체 스튜디오 조회(Paging)
      * @return
      */
+    @GetMapping("/api/v1/studios/all")
+    public StudioNameResult getStudios() {
+        List<StudioNameDto> collect = studioService.findStudios().stream()
+                .filter(f -> f.getIs_delete() == 'N')
+                .map(m -> new StudioNameDto(
+                        m.getId(),
+                        m.getName()
+                ))
+                .collect(Collectors.toList());
+        return new StudioNameResult(collect.size(), collect);
+    }
+
+    /**
+     * 전체 스튜디오 조회(Paging)
+     * @return
+     */
     @GetMapping("/api/v1/studios")
-    public StudioResult getStudios(@RequestParam("name") String name,
-                                   @RequestParam("page") int page,
-                                   @RequestParam("size") int size) {
+    public StudioResult getStudiosPageable(@RequestParam("name") String name,
+                                           @RequestParam("page") int page,
+                                           @RequestParam("size") int size) {
         PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
         Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
 
@@ -144,6 +160,13 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
+    static class StudioNameResult<T> {
+        private int count;
+        private T studios;
+    }
+
+    @Data
+    @AllArgsConstructor
     static class StudioListDto {
         private Long studio_id;
         private String name;
@@ -154,6 +177,13 @@ public class StudioReadApiController {
         private LocalDateTime update_time;
         private Character is_release;
         private LocalDateTime release_time;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class StudioNameDto {
+        private Long id;
+        private String name;
     }
 
     @Data
