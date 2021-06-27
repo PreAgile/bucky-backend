@@ -184,7 +184,7 @@ public class StudioService {
 
     //이미지 정보 조회
     public List<Image> findImages(Long id) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         return findStudio.getImages();
     }
 
