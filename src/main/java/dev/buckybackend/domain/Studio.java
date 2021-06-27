@@ -1,6 +1,7 @@
 package dev.buckybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -62,6 +63,7 @@ public class Studio {
     private Character is_delete;
 
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)

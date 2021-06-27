@@ -1,5 +1,6 @@
 package dev.buckybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,6 +40,7 @@ public class Image {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_id")
+    @JsonBackReference
     private Studio studio;
 
     @Column(nullable = false, columnDefinition = "char(1) default 'N'")
