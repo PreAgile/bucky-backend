@@ -65,7 +65,7 @@ public class StudioService {
     @Transactional
     public void delete(Long id) {
         Studio findStudio = studioRepository.getById(id);
-        findStudio.setIs_delete('Y');
+        findStudio.setIsDelete('Y');
     }
 
     //중복 스튜디오 검증
@@ -88,12 +88,12 @@ public class StudioService {
 
     //전체 스튜디오 조회
     public List<Studio> findStudios() {
-        return studioRepository.findAll();
+        return studioRepository.findAllByIsDelete('N');
     }
 
     //전체 스튜디오 조회(pagination)
     public Page<Studio> findStudiosByNameOrderByCreateTimeDesc(String name, Pageable pageable) {
-        return studioRepository.findByNameContainsIgnoreCase(name, pageable);
+        return studioRepository.findByNameContainsIgnoreCaseAndIsDelete(name, 'N', pageable);
     }
 
     //특정 스튜디오 조회

@@ -60,8 +60,8 @@ public class Studio {
 
     private LocalDateTime release_time;
 
-    @Column(nullable = false, columnDefinition = "char(1) default 'N'")
-    private Character is_delete;
+    @Column(name = "is_delete", nullable = false, columnDefinition = "char(1) default 'N'")
+    private Character isDelete;
 
     @OneToMany(mappedBy = "studio", cascade = CascadeType.ALL)
     @JsonManagedReference

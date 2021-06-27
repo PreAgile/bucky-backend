@@ -40,8 +40,7 @@ public class StudioServiceTest {
         options.setWaxing(false);
         studio.setOption(options);
 
-        studio.setParking(true);
-        studio.setIs_delete('Y');
+        studio.setIsDelete('Y');
 
         studio.setCreateTime(LocalDateTime.now());
         studio.setUpdate_time(LocalDateTime.now());
@@ -68,8 +67,7 @@ public class StudioServiceTest {
         options1.setWaxing(false);
         studio1.setOption(options1);
 
-        studio1.setParking(true);
-        studio1.setIs_delete('Y');
+        studio1.setIsDelete('Y');
         //----
         studio2.setName("버키스튜디오");
 
@@ -80,8 +78,7 @@ public class StudioServiceTest {
         options2.setWaxing(false);
         studio2.setOption(options2);
 
-        studio2.setParking(true);
-        studio2.setIs_delete('Y');
+        studio2.setIsDelete('Y');
 
         //when
         studioService.register(studio1, 1L);
