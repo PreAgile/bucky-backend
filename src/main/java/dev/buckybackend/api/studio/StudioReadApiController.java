@@ -56,7 +56,7 @@ public class StudioReadApiController {
 
         Integer lastPage = calculateLastPage(collect.size(), count);
 
-        return new StudioResult(lastPage, count, collect);
+        return new StudioResult(collect.size(), lastPage, count, collect);
     }
 
     /**
@@ -133,8 +133,9 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
+        private int total_count;
         private int last_page;
-        private int count;
+        private int count_per_page;
         private T studios;
     }
 
