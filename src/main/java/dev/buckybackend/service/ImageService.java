@@ -21,7 +21,7 @@ public class ImageService {
     //이미지 업로드
     @Transactional
     public Long upload(Image image, Long studioId) {
-        Studio findStudio = studioRepository.findOne(studioId);
+        Studio findStudio = studioRepository.getById(studioId);
         image.setStudio(findStudio);
         imageRepository.save(image);
         return image.getId();
