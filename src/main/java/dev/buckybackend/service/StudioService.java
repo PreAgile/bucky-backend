@@ -182,5 +182,10 @@ public class StudioService {
         return findStudio.getMenuBoards();
     }
 
+    //이미지 정보 조회
+    public List<Image> findImages(Long id) {
+        Studio findStudio = validateExistStudio(id);
+        return findStudio.getImages();
+    }
 
 }
