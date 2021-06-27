@@ -43,14 +43,14 @@ public class StudioServiceTest {
         studio.setParking(true);
         studio.setIs_delete('Y');
 
-        studio.setCreate_time(LocalDateTime.now());
+        studio.setCreateTime(LocalDateTime.now());
         studio.setUpdate_time(LocalDateTime.now());
 
         //when
         Long saveId = studioService.register(studio, 7L);
 
         //then
-        assertEquals(studio, studioRepository.findOne(saveId));
+        assertEquals(studio, studioRepository.getById(saveId));
     }
 
     @Test(expected = IllegalStateException.class)
