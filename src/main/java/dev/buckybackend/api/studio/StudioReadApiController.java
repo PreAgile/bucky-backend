@@ -8,8 +8,12 @@ import dev.buckybackend.service.StudioService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -26,9 +30,12 @@ public class StudioReadApiController {
      * 전체 스튜디오 조회(Paging)
      * @return
      */
-    @GetMapping("/api/v1/studios/page/{count}")
-    public StudioResult getStudios(@PathVariable("count") Integer count) {
-        List<Studio> findStudio = studioService.findStudios();
+    @GetMapping("/api/v1/studios")
+    public StudioResult getStudios(@RequestParam("name") String name,
+                                   @RequestParam("page") int page,
+                                   @RequestParam("size") int size) {
+        PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
+        Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
 
         List<StudioListDto> collect = findStudio.stream()
                 .filter(f -> f.getIs_delete() == 'N')
@@ -44,16 +51,13 @@ public class StudioReadApiController {
                                 .map(o -> o.getPhone())
                                 .collect(Collectors.joining("")),
                         m.getImages().size(),
-                        m.getCreate_time(),
+                        m.getCreateTime(),
                         m.getUpdate_time(),
                         m.getIs_release(),
                         m.getRelease_time()
                 ))
                 .collect(Collectors.toList());
-
-        Integer lastPage = calculateLastPage(collect.size(), count);
-
-        return new StudioResult(collect.size(), lastPage, count, collect);
+        return new StudioResult(collect.size(), findStudio.getTotalPages(), collect);
     }
 
     /**
@@ -112,9 +116,8 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
-        private int total_count;
+        private int count;
         private int last_page;
-        private int count_per_page;
         private T studios;
     }
 
@@ -177,20 +180,4 @@ public class StudioReadApiController {
         private T menu_board;
     }
 
-    public Integer calculateLastPage(int collectSize, int count) {
-        if (collectSize == 0 || count == 0) return 0;
-
-        int portion = collectSize / count;
-        int rest = collectSize % count;
-        int lastPage = portion;
-        // Paging 계산
-        if (rest != 0 && rest != collectSize) {
-            lastPage = portion + 1;
-        } else if (portion == 1 || count == 1){
-            lastPage = portion;
-        } else if (count > collectSize) {
-            lastPage = 1;
-        }
-        return lastPage;
-    }
 }

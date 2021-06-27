@@ -49,7 +49,8 @@ public class Studio {
     private String kakao;
 
     @CreatedDate
-    private LocalDateTime create_time;
+    @Column(name = "create_time")
+    private LocalDateTime createTime;
 
     @LastModifiedDate
     private LocalDateTime update_time;

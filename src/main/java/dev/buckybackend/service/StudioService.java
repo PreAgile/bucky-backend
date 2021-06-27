@@ -3,6 +3,9 @@ package dev.buckybackend.service;
 import dev.buckybackend.domain.*;
 import dev.buckybackend.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +17,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudioService {
 
-    private final StudioRepository studioRepository;
     private final StudioAddressRepository addressRepository;
     private final StudioPhoneRepository phoneRepository;
     private final MenuBoardRepository menuBoardRepository;
     private final UserRepository userRepository;
+
+    @Autowired
+    private StudioRepository studioRepository;
 
     //스튜디오 등록
     @Transactional
@@ -35,7 +40,7 @@ public class StudioService {
     @Transactional
     public void update(Long studioId, Studio studio, Long userId) {
         validateDuplicateStudioExceptId(studio, studioId);
-        Studio findStudio = validateExistStudio(studioId);
+        Studio findStudio = studioRepository.getById(studioId);
 
         findStudio.setName(studio.getName());
 
@@ -59,7 +64,7 @@ public class StudioService {
     //스튜디오 삭제(비활성화)
     @Transactional
     public void delete(Long id) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         findStudio.setIs_delete('Y');
     }
 
@@ -81,31 +86,25 @@ public class StudioService {
         }
     }
 
-    //스튜디오 등록 유무 검증
-    private Studio validateExistStudio(Long id) {
-        Studio findStudio = studioRepository.findOne(id);
-        if (findStudio == null) {
-            throw new IllegalStateException("Not Exist Key");
-        }
-        else {
-            return findStudio;
-        }
-    }
-
     //전체 스튜디오 조회
     public List<Studio> findStudios() {
-        return studioRepository.findAllOrderByCreateTimeDesc();
+        return studioRepository.findAll();
+    }
+
+    //전체 스튜디오 조회(pagination)
+    public Page<Studio> findStudiosByNameOrderByCreateTimeDesc(String name, Pageable pageable) {
+        return studioRepository.findByNameContainsIgnoreCase(name, pageable);
     }
 
     //특정 스튜디오 조회
     public Studio findStudio(Long id) {
-        return studioRepository.findOne(id);
+        return studioRepository.getById(id);
     }
 
     //스튜디오 주소 등록
     @Transactional
     public Long addStudioAddresses(Long id, List<StudioAddress> studioAddressList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         for (StudioAddress sa : studioAddressList) {
             findStudio.addStudioAddresses(sa);
         }
@@ -115,7 +114,7 @@ public class StudioService {
     //스튜디오 주소 업데이트
     @Transactional
     public Long updateStudioAddresses(Long id, List<StudioAddress> studioAddressList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         addressRepository.deleteByStudioId(findStudio.getId());
         for (StudioAddress sa : studioAddressList) {
             findStudio.addStudioAddresses(sa);
@@ -125,14 +124,14 @@ public class StudioService {
 
     //스튜디오 주소 조회
     public List<StudioAddress> findAddresses(Long id) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         return findStudio.getStudioAddresses();
     }
 
     //스튜디오 전화번호 업데이트
     @Transactional
     public Long updateStudioPhones(Long id, List<StudioPhone> studioPhoneList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         phoneRepository.deleteByStudioId(findStudio.getId());
         for (StudioPhone sp : studioPhoneList) {
             findStudio.addStudioPhones(sp);
@@ -143,7 +142,7 @@ public class StudioService {
     //스튜디오 전화번호 등록
     @Transactional
     public Long addStudioPhones(Long id, List<StudioPhone> studioPhoneList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         for (StudioPhone studioPhone : studioPhoneList) {
             findStudio.addStudioPhones(studioPhone);
         }
@@ -152,14 +151,14 @@ public class StudioService {
 
     //스튜디오 전화번호 조회
     public List<StudioPhone> findPhones(Long id) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         return findStudio.getStudioPhones();
     }
 
     //메뉴 정보 등록
     @Transactional
     public Long addMenuBoard(Long id, List<MenuBoard> menuBoardList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         for (MenuBoard menuBoard : menuBoardList) {
             findStudio.addMenuBoard(menuBoard);
         }
@@ -169,7 +168,7 @@ public class StudioService {
     //메뉴 정보 수정
     @Transactional
     public Long updateMenuBoard(Long id, List<MenuBoard> menuBoardList) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         menuBoardRepository.deleteByStudioId(findStudio.getId());
         for (MenuBoard mb : menuBoardList) {
             findStudio.addMenuBoard(mb);
@@ -179,7 +178,9 @@ public class StudioService {
 
     //메뉴 정보 조회
     public List<MenuBoard> findMenuBoard(Long id) {
-        Studio findStudio = validateExistStudio(id);
+        Studio findStudio = studioRepository.getById(id);
         return findStudio.getMenuBoards();
     }
+
+
 }
