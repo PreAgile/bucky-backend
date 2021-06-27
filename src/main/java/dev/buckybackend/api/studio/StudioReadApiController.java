@@ -1,7 +1,9 @@
 package dev.buckybackend.api.studio;
 
+import dev.buckybackend.domain.Image;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.dto.AddressListDto;
+import dev.buckybackend.dto.ImageDto;
 import dev.buckybackend.dto.MenuBoardDto;
 import dev.buckybackend.dto.PhoneListDto;
 import dev.buckybackend.service.StudioService;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,6 +112,24 @@ public class StudioReadApiController {
         return new MenuBoardResult(collect.size(), collect);
     }
 
+    /**
+     * 스튜디오별 Image조회
+     * @param id
+     * @return
+     */
+    @GetMapping("/api/v1/studios/{id}/images")
+    public ImagesResult getStudioImages(@PathVariable("id") Long id) {
+        List<ImageDto> collect = new ArrayList<>();
+        for (Image i : studioService.findImages(id)) {
+            ImageDto imageDto = new ImageDto(i.getId(), i.getPeople_num(), i.getSex(),
+                    i.getColor(), i.isOutdoor(), i.getImage_url(),
+                    i.getStudio().getId(),i.getCreate_time(),i.getUpdate_time(),
+                    i.getIs_delete(), i.getIs_release());
+            collect.add(imageDto);
+        }
+        return new ImagesResult(collect.size(), collect);
+    }
+
     @Data
     @AllArgsConstructor
     static class StudioResult<T> {
@@ -174,6 +195,13 @@ public class StudioReadApiController {
     static class MenuBoardResult<T> {
         private int count;
         private T menu_board;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class ImagesResult<T> {
+        private int count;
+        private T images;
     }
 
     public Integer calculateLastPage(int collectSize, int count) {
