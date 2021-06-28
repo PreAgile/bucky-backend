@@ -1,5 +1,6 @@
 package dev.buckybackend.api.studio;
 
+import dev.buckybackend.common.Constant;
 import dev.buckybackend.domain.Image;
 import dev.buckybackend.domain.Studio;
 import dev.buckybackend.dto.AddressListDto;
@@ -36,7 +37,6 @@ public class StudioReadApiController {
     @GetMapping("/api/v1/studios/all")
     public StudioResult getStudios() {
         List<StudioNameDto> collect = studioService.findStudios().stream()
-//                .filter(f -> f.getIs_delete() == 'N')
                 .map(m -> new StudioNameDto(
                         m.getId(),
                         m.getName()
@@ -50,14 +50,13 @@ public class StudioReadApiController {
      * @return
      */
     @GetMapping("/api/v1/studios")
-    public StudioPageResult getStudiosPageable(@RequestParam("name") String name,
-                                               @RequestParam("page") Integer page,
-                                               @RequestParam("size") Integer size) {
-        PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime"));
+    public StudioPageResult getStudiosPageable(@RequestParam String name,
+                                               @RequestParam Integer page,
+                                               @RequestParam(required = false, defaultValue = Constant.STUDIO_LIST_SIZE) Integer size) {
+        PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime")); //TODO: 필요 시 sort 받아서 처리
         Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
 
         List<StudioPageDto> collect = findStudio.stream()
-//                .filter(f -> f.getIs_delete() == 'N')
                 .map(m -> new StudioPageDto(
                         m.getId(),
                         m.getName(),
