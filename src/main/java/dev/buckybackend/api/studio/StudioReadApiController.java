@@ -181,7 +181,7 @@ public class StudioReadApiController {
     @Data
     @AllArgsConstructor
     static class StudioNameDto {
-        private Long id;
+        private Long studio_id;
         private String name;
     }
 
