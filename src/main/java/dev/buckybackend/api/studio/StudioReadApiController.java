@@ -140,7 +140,7 @@ public class StudioReadApiController {
     public ImagesResult getStudioImages(@PathVariable("id") Long id) {
         List<ImageDto> collect = new ArrayList<>();
         for (Image i : studioService.findImages(id)) {
-            ImageDto imageDto = new ImageDto(i.getId(), i.getPeople_num(), i.getSex(),
+            ImageDto imageDto = new ImageDto(i.getId(), i.getPeopleNum(), i.getSex(),
                     i.getColor(), i.isOutdoor(), i.getImage_url(),
                     i.getStudio().getId(),i.getCreate_time(),i.getUpdate_time(),
                     i.getIs_delete(), i.getIs_release());

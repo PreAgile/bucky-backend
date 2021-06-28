@@ -21,8 +21,8 @@ public class Image {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private PeopleNum people_num;
+    @Column(name = "people_num", nullable = false)
+    private PeopleNum peopleNum;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

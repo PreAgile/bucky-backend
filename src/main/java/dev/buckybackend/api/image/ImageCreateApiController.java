@@ -25,7 +25,7 @@ public class ImageCreateApiController {
     @PostMapping("/api/v1/images")
     public CreateImageResponse saveImage(@RequestBody @Valid CreateImageRequest request) {
         Image image = new Image();
-        image.setPeople_num(request.getPeople_num());
+        image.setPeopleNum(request.getPeople_num());
         image.setSex(request.getSex());
         image.setColor(request.getColor());
         image.setOutdoor(request.isOutdoor());

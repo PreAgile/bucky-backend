@@ -39,20 +39,19 @@ public class UserServiceImplTest {
         studio.setName("강남 어느 스튜디오");
         studio.setMin_price(30);
         studio.setMax_price(100);
-        studio.setIs_delete('N');
         Option options = new Option();
         options.setHair_makeup(false);
         options.setRent_clothes(false);
         options.setTanning(false);
         options.setWaxing(false);
+        options.setParking(false);
         studio.setOption(options);
-        studio.setParking(false);
         studio.setDescription("HAHAHAHA");
-        studio.setIs_delete('N');
+        studio.setIsDelete('N');
 
         // 이미지 세팅
         image = new Image();
-        image.setPeople_num(PeopleNum.MANY);
+        image.setPeopleNum(PeopleNum.MANY);
         image.setSex(Sex.F);
         image.setColor(Color.ACHROMATIC);
         image.setOutdoor(true);
