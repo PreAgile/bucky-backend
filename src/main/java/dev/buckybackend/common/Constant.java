@@ -13,4 +13,7 @@ public class Constant {
 
     public static final String LOGIN_URI = "https://kauth.kakao.com/oauth/authorize?client_id=930c96be7c2e9e9062b2a584788fe333&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Foauth2%2Fkakao&response_type=code";
     public static final String AGREEMENT_URI = "https://kauth.kakao.com/oauth/authorize?client_id=930c96be7c2e9e9062b2a584788fe333&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Foauth2%2Fkakao&response_type=code&scope=account_email";
+
+    //Constant
+    public static final String STUDIO_LIST_SIZE = "16";
 }
