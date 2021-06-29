@@ -50,7 +50,7 @@ public class StudioReadApiController {
      * @return
      */
     @GetMapping("/api/v1/studios")
-    public StudioPageResult getStudiosPageable(@RequestParam String name,
+    public StudioPageResult getStudiosPageable(@RequestParam(required = false, defaultValue = "") String name,
                                                @RequestParam Integer page,
                                                @RequestParam(required = false, defaultValue = Constant.STUDIO_LIST_SIZE) Integer size) {
         PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime")); //TODO: 필요 시 sort 받아서 처리
