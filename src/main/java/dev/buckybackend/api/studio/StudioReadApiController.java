@@ -50,7 +50,7 @@ public class StudioReadApiController {
      * @return
      */
     @GetMapping("/api/v1/studios")
-    public StudioPageResult getStudiosPageable(@RequestParam String name,
+    public StudioPageResult getStudiosPageable(@RequestParam(required = false, defaultValue = "") String name,
                                                @RequestParam Integer page,
                                                @RequestParam(required = false, defaultValue = Constant.STUDIO_LIST_SIZE) Integer size) {
         PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime")); //TODO: 필요 시 sort 받아서 처리
@@ -140,7 +140,7 @@ public class StudioReadApiController {
     public ImagesResult getStudioImages(@PathVariable("id") Long id) {
         List<ImageDto> collect = new ArrayList<>();
         for (Image i : studioService.findImages(id)) {
-            ImageDto imageDto = new ImageDto(i.getId(), i.getPeople_num(), i.getSex(),
+            ImageDto imageDto = new ImageDto(i.getId(), i.getPeopleNum(), i.getSex(),
                     i.getColor(), i.isOutdoor(), i.getImage_url(),
                     i.getStudio().getId(),i.getCreate_time(),i.getUpdate_time(),
                     i.getIs_delete(), i.getIs_release());

@@ -87,7 +87,7 @@ public class StudioService {
 
     //전체 스튜디오 조회
     public List<Studio> findStudios() {
-        return studioRepository.findAllByIsDelete('N');
+        return studioRepository.findByIsDelete('N');
     }
 
     //전체 스튜디오 조회(pagination)
@@ -145,7 +145,7 @@ public class StudioService {
         for (StudioPhone studioPhone : studioPhoneList) {
             findStudio.addStudioPhones(studioPhone);
         }
-        return id;
+        return findStudio.getId();
     }
 
     //스튜디오 전화번호 조회
@@ -161,7 +161,7 @@ public class StudioService {
         for (MenuBoard menuBoard : menuBoardList) {
             findStudio.addMenuBoard(menuBoard);
         }
-        return id;
+        return findStudio.getId();
     }
 
     //메뉴 정보 수정

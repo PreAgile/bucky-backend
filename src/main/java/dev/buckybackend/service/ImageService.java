@@ -1,7 +1,6 @@
 package dev.buckybackend.service;
 
-import dev.buckybackend.domain.Image;
-import dev.buckybackend.domain.Studio;
+import dev.buckybackend.domain.*;
 import dev.buckybackend.repository.ImageRepository;
 import dev.buckybackend.repository.StudioRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,5 +29,13 @@ public class ImageService {
     //전체 이미지 조회
     public List<Image> findImages() {
         return imageRepository.findAll();
+    }
+
+    public List<Image> findImagesByStudioId(Studio studio) {
+        return imageRepository.findByStudio(studio);
+    }
+
+    public List<Image> findImagesByFilter(PeopleNum peopleNum, Sex sex, Color color, Boolean outdoor) {
+        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoor(peopleNum, sex, color, outdoor);
     }
 }
