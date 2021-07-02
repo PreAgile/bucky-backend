@@ -49,8 +49,8 @@ public class StudioCreateApiController {
         studio.setDescription(request.getDescription());
 
         Option option = new Option();
-        option.setHair_makeup(request.isHair_makeup());
-        option.setRent_clothes(request.isRent_clothes());
+        option.setHairMakeup(request.isHair_makeup());
+        option.setRentClothes(request.isRent_clothes());
         option.setTanning(request.isTanning());
         option.setWaxing(request.isWaxing());
         option.setParking(request.isParking());

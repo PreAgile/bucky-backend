@@ -10,18 +10,18 @@ import javax.persistence.Embeddable;
 @Getter @Setter
 public class Option {
 
-    @Column(nullable = false)
-    private boolean hair_makeup;
+    @Column(name = "hair_makeup", nullable = false)
+    private Boolean hairMakeup;
+
+    @Column(name = "rent_clothes", nullable = false)
+    private Boolean rentClothes;
 
     @Column(nullable = false)
-    private boolean rent_clothes;
+    private Boolean tanning;
 
     @Column(nullable = false)
-    private boolean tanning;
+    private Boolean waxing;
 
     @Column(nullable = false)
-    private boolean waxing;
-
-    @Column(nullable = false)
-    private boolean parking;
+    private Boolean parking;
 }

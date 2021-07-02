@@ -57,22 +57,22 @@ public class StudioReadApiController {
         Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
 
         List<StudioPageDto> collect = findStudio.stream()
-                .map(m -> new StudioPageDto(
-                        m.getId(),
-                        m.getName(),
-                        m.getStudioAddresses().stream()
+                .map(s -> new StudioPageDto(
+                        s.getId(),
+                        s.getName(),
+                        s.getStudioAddresses().stream()
                                 .filter(a -> a.getIs_main() == 'Y')
                                 .map(o -> o.getAddress())
                                 .collect(Collectors.joining("")),
-                        m.getStudioPhones().stream()
+                        s.getStudioPhones().stream()
                                 .filter(a -> a.getIs_main() == 'Y')
                                 .map(o -> o.getPhone())
                                 .collect(Collectors.joining("")),
-                        m.getImages().size(),
-                        m.getCreateTime(),
-                        m.getUpdate_time(),
-                        m.getIs_release(),
-                        m.getRelease_time()
+                        s.getImages().size(),
+                        s.getCreateTime(),
+                        s.getUpdate_time(),
+                        s.getIs_release(),
+                        s.getRelease_time()
                 ))
                 .collect(Collectors.toList());
         return new StudioPageResult(collect.size(), findStudio.getTotalPages(), collect);
@@ -94,11 +94,11 @@ public class StudioReadApiController {
                 findStudio.getNaver(),
                 findStudio.getKakao(),
                 findStudio.getDescription(),
-                findStudio.getOption().isHair_makeup(),
-                findStudio.getOption().isRent_clothes(),
-                findStudio.getOption().isTanning(),
-                findStudio.getOption().isWaxing(),
-                findStudio.getOption().isParking(),
+                findStudio.getOption().getHairMakeup(),
+                findStudio.getOption().getRentClothes(),
+                findStudio.getOption().getTanning(),
+                findStudio.getOption().getWaxing(),
+                findStudio.getOption().getParking(),
                 findStudio.getIsDelete());
     }
 

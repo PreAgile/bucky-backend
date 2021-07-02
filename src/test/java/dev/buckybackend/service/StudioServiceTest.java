@@ -34,8 +34,8 @@ public class StudioServiceTest {
 
         Option options = new Option();
 
-        options.setHair_makeup(false);
-        options.setRent_clothes(false);
+        options.setHairMakeup(false);
+        options.setRentClothes(false);
         options.setTanning(false);
         options.setWaxing(false);
         options.setParking(true);
@@ -62,8 +62,8 @@ public class StudioServiceTest {
         studio1.setName("버키스튜디오");
 
         Option options1 = new Option();
-        options1.setHair_makeup(false);
-        options1.setRent_clothes(false);
+        options1.setHairMakeup(false);
+        options1.setRentClothes(false);
         options1.setTanning(false);
         options1.setWaxing(false);
         options1.setParking(true);
@@ -74,8 +74,8 @@ public class StudioServiceTest {
         studio2.setName("버키스튜디오");
 
         Option options2 = new Option();
-        options2.setHair_makeup(false);
-        options2.setRent_clothes(false);
+        options2.setHairMakeup(false);
+        options2.setRentClothes(false);
         options2.setTanning(false);
         options2.setWaxing(false);
         options2.setParking(true);
