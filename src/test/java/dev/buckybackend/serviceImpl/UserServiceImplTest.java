@@ -40,8 +40,8 @@ public class UserServiceImplTest {
         studio.setMin_price(30);
         studio.setMax_price(100);
         Option options = new Option();
-        options.setHair_makeup(false);
-        options.setRent_clothes(false);
+        options.setHairMakeup(false);
+        options.setRentClothes(false);
         options.setTanning(false);
         options.setWaxing(false);
         options.setParking(false);

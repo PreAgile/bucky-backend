@@ -4,6 +4,8 @@ import dev.buckybackend.domain.*;
 import dev.buckybackend.repository.ImageRepository;
 import dev.buckybackend.repository.StudioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +33,33 @@ public class ImageService {
         return imageRepository.findAll();
     }
 
-    public List<Image> findImagesByStudioId(Studio studio) {
+    //스튜디오 정보로 이미지 조회
+    public List<Image> findImagesByStudio(Studio studio) {
         return imageRepository.findByStudio(studio);
     }
 
-    public List<Image> findImagesByFilter(PeopleNum peopleNum, Sex sex, Color color, Boolean outdoor) {
-        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoor(peopleNum, sex, color, outdoor);
+    //필터값으로 이미지 조회
+    public Page<Image> findImagesByFilterAndStudio(PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, List<Studio> studio, Pageable pageable) {
+//        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndStudioIn(peopleNum, sex, color, outdoor, studio, pageable);
+        return imageRepository.findByFilterAndStudio(peopleNum, sex, color, outdoor, studio, pageable);
+
+    }
+
+    //스튜디오 & 필터값으로 이미지 조회
+    public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Pageable pageable) {
+        List<Studio> findStudio = studioRepository.findByNameContainsIgnoreCaseAndIsDeleteAndOption(studioName,
+                'N',
+                studioOption.getHairMakeup(),
+                studioOption.getRentClothes(),
+                studioOption.getTanning(),
+                studioOption.getWaxing(),
+                studioOption.getParking());
+        return this.findImagesByFilterAndStudio(
+                peopleNum,
+                sex,
+                color,
+                outdoor == true ? null : false,
+                findStudio,
+                pageable);
     }
 }
