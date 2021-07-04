@@ -24,6 +24,8 @@ public class StudioService {
 
     @Autowired
     private StudioRepository studioRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     //스튜디오 등록
     @Transactional
@@ -188,4 +190,8 @@ public class StudioService {
         return findStudio.getImages();
     }
 
+    public List<Image> findImagesIsDelete(Long id, Character isDelete) {
+        Studio findStudio = studioRepository.getById(id);
+        return imageRepository.findByStudioAndIsDelete(findStudio, isDelete);
+    }
 }

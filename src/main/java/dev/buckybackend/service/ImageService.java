@@ -40,6 +40,13 @@ public class ImageService {
         return findImage.getId();
     }
 
+    //스튜디오 삭제(비활성화)
+    @Transactional
+    public void delete(Long id) {
+        Image findImage = imageRepository.getById(id);
+        findImage.setIsDelete('Y');
+    }
+
     //전체 이미지 조회
     public List<Image> findImages() {
         return imageRepository.findAll();
