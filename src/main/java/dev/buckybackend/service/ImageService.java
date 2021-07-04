@@ -28,6 +28,18 @@ public class ImageService {
         return image.getId();
     }
 
+    //이미지 수정
+    @Transactional
+    public Long update(Long imageId, Image image) {
+        Image findImage = imageRepository.getById(imageId);
+        findImage.setPeopleNum(image.getPeopleNum());
+        findImage.setSex(image.getSex());
+        findImage.setColor(image.getColor());
+        findImage.setOutdoor(image.isOutdoor());
+        findImage.setImage_url(image.getImage_url());
+        return findImage.getId();
+    }
+
     //전체 이미지 조회
     public List<Image> findImages() {
         return imageRepository.findAll();
