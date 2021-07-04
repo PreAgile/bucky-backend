@@ -94,13 +94,17 @@ public class StudioService {
     }
 
     //전체 스튜디오 조회(pagination)
-    public Page<Studio> findStudiosByNameOrderByCreateTimeDesc(String name, Pageable pageable) {
-        return studioRepository.findByNameContainsIgnoreCaseAndIsDelete(name, 'N', pageable);
+    public Page<Studio> findStudiosByNameAndIsDeletePageable(String name, Character isDelete, Pageable pageable) {
+        return studioRepository.findByNameContainsIgnoreCaseAndIsDelete(name, isDelete, pageable);
     }
 
     //특정 스튜디오 조회
     public Studio findStudio(Long id) {
         return studioRepository.getById(id);
+    }
+
+    public List<Studio> findStudiosByNameAndIsDelete(String name, Character isDelete) {
+        return studioRepository.findByNameContainsIgnoreCaseAndIsDelete(name, isDelete);
     }
 
     //스튜디오 주소 등록
