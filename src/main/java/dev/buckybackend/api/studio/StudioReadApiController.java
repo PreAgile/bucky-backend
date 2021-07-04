@@ -54,7 +54,7 @@ public class StudioReadApiController {
                                                @RequestParam Integer page,
                                                @RequestParam(required = false, defaultValue = Constant.STUDIO_LIST_SIZE) Integer size) {
         PageRequest sPage = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createTime")); //TODO: 필요 시 sort 받아서 처리
-        Page<Studio> findStudio = studioService.findStudiosByNameOrderByCreateTimeDesc(name, sPage);
+        Page<Studio> findStudio = studioService.findStudiosByNameAndIsDeletePageable(name, 'N', sPage);
 
         List<StudioPageDto> collect = findStudio.stream()
                 .map(s -> new StudioPageDto(

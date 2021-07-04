@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Long>, CustomStudioRepository {
 
-
     List<Studio> findByIsDelete(Character isDelete);
     List<Studio> findByName(String name);
     //pagination
     Page<Studio> findByNameContainsIgnoreCaseAndIsDelete(String name, Character isDelete, Pageable pageable);
+    //all
+    List<Studio> findByNameContainsIgnoreCaseAndIsDelete(String name, Character isDelete);
+
 }

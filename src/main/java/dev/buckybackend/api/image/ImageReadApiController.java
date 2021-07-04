@@ -73,6 +73,11 @@ public class ImageReadApiController {
         return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
     }
 
+    /**
+     * 유사한 컨셉 이미지 조회 API
+     * @param id
+     * @return
+     */
     @GetMapping("/api/v1/images/{id}/similar")
     public Result getImagesSimilar(@PathVariable("id") Long id) {
         PageRequest pageable = PageRequest.of(0, Constant.DETAIL_IMAGE_LIST_SIZE);
