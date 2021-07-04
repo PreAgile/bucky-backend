@@ -41,7 +41,7 @@ public class ImageServiceTest {
         option.setParking(true);
 
         PageRequest pageable = PageRequest.of(0, 10);
-        List<Studio> studios = studioRepository.findByNameContainsIgnoreCaseAndIsDeleteAndOption("",
+        List<Studio> studios = studioRepository.findByFilter("test",
                 'N',
                 option.getHairMakeup(),
                 option.getRentClothes(),

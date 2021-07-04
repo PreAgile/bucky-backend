@@ -45,13 +45,12 @@ public class StudioUpdateApiController {
         option.setRentClothes(request.isRent_clothes());
         option.setTanning(request.isTanning());
         option.setWaxing(request.isWaxing());
+        option.setParking(request.parking);
 
         studio.setOption(option);
 
-        studioService.update(id, studio, request.getUser_id());
-
-        Studio findStudio = studioService.findStudio(id);
-        return new UpdateStudioResponse(findStudio.getId());
+        Long studioId = studioService.update(id, studio, request.getUser_id());
+        return new UpdateStudioResponse(studioId);
     }
 
     @PutMapping("/api/v1/studios/{id}/addresses")

@@ -5,9 +5,11 @@ import dev.buckybackend.domain.Image;
 import dev.buckybackend.domain.PeopleNum;
 import dev.buckybackend.domain.Sex;
 import dev.buckybackend.service.ImageService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,12 +19,13 @@ import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
-public class ImageCreateApiController {
+public class ImageUpdateApiController {
 
     private final ImageService imageService;
 
-    @PostMapping("/api/v1/images")
-    public CreateImageResponse saveImage(@RequestBody @Valid CreateImageRequest request) {
+    @PutMapping("/api/v1/images/{id}")
+    public UpdateImageResponse updateImage(@PathVariable("id") Long id,
+                                           @RequestBody @Valid UpdateImageRequest request) {
         Image image = new Image();
         image.setPeopleNum(request.getPeople_num());
         image.setSex(request.getSex());
@@ -30,14 +33,12 @@ public class ImageCreateApiController {
         image.setOutdoor(request.isOutdoor());
         image.setImage_url(request.getImage_url());
 
-        image.setIs_delete('N');
-
-        Long id = imageService.upload(image, request.getStudio_id());
-        return new CreateImageResponse(id);
+        Long imageId = imageService.update(id, image);
+        return new UpdateImageResponse(imageId);
     }
 
     @Data
-    static class CreateImageRequest {
+    static class UpdateImageRequest {
         @NotNull
         private PeopleNum people_num;
         @NotNull
@@ -47,16 +48,13 @@ public class ImageCreateApiController {
         private boolean outdoor;
         @NotEmpty
         private String image_url;
-        @NotNull
-        private Long studio_id;
     }
 
     @Data
-    static class CreateImageResponse {
+    @AllArgsConstructor
+    static class UpdateImageResponse {
         private Long image_id;
-
-        public CreateImageResponse(Long image_id) {
-            this.image_id = image_id;
-        }
     }
+
+
 }

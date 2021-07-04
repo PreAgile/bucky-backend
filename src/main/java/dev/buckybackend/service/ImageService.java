@@ -28,6 +28,18 @@ public class ImageService {
         return image.getId();
     }
 
+    //이미지 수정
+    @Transactional
+    public Long update(Long imageId, Image image) {
+        Image findImage = imageRepository.getById(imageId);
+        findImage.setPeopleNum(image.getPeopleNum());
+        findImage.setSex(image.getSex());
+        findImage.setColor(image.getColor());
+        findImage.setOutdoor(image.isOutdoor());
+        findImage.setImage_url(image.getImage_url());
+        return findImage.getId();
+    }
+
     //전체 이미지 조회
     public List<Image> findImages() {
         return imageRepository.findAll();
@@ -40,14 +52,13 @@ public class ImageService {
 
     //필터값으로 이미지 조회
     public Page<Image> findImagesByFilterAndStudio(PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, List<Studio> studio, Pageable pageable) {
-//        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndStudioIn(peopleNum, sex, color, outdoor, studio, pageable);
         return imageRepository.findByFilterAndStudio(peopleNum, sex, color, outdoor, studio, pageable);
 
     }
 
     //스튜디오 & 필터값으로 이미지 조회
     public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Pageable pageable) {
-        List<Studio> findStudio = studioRepository.findByNameContainsIgnoreCaseAndIsDeleteAndOption(studioName,
+        List<Studio> findStudio = studioRepository.findByFilter(studioName,
                 'N',
                 studioOption.getHairMakeup(),
                 studioOption.getRentClothes(),

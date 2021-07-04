@@ -38,7 +38,7 @@ public class StudioService {
 
     //스튜디오 수정
     @Transactional
-    public void update(Long studioId, Studio studio, Long userId) {
+    public Long update(Long studioId, Studio studio, Long userId) {
         validateDuplicateStudioExceptId(studio, studioId);
         Studio findStudio = studioRepository.getById(studioId);
 
@@ -58,6 +58,7 @@ public class StudioService {
 
         Optional<User> findUser = userRepository.findById(userId);
         findUser.ifPresent(u -> findStudio.setUser(u));
+        return findStudio.getId();
     }
 
     //스튜디오 삭제(비활성화)
