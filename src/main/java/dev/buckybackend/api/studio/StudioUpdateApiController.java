@@ -45,6 +45,7 @@ public class StudioUpdateApiController {
         option.setRentClothes(request.isRent_clothes());
         option.setTanning(request.isTanning());
         option.setWaxing(request.isWaxing());
+        option.setParking(request.parking);
 
         studio.setOption(option);
 

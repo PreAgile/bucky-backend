@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,10 +49,6 @@ public class ImageCreateApiController {
         private String image_url;
         @NotNull
         private Long studio_id;
-
-        private LocalDateTime create_time;
-
-        private Character is_release;
     }
 
     @Data
