@@ -30,7 +30,7 @@ public class ImageCreateApiController {
         image.setOutdoor(request.isOutdoor());
         image.setImage_url(request.getImage_url());
 
-        image.setIs_delete('N');
+        image.setIsDelete('N');
 
         Long id = imageService.upload(image, request.getStudio_id());
         return new CreateImageResponse(id);

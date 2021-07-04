@@ -27,7 +27,7 @@ public class ImageRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         inColor(color),
                         eqOutdoor(outdoor),
                         inStudio(studios),
-                        image.is_delete.eq('N'))
+                        image.isDelete.eq('N'))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetchResults();

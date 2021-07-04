@@ -43,8 +43,8 @@ public class Image {
     @JsonBackReference
     private Studio studio;
 
-    @Column(nullable = false, columnDefinition = "char(1) default 'N'")
-    private Character is_delete;
+    @Column(name = "is_delete", nullable = false, columnDefinition = "char(1) default 'N'")
+    private Character isDelete;
 
     private Character is_release;
 
