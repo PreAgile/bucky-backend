@@ -52,14 +52,13 @@ public class ImageService {
 
     //필터값으로 이미지 조회
     public Page<Image> findImagesByFilterAndStudio(PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, List<Studio> studio, Pageable pageable) {
-//        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndStudioIn(peopleNum, sex, color, outdoor, studio, pageable);
         return imageRepository.findByFilterAndStudio(peopleNum, sex, color, outdoor, studio, pageable);
 
     }
 
     //스튜디오 & 필터값으로 이미지 조회
     public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Pageable pageable) {
-        List<Studio> findStudio = studioRepository.findByNameContainsIgnoreCaseAndIsDeleteAndOption(studioName,
+        List<Studio> findStudio = studioRepository.findByFilter(studioName,
                 'N',
                 studioOption.getHairMakeup(),
                 studioOption.getRentClothes(),
