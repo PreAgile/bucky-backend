@@ -21,10 +21,14 @@ public class ImageReadApiController {
 
     private final ImageService imageService;
 
+    /**
+     * 전체 이미지 조회
+     * @return
+     */
     @GetMapping("/api/v1/images/all")
     public Result getImages() {
         List<ImageListDto> collect = imageService.findImages().stream()
-                .map(m -> new ImageListDto(m.getId(), m.getStudio().getId(), m.getImage_url(),m.getIs_release()))
+                .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
@@ -36,7 +40,7 @@ public class ImageReadApiController {
     @GetMapping("/api/v1/images")
     public ImagePageResult getImagesPageable(@RequestParam(required = false, defaultValue = "") String name,
                                              @RequestParam(required = false, defaultValue = "0") Integer page,
-                                             @RequestParam(required = false, defaultValue = Constant.IMAGE_LIST_SIZE) Integer size,
+                                             @RequestParam(required = false, defaultValue = Constant.MAIN_IMAGE_LIST_SIZE) Integer size,
                                              @RequestParam(required = false) PeopleNum[] people_num,       //image: multiple select
                                              @RequestParam(required = false) Sex[] sex,                    //image: multiple select
                                              @RequestParam(required = false) Color[] color,                //image: multiple select
@@ -66,6 +70,15 @@ public class ImageReadApiController {
                 ))
                 .collect(Collectors.toList());
         return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
+    }
+
+    @GetMapping("/api/v1/images/{id}/similar")
+    public Result getImagesSimilar(@PathVariable("id") Long id) {
+        PageRequest pageable = PageRequest.of(0, Constant.DETAIL_IMAGE_LIST_SIZE);
+        List<ImageListDto> collect = imageService.findImagesSimilar(id, pageable).stream()
+                .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
+                .collect(Collectors.toList());
+        return new Result(collect.size(), collect);
     }
 
     @Data
