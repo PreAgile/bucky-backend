@@ -57,7 +57,7 @@ public class UserServiceImplTest {
         image.setOutdoor(true);
         image.setImage_url("www.bucky.com");
         image.setStudio(studio);
-        image.setIs_delete('N');
+        image.setIsDelete('N');
         image.setIs_release('N');
         image.setCreate_time(LocalDateTime.now());
 

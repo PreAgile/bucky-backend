@@ -16,5 +16,7 @@ public class Constant {
 
     //Constant
     public static final String STUDIO_LIST_SIZE = "16";
-    public static final String IMAGE_LIST_SIZE = "30";
+    public static final String MAIN_IMAGE_LIST_SIZE = "30";
+
+    public static final int DETAIL_IMAGE_LIST_SIZE = 10;
 }

@@ -67,4 +67,23 @@ public class ImageServiceTest {
         findImage.size();
     }
 
+    @Test
+    public void 같은_컨셉_이미지_조회() throws Exception {
+        //given
+        Image findImage = imageRepository.getById(19L);
+        PageRequest pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<Image> relatedImage = imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndIsDeleteAndIdNot(
+                findImage.getPeopleNum(),
+                findImage.getSex(),
+                findImage.getColor(),
+                findImage.isOutdoor(),
+                'N',
+                findImage.getId(),
+                pageable
+        );
+        //then
+        relatedImage.getTotalElements();
+    }
 }

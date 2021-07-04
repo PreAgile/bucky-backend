@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ImageDeleteApiController {
     private final ImageService imageService;
 
+    /**
+     * 이미지 삭제 API
+     * @param id
+     * @return
+     */
     @DeleteMapping("/api/v1/images/{id}")
     public DeleteImageResponse deleteImage(@PathVariable("id") Long id) {
         imageService.delete(id);

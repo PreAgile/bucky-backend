@@ -80,4 +80,18 @@ public class ImageService {
                 findStudio,
                 pageable);
     }
+
+    //유사한 컨셉의 이미지 조회
+    public Page<Image> findImagesSimilar(Long imageId, Pageable pageable) {
+        Image findImage = imageRepository.getById(imageId);
+        return imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndIsDeleteAndIdNot(
+                findImage.getPeopleNum(),
+                findImage.getSex(),
+                findImage.getColor(),
+                findImage.isOutdoor(),
+                'N',
+                findImage.getId(),
+                pageable
+        );
+    }
 }

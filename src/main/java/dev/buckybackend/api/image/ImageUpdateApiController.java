@@ -23,6 +23,12 @@ public class ImageUpdateApiController {
 
     private final ImageService imageService;
 
+    /**
+     * 이미지 수정 API
+     * @param id
+     * @param request
+     * @return
+     */
     @PutMapping("/api/v1/images/{id}")
     public UpdateImageResponse updateImage(@PathVariable("id") Long id,
                                            @RequestBody @Valid UpdateImageRequest request) {
