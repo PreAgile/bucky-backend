@@ -1,6 +1,8 @@
 package dev.buckybackend.api.user;
 
+import dev.buckybackend.domain.SelectList;
 import dev.buckybackend.domain.User;
+import dev.buckybackend.dto.SelectListDto;
 import dev.buckybackend.dto.UserDto;
 import dev.buckybackend.serviceImpl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -73,5 +75,19 @@ public class UserController {
     @DeleteMapping(value = "/api/v1/users/{id}")
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
+    }
+
+    @PostMapping(value = "/api/v1/users/selectList")
+    public void createSelectList(@RequestBody @Valid SelectListDto selectListDto) {
+        userService.saveSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
+    }
+    @GetMapping(value = "/api/v1/users/selectList/{id}")
+    public List<SelectListDto> getSelectList(@PathVariable("id") Long id) {
+        return userService.getSelectListDtoByUserId(id);
+    }
+
+    @DeleteMapping(value = "/api/v1/users/selectList")
+    public void deleteSelectList(@RequestBody @Valid SelectListDto selectListDto) {
+        userService.deleteSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
     }
 }
