@@ -22,7 +22,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final StudioRepository studioRepository;
-//    private final ImageLikeRepository imageLikeRepository;
+    private final ImageLikeRepository imageLikeRepository;
 
     //이미지 업로드
     @Transactional
@@ -31,7 +31,7 @@ public class ImageService {
         image.setStudio(findStudio);
         imageRepository.save(image);
         //Image를 업로드 하는 시점에 ImageLikeTable생성
-//        imageLikeRepository.initImageLikeNum(image.getId());
+        imageLikeRepository.initImageLikeNum(image.getId());
         return image.getId();
     }
 
@@ -113,16 +113,19 @@ public class ImageService {
 
     //이미지 Like 선택시 like_num 증가
 
-//    public void plusImageLikeNum(Long imageId) {
-//        imageLikeRepository.plusImageLikeNum(imageId);
-//    }
-//
-//    public void minusImageLikeNum(Long imageId) {
-//        imageLikeRepository.minusImageLikeNum(imageId);
-//    }
-//
-//    public ImageLike getImageLikeNum(Long imageId) {
-//        return imageLikeRepository.getImageLikeNum(imageId);
-//    }
+    @Transactional
+    public void plusImageLikeNum(Long imageId) {
+        imageLikeRepository.plusImageLikeNum(imageId);
+    }
+
+    @Transactional
+    public void minusImageLikeNum(Long imageId) {
+        imageLikeRepository.minusImageLikeNum(imageId);
+    }
+
+    @Transactional
+    public ImageLike getImageLikeNum(Long imageId) {
+        return imageLikeRepository.getImageLikeNum(imageId);
+    }
 
 }

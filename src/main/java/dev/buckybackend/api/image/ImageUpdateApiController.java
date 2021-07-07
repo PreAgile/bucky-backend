@@ -1,9 +1,7 @@
 package dev.buckybackend.api.image;
 
-import dev.buckybackend.domain.Color;
-import dev.buckybackend.domain.Image;
-import dev.buckybackend.domain.PeopleNum;
-import dev.buckybackend.domain.Sex;
+import dev.buckybackend.domain.*;
+import dev.buckybackend.dto.ImageLikeDto;
 import dev.buckybackend.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +39,22 @@ public class ImageUpdateApiController {
 
         Long imageId = imageService.update(id, image);
         return new UpdateImageResponse(imageId);
+    }
+
+    @PutMapping("/api/v1/images/{id}/plus")
+    public ImageLikeDto plusImageLikeNum(@PathVariable("id") Long id) {
+        imageService.plusImageLikeNum(id);
+        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+        // TODO: LikeNum이 그전값으로 나옴 확인 필요
+        return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num()+ 1);
+    }
+
+    @PutMapping("/api/v1/images/{id}/minus")
+    public ImageLikeDto minusImageLikeNum(@PathVariable("id") Long id) {
+        imageService.minusImageLikeNum(id);
+        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+        // TODO: LikeNum이 그전값으로 나옴 확인 필요
+        return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num() - 1);
     }
 
     @Data
