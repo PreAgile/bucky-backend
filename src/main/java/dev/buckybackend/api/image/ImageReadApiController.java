@@ -2,6 +2,8 @@ package dev.buckybackend.api.image;
 
 import dev.buckybackend.common.Constant;
 import dev.buckybackend.domain.*;
+import dev.buckybackend.dto.ImageDto;
+import dev.buckybackend.dto.ImageLikeDto;
 import dev.buckybackend.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +36,18 @@ public class ImageReadApiController {
                 .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
+    }
+
+    /**
+     * 이미지 조회
+     * @return
+     */
+    @GetMapping("/api/v1/images/{id}")
+    public ImageDto getImages(@PathVariable("id") Long id) {
+        Image image = imageService.findImageById(id);
+        return new ImageDto(image.getId(), image.getPeopleNum(), image.getSex(), image.getColor()
+        ,image.isOutdoor(),image.getImage_url(),image.getStudio().getId(), image.getCreate_time(),image.getUpdate_time()
+        ,image.getIsDelete(),image.getIs_release());
     }
 
     /**
@@ -86,6 +102,12 @@ public class ImageReadApiController {
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
+
+//    @GetMapping("/api/v1/images/{id}/likenum")
+//    public ImageLikeDto getImageLikeNum(@PathVariable("id") Long id) {
+//        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+//        return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num());
+//    }
 
     @Data
     @AllArgsConstructor
