@@ -137,16 +137,20 @@ public class StudioReadApiController {
      * @return
      */
     @GetMapping("/api/v1/studios/{id}/images")
-    public ImagesResult getStudioImages(@PathVariable("id") Long id) {
+    public ImagePageResult getStudioImages(@PathVariable("id") Long id,
+                                           @RequestParam(required = false, defaultValue = "0") Integer page,
+                                           @RequestParam(required = false, defaultValue = Constant.DETAIL_IMAGE_LIST_SIZE) Integer size) {
+        PageRequest pageable = PageRequest.of(page, size);
         List<ImageDto> collect = new ArrayList<>();
-        for (Image i : studioService.findImagesIsDelete(id, 'N')) {
+        Page<Image> findImage = studioService.findImagesIsDelete(id, 'N', pageable);
+        for (Image i : findImage) {
             ImageDto imageDto = new ImageDto(i.getId(), i.getPeopleNum(), i.getSex(),
                     i.getColor(), i.isOutdoor(), i.getImage_url(),
                     i.getStudio().getId(),i.getCreate_time(),i.getUpdate_time(),
                     i.getIsDelete(), i.getIs_release());
             collect.add(imageDto);
         }
-        return new ImagesResult(collect.size(), collect);
+        return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
     }
 
     @Data
@@ -232,8 +236,9 @@ public class StudioReadApiController {
 
     @Data
     @AllArgsConstructor
-    static class ImagesResult<T> {
+    static class ImagePageResult<T> {
         private int count;
+        private int last_page;
         private T images;
     }
 }

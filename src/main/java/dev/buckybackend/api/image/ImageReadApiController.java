@@ -79,12 +79,15 @@ public class ImageReadApiController {
      * @return
      */
     @GetMapping("/api/v1/images/{id}/similar")
-    public Result getImagesSimilar(@PathVariable("id") Long id) {
-        PageRequest pageable = PageRequest.of(0, Constant.DETAIL_IMAGE_LIST_SIZE);
-        List<ImageListDto> collect = imageService.findImagesSimilar(id, pageable).stream()
+    public ImagePageResult getImagesSimilar(@PathVariable("id") Long id,
+                                   @RequestParam(required = false, defaultValue = "0") Integer page,
+                                   @RequestParam(required = false, defaultValue = Constant.DETAIL_IMAGE_LIST_SIZE) Integer size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        Page<Image> findImage = imageService.findImagesSimilar(id, pageable);
+        List<ImageListDto> collect = findImage.stream()
                 .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
                 .collect(Collectors.toList());
-        return new Result(collect.size(), collect);
+        return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
     }
 
     @Data
