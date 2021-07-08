@@ -13,6 +13,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    querydsl.extendsFrom compileClasspath
 }
 
 repositories {
@@ -51,10 +52,6 @@ querydsl {
 
 sourceSets {
     main.java.srcDir querydslDir
-}
-
-configurations {
-    querydsl.extendsFrom compileClasspath
 }
 
 compileQuerydsl {
