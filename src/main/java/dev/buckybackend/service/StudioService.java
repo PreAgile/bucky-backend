@@ -194,8 +194,9 @@ public class StudioService {
         return findStudio.getImages();
     }
 
-    public List<Image> findImagesIsDelete(Long id, Character isDelete) {
+    //스튜디오별 이미지 조회
+    public Page<Image> findImagesIsDelete(Long id, Character isDelete, Pageable pageable) {
         Studio findStudio = studioRepository.getById(id);
-        return imageRepository.findByStudioAndIsDelete(findStudio, isDelete);
+        return imageRepository.findByStudioAndIsDelete(findStudio, isDelete, pageable);
     }
 }
