@@ -1,6 +1,8 @@
 package dev.buckybackend.repositoryImpl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.util.ArrayUtils;
 import dev.buckybackend.domain.Studio;
 import static dev.buckybackend.domain.QStudio.studio;
 import dev.buckybackend.repository.CustomStudioRepository;
@@ -23,24 +25,28 @@ public class StudioRepositoryImpl extends QuerydslRepositorySupport implements C
                         eqHairMakeup(hairMakeup),
                         eqRentClothes(rentClothes),
                         eqTanning(tanning),
-                        eqWaxing(waxing),
-                        loeMinPrice(maxPrice),
-                        goeMaxPrice(minPrice))
+                        eqWaxing(waxing))
+                .where(loeMinPrice(maxPrice))
+                .where(goeMaxPrice(minPrice))
                 .fetch();
     }
 
-    private BooleanExpression loeMinPrice(Integer[] maxPrice) {
-        if (maxPrice == null) {
+    private BooleanBuilder loeMinPrice(Integer[] maxPrice) {
+        if (ArrayUtils.isEmpty(maxPrice)) {
             return null;
         }
-        return studio.min_price.loeAny(maxPrice); //min_price <= maxPrice of filter
+        BooleanBuilder builder = new BooleanBuilder();
+        for (Integer i : maxPrice) builder.or(studio.min_price.loe(i)); //min_price <= any max_price filters
+        return builder;
     }
 
-    private BooleanExpression goeMaxPrice(Integer[] minPrice) {
-        if (minPrice == null || minPrice == 0) {
+    private BooleanBuilder goeMaxPrice(Integer[] minPrice) {
+        if (ArrayUtils.isEmpty(minPrice)) {
             return null;
         }
-        return studio.max_price.goe(minPrice); //max_price >= minPrice of filter
+        BooleanBuilder builder = new BooleanBuilder();
+        for (Integer i : minPrice) builder.or(studio.max_price.goe(i)); //max_price >= any min_price filters
+        return builder;
     }
 
     private BooleanExpression containsName(String name) {

@@ -67,8 +67,8 @@ public class ImageReadApiController {
                                              @RequestParam(required = false) Boolean tanning,              //studio
                                              @RequestParam(required = false) Boolean waxing,               //studio
                                              @RequestParam(required = false) Boolean parking,              //studio
-                                             @RequestParam(required = false) Integer[] min_price,
-                                             @RequestParam(required = false) Integer[] max_price) {
+                                             @RequestParam(required = false) Integer[] min_price,          //studio: multiple select
+                                             @RequestParam(required = false) Integer[] max_price) {        //studio: multiple select
         PageRequest iPage = PageRequest.of(page, size); //TODO: Sorting
         Option option = new Option();
         option.setHairMakeup(hair_makeup);
