@@ -1,6 +1,8 @@
 package dev.buckybackend.repositoryImpl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.util.ArrayUtils;
 import dev.buckybackend.domain.Studio;
 import static dev.buckybackend.domain.QStudio.studio;
 import dev.buckybackend.repository.CustomStudioRepository;
@@ -16,16 +18,35 @@ public class StudioRepositoryImpl extends QuerydslRepositorySupport implements C
     }
 
     @Override
-    public List<Studio> findByFilter(String name, Character isDelete, Boolean hairMakeup, Boolean rentClothes, Boolean tanning, Boolean waxing, Boolean parking) {
+    public List<Studio> findByFilter(String name, Character isDelete, Boolean hairMakeup, Boolean rentClothes, Boolean tanning, Boolean waxing, Boolean parking, Integer[] minPrice, Integer[] maxPrice) {
         return from(studio)
                 .where(containsName(name),
                         eqIsDelete(isDelete),
                         eqHairMakeup(hairMakeup),
                         eqRentClothes(rentClothes),
                         eqTanning(tanning),
-                        eqWaxing(waxing),
-                        eqParking(parking))
+                        eqWaxing(waxing))
+                .where(loeMinPrice(maxPrice))
+                .where(goeMaxPrice(minPrice))
                 .fetch();
+    }
+
+    private BooleanBuilder loeMinPrice(Integer[] maxPrice) {
+        if (ArrayUtils.isEmpty(maxPrice)) {
+            return null;
+        }
+        BooleanBuilder builder = new BooleanBuilder();
+        for (Integer i : maxPrice) builder.or(studio.min_price.loe(i)); //min_price <= any max_price filters
+        return builder;
+    }
+
+    private BooleanBuilder goeMaxPrice(Integer[] minPrice) {
+        if (ArrayUtils.isEmpty(minPrice)) {
+            return null;
+        }
+        BooleanBuilder builder = new BooleanBuilder();
+        for (Integer i : minPrice) builder.or(studio.max_price.goe(i)); //max_price >= any min_price filters
+        return builder;
     }
 
     private BooleanExpression containsName(String name) {
