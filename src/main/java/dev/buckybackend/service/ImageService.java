@@ -31,7 +31,7 @@ public class ImageService {
         image.setStudio(findStudio);
         imageRepository.save(image);
         //Image를 업로드 하는 시점에 ImageLikeTable생성
-        imageLikeRepository.initImageLikeNum(image.getId());
+        //imageLikeRepository.initImageLikeNum(image.getId());
         return image.getId();
     }
 
