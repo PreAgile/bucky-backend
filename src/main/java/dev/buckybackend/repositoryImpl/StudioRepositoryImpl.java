@@ -16,7 +16,7 @@ public class StudioRepositoryImpl extends QuerydslRepositorySupport implements C
     }
 
     @Override
-    public List<Studio> findByFilter(String name, Character isDelete, Boolean hairMakeup, Boolean rentClothes, Boolean tanning, Boolean waxing, Boolean parking) {
+    public List<Studio> findByFilter(String name, Character isDelete, Boolean hairMakeup, Boolean rentClothes, Boolean tanning, Boolean waxing, Boolean parking, Integer[] minPrice, Integer[] maxPrice) {
         return from(studio)
                 .where(containsName(name),
                         eqIsDelete(isDelete),
@@ -24,8 +24,23 @@ public class StudioRepositoryImpl extends QuerydslRepositorySupport implements C
                         eqRentClothes(rentClothes),
                         eqTanning(tanning),
                         eqWaxing(waxing),
-                        eqParking(parking))
+                        loeMinPrice(maxPrice),
+                        goeMaxPrice(minPrice))
                 .fetch();
+    }
+
+    private BooleanExpression loeMinPrice(Integer[] maxPrice) {
+        if (maxPrice == null) {
+            return null;
+        }
+        return studio.min_price.loeAny(maxPrice); //min_price <= maxPrice of filter
+    }
+
+    private BooleanExpression goeMaxPrice(Integer[] minPrice) {
+        if (minPrice == null || minPrice == 0) {
+            return null;
+        }
+        return studio.max_price.goe(minPrice); //max_price >= minPrice of filter
     }
 
     private BooleanExpression containsName(String name) {

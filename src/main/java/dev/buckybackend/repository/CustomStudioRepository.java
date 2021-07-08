@@ -13,5 +13,7 @@ public interface CustomStudioRepository {
                               @Param("rentClothes") Boolean rentClothes,
                               @Param("tanning") Boolean tanning,
                               @Param("waxing") Boolean waxing,
-                              @Param("parking") Boolean parking);
+                              @Param("parking") Boolean parking,
+                              @Param("minPrice") Integer[] minPrice,
+                              @Param("maxPrice") Integer[] maxPrice);
 }

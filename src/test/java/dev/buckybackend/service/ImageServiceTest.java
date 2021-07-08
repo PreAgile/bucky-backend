@@ -40,6 +40,8 @@ public class ImageServiceTest {
         option.setWaxing(false);
         option.setParking(true);
 
+        Integer[] min_price = {0};
+        Integer[] max_price = {100000};
         PageRequest pageable = PageRequest.of(0, 10);
         List<Studio> studios = studioRepository.findByFilter("test",
                 'N',
@@ -47,7 +49,9 @@ public class ImageServiceTest {
                 option.getRentClothes(),
                 option.getTanning(),
                 option.getWaxing(),
-                option.getParking());
+                option.getParking(),
+                min_price,
+                max_price);
 
         //when
 //        Page<Image> images = imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndStudioIn(people_num, sex, color, outdoor, studios, pageable);

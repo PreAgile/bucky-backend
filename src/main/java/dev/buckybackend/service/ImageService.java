@@ -80,14 +80,16 @@ public class ImageService {
     }
 
     //스튜디오 & 필터값으로 이미지 조회
-    public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Pageable pageable) {
+    public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Integer[] minPrice, Integer[] maxPrice, Pageable pageable) {
         List<Studio> findStudio = studioRepository.findByFilter(studioName,
                 'N',
                 studioOption.getHairMakeup(),
                 studioOption.getRentClothes(),
                 studioOption.getTanning(),
                 studioOption.getWaxing(),
-                studioOption.getParking());
+                studioOption.getParking(),
+                minPrice,
+                maxPrice);
         return this.findImagesByFilterAndStudio(
                 peopleNum,
                 sex,

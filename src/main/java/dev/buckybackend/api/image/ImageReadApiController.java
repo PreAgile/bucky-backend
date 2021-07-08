@@ -66,7 +66,9 @@ public class ImageReadApiController {
                                              @RequestParam(required = false) Boolean rent_clothes,         //studio
                                              @RequestParam(required = false) Boolean tanning,              //studio
                                              @RequestParam(required = false) Boolean waxing,               //studio
-                                             @RequestParam(required = false) Boolean parking) {            //studio
+                                             @RequestParam(required = false) Boolean parking,              //studio
+                                             @RequestParam(required = false) Integer[] min_price,
+                                             @RequestParam(required = false) Integer[] max_price) {
         PageRequest iPage = PageRequest.of(page, size); //TODO: Sorting
         Option option = new Option();
         option.setHairMakeup(hair_makeup);
@@ -75,7 +77,7 @@ public class ImageReadApiController {
         option.setWaxing(waxing);
         option.setParking(parking);
 
-        Page<Image> findImage = imageService.findImagesByFilter(name, option, people_num, sex, color, outdoor, iPage);
+        Page<Image> findImage = imageService.findImagesByFilter(name, option, people_num, sex, color, outdoor, min_price, max_price, iPage);
 
         List<ImagePageDto> collect = findImage.stream()
                 .map(i -> new ImagePageDto(
