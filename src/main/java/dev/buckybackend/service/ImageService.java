@@ -1,6 +1,7 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.*;
+import dev.buckybackend.repository.ImageLikeRepository;
 import dev.buckybackend.repository.ImageRepository;
 import dev.buckybackend.repository.StudioRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,6 +22,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final StudioRepository studioRepository;
+    private final ImageLikeRepository imageLikeRepository;
 
     //이미지 업로드
     @Transactional
@@ -25,6 +30,8 @@ public class ImageService {
         Studio findStudio = studioRepository.getById(studioId);
         image.setStudio(findStudio);
         imageRepository.save(image);
+        //Image를 업로드 하는 시점에 ImageLikeTable생성
+        imageLikeRepository.initImageLikeNum(image.getId());
         return image.getId();
     }
 
@@ -51,10 +58,19 @@ public class ImageService {
     public List<Image> findImages() {
         return imageRepository.findAll();
     }
-
     //스튜디오 정보로 이미지 조회
     public List<Image> findImagesByStudio(Studio studio) {
         return imageRepository.findByStudio(studio);
+    }
+
+    //이미지 조회
+    public Image findImageById(Long id) {
+        Optional<Image> image = imageRepository.findById(id);
+        AtomicReference<Image> returnImage = new AtomicReference<>();
+        image.ifPresentOrElse(returnImage::set, () -> {
+            throw new NoSuchElementException("이미지가 없습니다 ID : " + id);
+        });
+        return returnImage.get();
     }
 
     //필터값으로 이미지 조회
@@ -94,4 +110,22 @@ public class ImageService {
                 pageable
         );
     }
+
+    //이미지 Like 선택시 like_num 증가
+
+    @Transactional
+    public void plusImageLikeNum(Long imageId) {
+        imageLikeRepository.plusImageLikeNum(imageId);
+    }
+
+    @Transactional
+    public void minusImageLikeNum(Long imageId) {
+        imageLikeRepository.minusImageLikeNum(imageId);
+    }
+
+    @Transactional
+    public ImageLike getImageLikeNum(Long imageId) {
+        return imageLikeRepository.getImageLikeNum(imageId);
+    }
+
 }

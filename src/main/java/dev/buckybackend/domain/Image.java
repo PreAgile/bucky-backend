@@ -9,6 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -56,11 +58,13 @@ public class Image {
     @OneToOne(mappedBy = "image", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ImageLike imageLike;
 
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
+    private List<SelectList> selectLists = new ArrayList<>();
+
     /** 연관 관계 메서드 **/
     public void setStudio(Studio studio) {
         this.studio = studio;
         studio.getImages().add(this);
     }
-
 
 }

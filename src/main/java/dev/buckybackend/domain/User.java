@@ -53,4 +53,6 @@ public class User implements Serializable {
     )
     private List<Image> images = new ArrayList<>();
 
-}
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<SelectList> selectLists = new ArrayList<>();
+    }
