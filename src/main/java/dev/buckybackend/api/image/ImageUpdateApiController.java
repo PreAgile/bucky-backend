@@ -41,18 +41,18 @@ public class ImageUpdateApiController {
         return new UpdateImageResponse(imageId);
     }
 
-    @PutMapping("/api/v1/images/{id}/plus")
-    public ImageLikeDto plusImageLikeNum(@PathVariable("id") Long id) {
-        imageService.plusImageLikeNum(id);
-        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+    @PutMapping("/api/v1/images/plus/{userId}/{imageId}")
+    public ImageLikeDto plusImageLikeNum(@PathVariable("userId") Long userId, @PathVariable("imageId") Long imageId){
+        imageService.plusImageLikeNum(userId, imageId);
+        ImageLike imageLikeNum = imageService.getImageLikeNum(imageId);
         // TODO: LikeNum이 그전값으로 나옴 확인 필요
         return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num()+ 1);
     }
 
-    @PutMapping("/api/v1/images/{id}/minus")
-    public ImageLikeDto minusImageLikeNum(@PathVariable("id") Long id) {
-        imageService.minusImageLikeNum(id);
-        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+    @PutMapping("/api/v1/images/minus/{userId}/{imageId}")
+    public ImageLikeDto minusImageLikeNum(@PathVariable("userId") Long userId, @PathVariable("imageId") Long imageId) {
+        imageService.minusImageLikeNum(userId,imageId);
+        ImageLike imageLikeNum = imageService.getImageLikeNum(imageId);
         // TODO: LikeNum이 그전값으로 나옴 확인 필요
         return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num() - 1);
     }

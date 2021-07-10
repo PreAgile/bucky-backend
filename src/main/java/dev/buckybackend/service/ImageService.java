@@ -3,6 +3,7 @@ package dev.buckybackend.service;
 import dev.buckybackend.domain.*;
 import dev.buckybackend.repository.ImageLikeRepository;
 import dev.buckybackend.repository.ImageRepository;
+import dev.buckybackend.repository.SelectListRepository;
 import dev.buckybackend.repository.StudioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ public class ImageService {
     private final ImageRepository imageRepository;
     private final StudioRepository studioRepository;
     private final ImageLikeRepository imageLikeRepository;
+    private final SelectListRepository selectListRepository;
 
     //이미지 업로드
     @Transactional
@@ -113,16 +115,16 @@ public class ImageService {
         );
     }
 
-    //이미지 Like 선택시 like_num 증가
-
     @Transactional
-    public void plusImageLikeNum(Long imageId) {
+    public void plusImageLikeNum(Long userId, Long imageId) {
         imageLikeRepository.plusImageLikeNum(imageId);
+        selectListRepository.createById(userId,imageId);
     }
 
     @Transactional
-    public void minusImageLikeNum(Long imageId) {
+    public void minusImageLikeNum(Long userId, Long imageId) {
         imageLikeRepository.minusImageLikeNum(imageId);
+        selectListRepository.deleteById(userId, imageId);
     }
 
     @Transactional
