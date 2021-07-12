@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,11 +20,9 @@ public class LoginController {
     private final OAuth2KakaoService oAuth2KakaoService;
 
     @GetMapping("/api/oauth2/kakao")
-    public LoginDto oAuth2Kakao(@RequestParam("code") String code,
-                                @RequestBody(required = false) @Valid RedirectUrlRequest request) {
-        String redirectUrl = null;
-        if (request != null) redirectUrl = request.getRedirect_url();
-        OAuthTokenResult tokenResult = oAuth2KakaoService.getToken(code, redirectUrl);
+    public LoginDto oAuth2Kakao(@RequestParam String code,
+                                @RequestParam(required = false) String redirect_url) {
+        OAuthTokenResult tokenResult = oAuth2KakaoService.getToken(code, redirect_url);
         OAuthUserResult userResult = oAuth2KakaoService.getUserInfo(tokenResult);
 
         OAuthUserResult.KakaoAccount kakaoAccount = userResult.getKakao_account();
