@@ -7,12 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,8 +21,11 @@ public class LoginController {
     private final OAuth2KakaoService oAuth2KakaoService;
 
     @GetMapping("/api/oauth2/kakao")
-    public LoginDto oAuth2Kakao(@RequestParam("code") String code) {
-        OAuthTokenResult tokenResult = oAuth2KakaoService.getToken(code);
+    public LoginDto oAuth2Kakao(@RequestParam("code") String code,
+                                @RequestBody(required = false) @Valid RedirectUrlRequest request) {
+        String redirectUrl = null;
+        if (request != null) redirectUrl = request.getRedirect_url();
+        OAuthTokenResult tokenResult = oAuth2KakaoService.getToken(code, redirectUrl);
         OAuthUserResult userResult = oAuth2KakaoService.getUserInfo(tokenResult);
 
         OAuthUserResult.KakaoAccount kakaoAccount = userResult.getKakao_account();
@@ -58,5 +60,8 @@ public class LoginController {
         private String profile_image_url;
     }
 
-
+    @Data
+    static class RedirectUrlRequest {
+        private String redirect_url;
+    }
 }
