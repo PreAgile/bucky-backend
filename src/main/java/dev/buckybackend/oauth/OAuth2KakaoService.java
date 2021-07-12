@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.buckybackend.common.Constant;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OAuth2KakaoService {
@@ -37,6 +39,8 @@ public class OAuth2KakaoService {
         params.add("client_secret", Constant.CLIENT_SECRET);
         params.add("redirect_uri", StringUtils.hasText(redirect_url) ? redirect_url : Constant.REDIRECT_URI);
         params.add("code", code);
+
+        log.info("oauth params: " + params);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
