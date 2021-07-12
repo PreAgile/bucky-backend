@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +27,7 @@ public class OAuth2KakaoService {
      * @param code
      * @return
      */
-    public OAuthTokenResult getToken(String code) {
+    public OAuthTokenResult getToken(String code, String redirect_url) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
@@ -34,7 +35,7 @@ public class OAuth2KakaoService {
         params.add("grant_type", Constant.GRANT_TYPE);
         params.add("client_id", Constant.CLIENT_ID);
         params.add("client_secret", Constant.CLIENT_SECRET);
-        params.add("redirect_uri", Constant.REDIRECT_URI);
+        params.add("redirect_uri", StringUtils.hasText(redirect_url) ? redirect_url : Constant.REDIRECT_URI);
         params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
