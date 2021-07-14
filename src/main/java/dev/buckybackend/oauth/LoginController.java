@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +21,8 @@ public class LoginController {
 
     @GetMapping("/api/oauth2/kakao")
     public LoginDto oAuth2Kakao(@RequestParam String code,
-                                @RequestParam(required = false) String redirect_url) {
+                                @RequestParam(required = false) String redirect_url,
+                                HttpSession session) {
         OAuthTokenResult tokenResult = oAuth2KakaoService.getToken(code, redirect_url);
         OAuthUserResult userResult = oAuth2KakaoService.getUserInfo(tokenResult);
 
