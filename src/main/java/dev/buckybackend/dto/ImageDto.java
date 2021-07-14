@@ -19,6 +19,7 @@ public class ImageDto {
     private boolean outdoor;
     private String image_url;
     private Long studio_id;
+    private String studio_name;
     private LocalDateTime create_time;
     private LocalDateTime update_time;
     private Character is_delete;

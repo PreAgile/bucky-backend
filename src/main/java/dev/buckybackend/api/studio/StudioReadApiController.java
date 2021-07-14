@@ -146,7 +146,7 @@ public class StudioReadApiController {
         for (Image i : findImage) {
             ImageDto imageDto = new ImageDto(i.getId(), i.getPeopleNum(), i.getSex(),
                     i.getColor(), i.isOutdoor(), i.getImage_url(),
-                    i.getStudio().getId(),i.getCreate_time(),i.getUpdate_time(),
+                    i.getStudio().getId(),i.getStudio().getName(),i.getCreate_time(),i.getUpdate_time(),
                     i.getIsDelete(), i.getIs_release());
             collect.add(imageDto);
         }

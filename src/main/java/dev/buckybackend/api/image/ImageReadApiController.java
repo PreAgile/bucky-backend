@@ -49,7 +49,7 @@ public class ImageReadApiController {
     public ImageDto getImages(@PathVariable("id") Long id) {
         Image image = imageService.findImageById(id);
         return new ImageDto(image.getId(), image.getPeopleNum(), image.getSex(), image.getColor()
-        ,image.isOutdoor(),image.getImage_url(),image.getStudio().getId(), image.getCreate_time(),image.getUpdate_time()
+        ,image.isOutdoor(),image.getImage_url(),image.getStudio().getId(), image.getStudio().getName(),image.getCreate_time(),image.getUpdate_time()
         ,image.getIsDelete(),image.getIs_release());
     }
 
