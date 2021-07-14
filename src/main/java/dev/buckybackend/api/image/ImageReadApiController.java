@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +31,12 @@ public class ImageReadApiController {
     @GetMapping("/api/v1/images/all")
     public Result getImages() {
         List<ImageListDto> collect = imageService.findImages().stream()
-                .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
+                .map(i -> new ImageListDto(
+                        i.getId(),
+                        i.getStudio().getId(),
+                        i.getStudio().getName(),
+                        i.getImage_url(),
+                        i.getIs_release()))
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
     }
@@ -103,7 +106,12 @@ public class ImageReadApiController {
         PageRequest pageable = PageRequest.of(page, size);
         Page<Image> findImage = imageService.findImagesSimilar(id, pageable);
         List<ImageListDto> collect = findImage.stream()
-                .map(i -> new ImageListDto(i.getId(), i.getStudio().getId(), i.getImage_url(), i.getIs_release()))
+                .map(i -> new ImageListDto(
+                        i.getId(),
+                        i.getStudio().getId(),
+                        i.getStudio().getName(),
+                        i.getImage_url(),
+                        i.getIs_release()))
                 .collect(Collectors.toList());
         return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
     }
@@ -134,6 +142,7 @@ public class ImageReadApiController {
     static class ImageListDto {
         private Long image_id;
         private Long studio_id;
+        private String studio_name;
         private String image_url;
         private Character is_release;
     }
@@ -144,7 +153,7 @@ public class ImageReadApiController {
         private Long image_id;
         private String image_url;
         private Long studio_id;
-        private String name;
+        private String studio_name;
         private Character is_release;
         //TODO: image like 여부
     }
