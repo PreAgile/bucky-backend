@@ -32,7 +32,7 @@ public class UserController {
                     user.getStudio(),
                     user.getMemo(),
                     user.getRole(),
-                    user.getImages()
+                    user.getSelectLists()
             );
             returnDto.set(userDto);
         });
@@ -44,7 +44,7 @@ public class UserController {
         List<UserDto> userDtoList = new ArrayList<>();
         List<User> allUsers = userService.getAllUsers();
         allUsers.forEach(s -> {
-            UserDto userDto = new UserDto(s.getId(), s.getName(), s.getEmail(), s.getStudio(), s.getMemo(), s.getRole(), s.getImages());
+            UserDto userDto = new UserDto(s.getId(), s.getName(), s.getEmail(), s.getStudio(), s.getMemo(), s.getRole(), s.getSelectLists());
             userDtoList.add(userDto);
         });
         return userDtoList;
@@ -67,7 +67,7 @@ public class UserController {
             u.setCreate_time(user.getCreate_time());
             u.setRecent_login_time(user.getRecent_login_time());
             u.setRole(user.getRole());
-            u.setImages(user.getImages());
+            u.setSelectLists(user.getSelectLists());
             userService.updateUser(u);
         });
     }
@@ -77,16 +77,18 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    /* image like로 커버 가능하므로 미지원 */
 //    @PostMapping(value = "/api/v1/users/selectList")
 //    public void createSelectList(@RequestBody @Valid SelectListDto selectListDto) {
 //        userService.saveSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
 //    }
 
-    @GetMapping(value = "/api/v1/users/selectList/{id}")
-    public List<SelectListDto> getSelectList(@PathVariable("id") Long id) {
-        return userService.getSelectListDtoByUserId(id);
+    @GetMapping(value = "/api/v1/users/selectList/{user_id}")
+    public List<SelectListDto> getSelectList(@PathVariable("user_id") Long user_id) {
+        return userService.getSelectListDtoByUserId(user_id);
     }
 
+    /* image unlike로 커버 가능하므로 미지원 */
 //    @DeleteMapping(value = "/api/v1/users/selectList")
 //    public void deleteSelectList(@RequestBody @Valid SelectListDto selectListDto) {
 //        userService.deleteSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
