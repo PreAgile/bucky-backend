@@ -77,17 +77,18 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-    @PostMapping(value = "/api/v1/users/selectList")
-    public void createSelectList(@RequestBody @Valid SelectListDto selectListDto) {
-        userService.saveSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
-    }
+//    @PostMapping(value = "/api/v1/users/selectList")
+//    public void createSelectList(@RequestBody @Valid SelectListDto selectListDto) {
+//        userService.saveSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
+//    }
+
     @GetMapping(value = "/api/v1/users/selectList/{id}")
     public List<SelectListDto> getSelectList(@PathVariable("id") Long id) {
         return userService.getSelectListDtoByUserId(id);
     }
 
-    @DeleteMapping(value = "/api/v1/users/selectList")
-    public void deleteSelectList(@RequestBody @Valid SelectListDto selectListDto) {
-        userService.deleteSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
-    }
+//    @DeleteMapping(value = "/api/v1/users/selectList")
+//    public void deleteSelectList(@RequestBody @Valid SelectListDto selectListDto) {
+//        userService.deleteSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
+//    }
 }
