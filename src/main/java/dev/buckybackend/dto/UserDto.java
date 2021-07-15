@@ -1,7 +1,7 @@
 package dev.buckybackend.dto;
 
-import dev.buckybackend.domain.Image;
 import dev.buckybackend.domain.Role;
+import dev.buckybackend.domain.SelectList;
 import dev.buckybackend.domain.Studio;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +25,5 @@ public class UserDto {
     private Studio studio;
     private String memo;
     private Role role;
-    private List<Image> images = new ArrayList<>();
+    private List<SelectList> images = new ArrayList<>();
 }
