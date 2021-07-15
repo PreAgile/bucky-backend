@@ -46,13 +46,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     private Role role;
 
-    @ManyToMany
-    @JoinTable(name = "pick_list",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id")
-    )
-    private List<Image> images = new ArrayList<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<SelectList> selectLists = new ArrayList<>();
-    }
+}
