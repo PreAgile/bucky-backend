@@ -6,10 +6,7 @@ import dev.buckybackend.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -41,7 +38,7 @@ public class ImageUpdateApiController {
         return new UpdateImageResponse(imageId);
     }
 
-    @PutMapping("/api/v1/images/plus/{userId}/{imageId}")
+    @PutMapping("/api/v1/images/{imageId}/like/{userId}")
     public ImageLikeDto plusImageLikeNum(@PathVariable("userId") Long userId, @PathVariable("imageId") Long imageId){
         imageService.plusImageLikeNum(userId, imageId);
         ImageLike imageLikeNum = imageService.getImageLikeNum(imageId);
@@ -49,7 +46,7 @@ public class ImageUpdateApiController {
         return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num()+ 1);
     }
 
-    @PutMapping("/api/v1/images/minus/{userId}/{imageId}")
+    @DeleteMapping("/api/v1/images/{imageId}/unlike/{userId}")
     public ImageLikeDto minusImageLikeNum(@PathVariable("userId") Long userId, @PathVariable("imageId") Long imageId) {
         imageService.minusImageLikeNum(userId,imageId);
         ImageLike imageLikeNum = imageService.getImageLikeNum(imageId);

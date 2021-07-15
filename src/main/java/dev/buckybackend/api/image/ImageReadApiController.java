@@ -116,9 +116,14 @@ public class ImageReadApiController {
         return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
     }
 
-    @GetMapping("/api/v1/images/{id}/likenum")
-    public ImageLikeDto getImageLikeNum(@PathVariable("id") Long id) {
-        ImageLike imageLikeNum = imageService.getImageLikeNum(id);
+    /**
+     * 이미지 like num 조회
+     * @param image_id
+     * @return
+     */
+    @GetMapping("/api/v1/images/{image_id}/likes")
+    public ImageLikeDto getImageLikeNum(@PathVariable("image_id") Long image_id) {
+        ImageLike imageLikeNum = imageService.getImageLikeNum(image_id);
         return new ImageLikeDto(imageLikeNum.getImage().getId(), imageLikeNum.getLike_num());
     }
 
