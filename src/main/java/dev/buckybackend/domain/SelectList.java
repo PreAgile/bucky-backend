@@ -1,5 +1,6 @@
 package dev.buckybackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import dev.buckybackend.dto.SelectListID;
 import lombok.*;
 
@@ -15,12 +16,14 @@ import java.io.Serializable;
 public class SelectList implements Serializable {
 
     @Id
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Id
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
+    @JsonBackReference
     private Image image;
 }

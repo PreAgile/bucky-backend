@@ -1,6 +1,7 @@
 package dev.buckybackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -59,6 +60,7 @@ public class Image {
     private ImageLike imageLike;
 
     @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<SelectList> selectLists = new ArrayList<>();
 
     /** 연관 관계 메서드 **/

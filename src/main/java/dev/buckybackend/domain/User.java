@@ -47,5 +47,6 @@ public class User implements Serializable {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<SelectList> selectLists = new ArrayList<>();
 }
