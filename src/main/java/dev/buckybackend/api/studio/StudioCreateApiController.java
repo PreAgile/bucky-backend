@@ -7,6 +7,7 @@ import dev.buckybackend.dto.PhoneListDto;
 import dev.buckybackend.service.StudioService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class StudioCreateApiController {
 
     private final StudioService studioService;
@@ -35,6 +37,7 @@ public class StudioCreateApiController {
      */
     @PostMapping("/api/v1/studios")
     public CreateStudioResponse saveStudio(@RequestBody @Valid CreateStudioRequest request) {
+        log.info("request incoming: " + request);
         Studio studio = new Studio();
         studio.setName(request.getName());
 
@@ -59,6 +62,7 @@ public class StudioCreateApiController {
 
         studio.setIsDelete('N'); //생성할 때는 Default N
 
+        log.info("register studio: " + studio);
         Long id = studioService.register(studio, request.getUser_id());
         return new CreateStudioResponse(id);
     }
