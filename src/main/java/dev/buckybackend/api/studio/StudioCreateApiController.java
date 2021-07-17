@@ -62,7 +62,6 @@ public class StudioCreateApiController {
 
         studio.setIsDelete('N'); //생성할 때는 Default N
 
-        log.info("register studio: " + studio);
         Long id = studioService.register(studio, request.getUser_id());
         return new CreateStudioResponse(id);
     }
