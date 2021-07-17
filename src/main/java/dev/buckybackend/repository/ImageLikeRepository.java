@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -64,9 +63,11 @@ public class ImageLikeRepository {
     public void minusImageLikeNum(Long imageId) {
         ImageLike imageLike = getImageLikeNum(imageId);
         Integer likeNum = imageLike.getLike_num() - 1;
-        em.createQuery("update ImageLike i set i.like_num = :likeNum")
-                .setParameter("likeNum", likeNum)
-                .executeUpdate();
+        if (likeNum >= 0) {
+            em.createQuery("update ImageLike i set i.like_num = :likeNum")
+                    .setParameter("likeNum", likeNum)
+                    .executeUpdate();
+        }
     }
 
 }

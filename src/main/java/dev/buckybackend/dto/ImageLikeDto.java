@@ -9,5 +9,4 @@ public class ImageLikeDto {
 
     private Long image_id;
 
-    private Integer like_num;
 }
