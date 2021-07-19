@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,7 +73,7 @@ public class ImageReadApiController {
                                              @RequestParam(required = false) Boolean parking,              //studio
                                              @RequestParam(required = false) Integer[] min_price,          //studio: multiple select
                                              @RequestParam(required = false) Integer[] max_price) {        //studio: multiple select
-        PageRequest iPage = PageRequest.of(page, size); //TODO: Sorting
+        PageRequest iPage = PageRequest.of(page, size, Sort.by("create_time").descending()); //등록 최신순
         Option option = new Option();
         option.setHairMakeup(hair_makeup);
         option.setRentClothes(rent_clothes);

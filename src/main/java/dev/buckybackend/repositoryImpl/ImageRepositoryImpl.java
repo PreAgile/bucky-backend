@@ -1,7 +1,10 @@
 package dev.buckybackend.repositoryImpl;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.core.util.ArrayUtils;
 import dev.buckybackend.domain.*;;
 import static dev.buckybackend.domain.QImage.image;
@@ -9,8 +12,10 @@ import dev.buckybackend.repository.CustomImageRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageRepositoryImpl extends QuerydslRepositorySupport implements CustomImageRepository {
@@ -30,6 +35,10 @@ public class ImageRepositoryImpl extends QuerydslRepositorySupport implements Cu
                         image.isDelete.eq('N'))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(
+                        getOrderSpecifier(pageable.getSort())
+                                .stream().toArray(OrderSpecifier[]::new)
+                )
                 .fetchResults();
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
@@ -64,5 +73,17 @@ public class ImageRepositoryImpl extends QuerydslRepositorySupport implements Cu
 
     private BooleanExpression inStudio(List<Studio> studios) {
         return image.studio.in(studios);
+    }
+
+    private List<OrderSpecifier> getOrderSpecifier(Sort sort) {
+        List<OrderSpecifier> orders = new ArrayList<>();
+        // Sort
+        sort.stream().forEach(order -> {
+            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
+            String prop = order.getProperty();
+            PathBuilder orderByExpression = new PathBuilder(Image.class, "image");
+            orders.add(new OrderSpecifier(direction, orderByExpression.get(prop)));
+        });
+        return orders;
     }
 }
