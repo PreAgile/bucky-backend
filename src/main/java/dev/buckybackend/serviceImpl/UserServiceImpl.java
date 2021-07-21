@@ -3,8 +3,9 @@ package dev.buckybackend.serviceImpl;
 import dev.buckybackend.domain.SelectList;
 import dev.buckybackend.domain.User;
 import dev.buckybackend.dto.SelectListDto;
-import dev.buckybackend.repository.ImageRepository;
+import dev.buckybackend.dto.StudioSelectNumDto;
 import dev.buckybackend.repository.SelectListRepository;
+import dev.buckybackend.repository.StudioRepository;
 import dev.buckybackend.repository.UserRepository;
 import dev.buckybackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ImageRepository imageRepository;
+    private StudioRepository studioRepository;
     @Autowired
     private SelectListRepository selectListRepository;
 
@@ -74,10 +75,14 @@ public class UserServiceImpl implements UserService {
         List<SelectList> selectLists = selectListRepository.findById(id);
         List<SelectListDto> selectListDtoList = new ArrayList<>();
         selectLists.forEach(s -> {
-            SelectListDto selectListDto = new SelectListDto(s.getUser().getId(),s.getImage().getId());
+            SelectListDto selectListDto = new SelectListDto(s.getUser().getId(), s.getImage().getId(), s.getImage().getImage_url());
             selectListDtoList.add(selectListDto);
         });
         return selectListDtoList;
+    }
+
+    public List<StudioSelectNumDto> findStudioLikeNumByUser(Long userId) {
+        return studioRepository.findStudioImageLikeNumByUser(userId);
     }
 
     @Override

@@ -1,10 +1,13 @@
 package dev.buckybackend.api.user;
 
-import dev.buckybackend.domain.SelectList;
 import dev.buckybackend.domain.User;
 import dev.buckybackend.dto.SelectListDto;
+import dev.buckybackend.dto.StudioSelectNumDto;
 import dev.buckybackend.dto.UserDto;
+import dev.buckybackend.service.StudioService;
 import dev.buckybackend.serviceImpl.UserServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,9 +86,16 @@ public class UserController {
 //        userService.saveSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
 //    }
 
-    @GetMapping(value = "/api/v1/users/selectList/{user_id}")
-    public List<SelectListDto> getSelectList(@PathVariable("user_id") Long user_id) {
-        return userService.getSelectListDtoByUserId(user_id);
+    @GetMapping(value = "/api/v1/users/{user_id}/selectList")
+    public Result getSelectList(@PathVariable("user_id") Long user_id) {
+        List<SelectListDto> collect = userService.getSelectListDtoByUserId(user_id);
+        return new Result(collect.size(), collect);
+    }
+
+    @GetMapping(value = "/api/v1/users/{user_id}/selectList/studios")
+    public Result getSelectListStudio(@PathVariable("user_id") Long id) {
+        List<StudioSelectNumDto> collect = userService.findStudioLikeNumByUser(id); //studio_id, studio_name, like_num
+        return new Result(collect.size(), collect);
     }
 
     /* image unlike로 커버 가능하므로 미지원 */
@@ -93,4 +103,11 @@ public class UserController {
 //    public void deleteSelectList(@RequestBody @Valid SelectListDto selectListDto) {
 //        userService.deleteSelectListByImageId(selectListDto.getUser_id(), selectListDto.getImage_id());
 //    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private int count;
+        private T select_list;
+    }
 }
