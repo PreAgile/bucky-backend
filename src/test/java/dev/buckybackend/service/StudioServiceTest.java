@@ -2,6 +2,7 @@ package dev.buckybackend.service;
 
 import dev.buckybackend.domain.Option;
 import dev.buckybackend.domain.Studio;
+import dev.buckybackend.dto.StudioSelectNumDto;
 import dev.buckybackend.repository.StudioRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -89,5 +91,12 @@ public class StudioServiceTest {
 
         //then
         fail("예외가 발생해야 한다.");
+    }
+
+    @Test
+    public void 유저별_스튜디오_좋아요수_조회() {
+        List<StudioSelectNumDto> studio = studioRepository.findStudioImageLikeNumByUser(1775712869L);
+
+        studio.size();
     }
 }
