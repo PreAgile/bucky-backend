@@ -11,6 +11,7 @@ public class SelectListDto {
 
     private Long user_id;
     private Long image_id;
-    private String studio_id;
+    private String image_url;
+    private Long studio_id;
 
 }
