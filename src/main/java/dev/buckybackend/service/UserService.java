@@ -1,7 +1,7 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.User;
-import dev.buckybackend.dto.SelectListDto;
+import dev.buckybackend.dto.ImageListDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface UserService {
     public abstract void deleteUser(Long id);
     public abstract List<User> getAllUsers();
 
-    public abstract List<SelectListDto> getSelectListDtoByUserId(Long id);
+    public abstract List<ImageListDto> getSelectListDtoByUserId(Long id);
 
     public abstract void saveSelectListByImageId(Long userId, Long imageId);
 
