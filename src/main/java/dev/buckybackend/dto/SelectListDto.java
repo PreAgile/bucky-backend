@@ -13,5 +13,7 @@ public class SelectListDto {
     private Long image_id;
     private String image_url;
     private Long studio_id;
+    private String studio_name;
+    private Character is_release;
 
 }

@@ -75,7 +75,14 @@ public class UserServiceImpl implements UserService {
         List<SelectList> selectLists = selectListRepository.findById(id);
         List<SelectListDto> selectListDtoList = new ArrayList<>();
         selectLists.forEach(s -> {
-            SelectListDto selectListDto = new SelectListDto(s.getUser().getId(), s.getImage().getId(), s.getImage().getImage_url(), s.getImage().getStudio().getId());
+            SelectListDto selectListDto = new SelectListDto(
+                    s.getUser().getId(),
+                    s.getImage().getId(),
+                    s.getImage().getImage_url(),
+                    s.getImage().getStudio().getId(),
+                    s.getImage().getStudio().getName(),
+                    s.getImage().getIs_release()
+            );
             selectListDtoList.add(selectListDto);
         });
         return selectListDtoList;
