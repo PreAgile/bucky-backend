@@ -1,6 +1,7 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.*;
+import dev.buckybackend.dto.ImageListDto;
 import dev.buckybackend.repository.ImageRepository;
 import dev.buckybackend.repository.StudioRepository;
 import org.junit.Test;
@@ -43,7 +44,10 @@ public class ImageServiceTest {
         Integer[] min_price = {0};
         Integer[] max_price = {100000};
         PageRequest pageable = PageRequest.of(0, 10);
-        List<Studio> studios = studioRepository.findByFilter("test",
+
+        //when
+        Page<ImageListDto> images = imageRepository.findByFilterAndStudio(
+                "test",
                 'N',
                 option.getHairMakeup(),
                 option.getRentClothes(),
@@ -51,11 +55,12 @@ public class ImageServiceTest {
                 option.getWaxing(),
                 option.getParking(),
                 min_price,
-                max_price);
-
-        //when
-//        Page<Image> images = imageRepository.findByPeopleNumAndSexAndColorAndOutdoorAndStudioIn(people_num, sex, color, outdoor, studios, pageable);
-        Page<Image> images = imageRepository.findByFilterAndStudio(people_num, sex, color, outdoor, studios, pageable);
+                max_price,
+                people_num,
+                sex,
+                color,
+                outdoor,
+                pageable);
 
         //then
          images.getTotalElements();

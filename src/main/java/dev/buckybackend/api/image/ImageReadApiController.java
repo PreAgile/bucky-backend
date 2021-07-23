@@ -4,6 +4,7 @@ import dev.buckybackend.common.Constant;
 import dev.buckybackend.domain.*;
 import dev.buckybackend.dto.ImageDto;
 import dev.buckybackend.dto.ImageLikeDto;
+import dev.buckybackend.dto.ImageListDto;
 import dev.buckybackend.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,9 +35,9 @@ public class ImageReadApiController {
         List<ImageListDto> collect = imageService.findImages().stream()
                 .map(i -> new ImageListDto(
                         i.getId(),
+                        i.getImage_url(),
                         i.getStudio().getId(),
                         i.getStudio().getName(),
-                        i.getImage_url(),
                         i.getIs_release()))
                 .collect(Collectors.toList());
         return new Result(collect.size(), collect);
@@ -81,18 +82,9 @@ public class ImageReadApiController {
         option.setWaxing(waxing);
         option.setParking(parking);
 
-        Page<Image> findImage = imageService.findImagesByFilter(name, option, people_num, sex, color, outdoor, min_price, max_price, iPage);
+        Page<dev.buckybackend.dto.ImageListDto> collect = imageService.findImagesByFilter(name, option, people_num, sex, color, outdoor, min_price, max_price, iPage);
 
-        List<ImagePageDto> collect = findImage.stream()
-                .map(i -> new ImagePageDto(
-                        i.getId(),
-                        i.getImage_url(),
-                        i.getStudio().getId(),
-                        i.getStudio().getName(),
-                        i.getIs_release()
-                ))
-                .collect(Collectors.toList());
-        return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
+        return new ImagePageResult(Long.valueOf(collect.getTotalElements()).intValue(), collect.getTotalPages(), collect.getContent());
     }
 
     /**
@@ -109,9 +101,9 @@ public class ImageReadApiController {
         List<ImageListDto> collect = findImage.stream()
                 .map(i -> new ImageListDto(
                         i.getId(),
+                        i.getImage_url(),
                         i.getStudio().getId(),
                         i.getStudio().getName(),
-                        i.getImage_url(),
                         i.getIs_release()))
                 .collect(Collectors.toList());
         return new ImagePageResult(collect.size(), findImage.getTotalPages(), collect);
@@ -143,24 +135,6 @@ public class ImageReadApiController {
         private T images;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class ImageListDto {
-        private Long image_id;
-        private Long studio_id;
-        private String studio_name;
-        private String image_url;
-        private Character is_release;
-    }
 
-    @Data
-    @AllArgsConstructor
-    static class ImagePageDto {
-        private Long image_id;
-        private String image_url;
-        private Long studio_id;
-        private String studio_name;
-        private Character is_release;
-        //TODO: image like 여부
-    }
+
 }

@@ -2,7 +2,7 @@ package dev.buckybackend.serviceImpl;
 
 import dev.buckybackend.domain.SelectList;
 import dev.buckybackend.domain.User;
-import dev.buckybackend.dto.SelectListDto;
+import dev.buckybackend.dto.ImageListDto;
 import dev.buckybackend.dto.StudioSelectNumDto;
 import dev.buckybackend.repository.SelectListRepository;
 import dev.buckybackend.repository.StudioRepository;
@@ -71,24 +71,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SelectListDto> getSelectListDtoByUserId(Long id) {
+    public List<ImageListDto> getSelectListDtoByUserId(Long id) {
         List<SelectList> selectLists = selectListRepository.findById(id);
-        List<SelectListDto> selectListDtoList = new ArrayList<>();
+        List<ImageListDto> images = new ArrayList<>();
         selectLists.forEach(s -> {
-            SelectListDto selectListDto = new SelectListDto(
-                    s.getUser().getId(),
+            ImageListDto selectListDto = new ImageListDto(
                     s.getImage().getId(),
                     s.getImage().getImage_url(),
                     s.getImage().getStudio().getId(),
                     s.getImage().getStudio().getName(),
                     s.getImage().getIs_release()
             );
-            selectListDtoList.add(selectListDto);
+            images.add(selectListDto);
         });
-        return selectListDtoList;
+        return images;
     }
 
-    public List<StudioSelectNumDto> findStudioLikeNumByUser(Long userId) {
+    public List<StudioSelectNumDto> findStudioLikeNumByUserId(Long userId) {
         return studioRepository.findStudioImageLikeNumByUser(userId);
     }
 

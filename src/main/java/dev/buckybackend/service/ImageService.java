@@ -1,6 +1,7 @@
 package dev.buckybackend.service;
 
 import dev.buckybackend.domain.*;
+import dev.buckybackend.dto.ImageListDto;
 import dev.buckybackend.repository.ImageLikeRepository;
 import dev.buckybackend.repository.ImageRepository;
 import dev.buckybackend.repository.SelectListRepository;
@@ -32,8 +33,6 @@ public class ImageService {
         Studio findStudio = studioRepository.getById(studioId);
         image.setStudio(findStudio);
         imageRepository.save(image);
-        //Image를 업로드 하는 시점에 ImageLikeTable생성
-        //imageLikeRepository.initImageLikeNum(image.getId());
         return image.getId();
     }
 
@@ -75,15 +74,10 @@ public class ImageService {
         return returnImage.get();
     }
 
-    //필터값으로 이미지 조회
-    public Page<Image> findImagesByFilterAndStudio(PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, List<Studio> studio, Pageable pageable) {
-        return imageRepository.findByFilterAndStudio(peopleNum, sex, color, outdoor, studio, pageable);
-
-    }
-
     //스튜디오 & 필터값으로 이미지 조회
-    public Page<Image> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Integer[] minPrice, Integer[] maxPrice, Pageable pageable) {
-        List<Studio> findStudio = studioRepository.findByFilter(studioName,
+    public Page<ImageListDto> findImagesByFilter(String studioName, Option studioOption, PeopleNum[] peopleNum, Sex[] sex, Color[] color, Boolean outdoor, Integer[] minPrice, Integer[] maxPrice, Pageable pageable) {
+        return imageRepository.findByFilterAndStudio(
+                studioName,
                 'N',
                 studioOption.getHairMakeup(),
                 studioOption.getRentClothes(),
@@ -91,13 +85,11 @@ public class ImageService {
                 studioOption.getWaxing(),
                 studioOption.getParking(),
                 minPrice,
-                maxPrice);
-        return this.findImagesByFilterAndStudio(
+                maxPrice,
                 peopleNum,
                 sex,
                 color,
                 outdoor == true ? null : false,
-                findStudio,
                 pageable);
     }
 
