@@ -171,7 +171,7 @@ public class ImageRepositoryImpl extends QuerydslRepositorySupport implements Cu
     }
 
     private BooleanExpression eqOutdoor(Boolean outdoor) {
-        if (outdoor == null || outdoor == true) {
+        if (outdoor == null) {
             return null;
         }
         return image.outdoor.eq(outdoor);

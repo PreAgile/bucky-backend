@@ -66,7 +66,7 @@ public class ImageReadApiController {
                                              @RequestParam(required = false) PeopleNum[] people_num,       //image: multiple select
                                              @RequestParam(required = false) Sex[] sex,                    //image: multiple select
                                              @RequestParam(required = false) Color[] color,                //image: multiple select
-                                             @RequestParam(required = false, defaultValue = "false") Boolean outdoor, //image
+                                             @RequestParam(required = false) Boolean outdoor,              //image
                                              @RequestParam(required = false) Boolean hair_makeup,          //studio
                                              @RequestParam(required = false) Boolean rent_clothes,         //studio
                                              @RequestParam(required = false) Boolean tanning,              //studio

@@ -89,7 +89,7 @@ public class ImageService {
                 peopleNum,
                 sex,
                 color,
-                outdoor == true ? null : false,
+                outdoor,
                 pageable);
     }
 
